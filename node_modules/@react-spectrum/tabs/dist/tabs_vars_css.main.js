@@ -1,0 +1,86 @@
+
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
+
+$parcel$export(module.exports, "focus-ring", () => $29add1fad43dc941$export$f39a09f249340e2a, (v) => $29add1fad43dc941$export$f39a09f249340e2a = v);
+$parcel$export(module.exports, "i18nFontFamily", () => $29add1fad43dc941$export$8c4ee2c50c22c514, (v) => $29add1fad43dc941$export$8c4ee2c50c22c514 = v);
+$parcel$export(module.exports, "is-disabled", () => $29add1fad43dc941$export$d35bc1e505d1ebbf, (v) => $29add1fad43dc941$export$d35bc1e505d1ebbf = v);
+$parcel$export(module.exports, "is-hovered", () => $29add1fad43dc941$export$b8813cd5d7824ce7, (v) => $29add1fad43dc941$export$b8813cd5d7824ce7 = v);
+$parcel$export(module.exports, "is-selected", () => $29add1fad43dc941$export$1e0fb04f31d3c22a, (v) => $29add1fad43dc941$export$1e0fb04f31d3c22a = v);
+$parcel$export(module.exports, "spectrum-FocusRing-ring", () => $29add1fad43dc941$export$4109102f950813a6, (v) => $29add1fad43dc941$export$4109102f950813a6 = v);
+$parcel$export(module.exports, "spectrum-FocusRing", () => $29add1fad43dc941$export$24c7f46a6e3605dd, (v) => $29add1fad43dc941$export$24c7f46a6e3605dd = v);
+$parcel$export(module.exports, "spectrum-FocusRing--quiet", () => $29add1fad43dc941$export$2927016961429360, (v) => $29add1fad43dc941$export$2927016961429360 = v);
+$parcel$export(module.exports, "spectrum-Icon", () => $29add1fad43dc941$export$d374b04f30360026, (v) => $29add1fad43dc941$export$d374b04f30360026 = v);
+$parcel$export(module.exports, "spectrum-Tabs", () => $29add1fad43dc941$export$35c105c0d9c8e56f, (v) => $29add1fad43dc941$export$35c105c0d9c8e56f = v);
+$parcel$export(module.exports, "spectrum-Tabs--compact", () => $29add1fad43dc941$export$e15c78184ee03abe, (v) => $29add1fad43dc941$export$e15c78184ee03abe = v);
+$parcel$export(module.exports, "spectrum-Tabs--emphasized", () => $29add1fad43dc941$export$87b15021e28e067a, (v) => $29add1fad43dc941$export$87b15021e28e067a = v);
+$parcel$export(module.exports, "spectrum-Tabs--horizontal", () => $29add1fad43dc941$export$229f1ac4d3d38f0e, (v) => $29add1fad43dc941$export$229f1ac4d3d38f0e = v);
+$parcel$export(module.exports, "spectrum-Tabs--isCollapsed", () => $29add1fad43dc941$export$ea514cd060922d6b, (v) => $29add1fad43dc941$export$ea514cd060922d6b = v);
+$parcel$export(module.exports, "spectrum-Tabs--quiet", () => $29add1fad43dc941$export$831e830d5828d42b, (v) => $29add1fad43dc941$export$831e830d5828d42b = v);
+$parcel$export(module.exports, "spectrum-Tabs--vertical", () => $29add1fad43dc941$export$e415005be3957065, (v) => $29add1fad43dc941$export$e415005be3957065 = v);
+$parcel$export(module.exports, "spectrum-Tabs-item", () => $29add1fad43dc941$export$123e4c01a5440a3e, (v) => $29add1fad43dc941$export$123e4c01a5440a3e = v);
+$parcel$export(module.exports, "spectrum-Tabs-itemLabel", () => $29add1fad43dc941$export$1f253edac4b98526, (v) => $29add1fad43dc941$export$1f253edac4b98526 = v);
+$parcel$export(module.exports, "spectrum-Tabs-picker", () => $29add1fad43dc941$export$12dc6b25c6dddfc1, (v) => $29add1fad43dc941$export$12dc6b25c6dddfc1 = v);
+$parcel$export(module.exports, "spectrum-Tabs-selectionIndicator", () => $29add1fad43dc941$export$a115f9117a19563e, (v) => $29add1fad43dc941$export$a115f9117a19563e = v);
+$parcel$export(module.exports, "spectrum-TabsPanel", () => $29add1fad43dc941$export$34f1a65c57bb7bb, (v) => $29add1fad43dc941$export$34f1a65c57bb7bb = v);
+$parcel$export(module.exports, "spectrum-TabsPanel--horizontal", () => $29add1fad43dc941$export$778fb839eaa0528c, (v) => $29add1fad43dc941$export$778fb839eaa0528c = v);
+$parcel$export(module.exports, "spectrum-TabsPanel--vertical", () => $29add1fad43dc941$export$9a6e2fb72c648072, (v) => $29add1fad43dc941$export$9a6e2fb72c648072 = v);
+$parcel$export(module.exports, "spectrum-TabsPanel-collapseWrapper", () => $29add1fad43dc941$export$e09869956b4c96f2, (v) => $29add1fad43dc941$export$e09869956b4c96f2 = v);
+$parcel$export(module.exports, "spectrum-TabsPanel-tabpanel", () => $29add1fad43dc941$export$acb5da0970288266, (v) => $29add1fad43dc941$export$acb5da0970288266 = v);
+$parcel$export(module.exports, "spectrum-TabsPanel-tabs", () => $29add1fad43dc941$export$4a157a691c854e23, (v) => $29add1fad43dc941$export$4a157a691c854e23 = v);
+var $29add1fad43dc941$export$f39a09f249340e2a;
+var $29add1fad43dc941$export$8c4ee2c50c22c514;
+var $29add1fad43dc941$export$d35bc1e505d1ebbf;
+var $29add1fad43dc941$export$b8813cd5d7824ce7;
+var $29add1fad43dc941$export$1e0fb04f31d3c22a;
+var $29add1fad43dc941$export$4109102f950813a6;
+var $29add1fad43dc941$export$24c7f46a6e3605dd;
+var $29add1fad43dc941$export$2927016961429360;
+var $29add1fad43dc941$export$d374b04f30360026;
+var $29add1fad43dc941$export$35c105c0d9c8e56f;
+var $29add1fad43dc941$export$e15c78184ee03abe;
+var $29add1fad43dc941$export$87b15021e28e067a;
+var $29add1fad43dc941$export$229f1ac4d3d38f0e;
+var $29add1fad43dc941$export$ea514cd060922d6b;
+var $29add1fad43dc941$export$831e830d5828d42b;
+var $29add1fad43dc941$export$e415005be3957065;
+var $29add1fad43dc941$export$123e4c01a5440a3e;
+var $29add1fad43dc941$export$1f253edac4b98526;
+var $29add1fad43dc941$export$12dc6b25c6dddfc1;
+var $29add1fad43dc941$export$a115f9117a19563e;
+var $29add1fad43dc941$export$34f1a65c57bb7bb;
+var $29add1fad43dc941$export$778fb839eaa0528c;
+var $29add1fad43dc941$export$9a6e2fb72c648072;
+var $29add1fad43dc941$export$e09869956b4c96f2;
+var $29add1fad43dc941$export$acb5da0970288266;
+var $29add1fad43dc941$export$4a157a691c854e23;
+$29add1fad43dc941$export$f39a09f249340e2a = `PDBWga_focus-ring`;
+$29add1fad43dc941$export$8c4ee2c50c22c514 = `PDBWga_i18nFontFamily`;
+$29add1fad43dc941$export$d35bc1e505d1ebbf = `PDBWga_is-disabled`;
+$29add1fad43dc941$export$b8813cd5d7824ce7 = `PDBWga_is-hovered`;
+$29add1fad43dc941$export$1e0fb04f31d3c22a = `PDBWga_is-selected`;
+$29add1fad43dc941$export$4109102f950813a6 = `PDBWga_spectrum-FocusRing-ring`;
+$29add1fad43dc941$export$24c7f46a6e3605dd = `PDBWga_spectrum-FocusRing ${$29add1fad43dc941$export$4109102f950813a6}`;
+$29add1fad43dc941$export$2927016961429360 = `PDBWga_spectrum-FocusRing--quiet`;
+$29add1fad43dc941$export$d374b04f30360026 = `PDBWga_spectrum-Icon`;
+$29add1fad43dc941$export$35c105c0d9c8e56f = `PDBWga_spectrum-Tabs`;
+$29add1fad43dc941$export$e15c78184ee03abe = `PDBWga_spectrum-Tabs--compact`;
+$29add1fad43dc941$export$87b15021e28e067a = `PDBWga_spectrum-Tabs--emphasized`;
+$29add1fad43dc941$export$229f1ac4d3d38f0e = `PDBWga_spectrum-Tabs--horizontal`;
+$29add1fad43dc941$export$ea514cd060922d6b = `PDBWga_spectrum-Tabs--isCollapsed`;
+$29add1fad43dc941$export$831e830d5828d42b = `PDBWga_spectrum-Tabs--quiet`;
+$29add1fad43dc941$export$e415005be3957065 = `PDBWga_spectrum-Tabs--vertical`;
+$29add1fad43dc941$export$123e4c01a5440a3e = `PDBWga_spectrum-Tabs-item`;
+$29add1fad43dc941$export$1f253edac4b98526 = `PDBWga_spectrum-Tabs-itemLabel`;
+$29add1fad43dc941$export$12dc6b25c6dddfc1 = `PDBWga_spectrum-Tabs-picker`;
+$29add1fad43dc941$export$a115f9117a19563e = `PDBWga_spectrum-Tabs-selectionIndicator`;
+$29add1fad43dc941$export$34f1a65c57bb7bb = `PDBWga_spectrum-TabsPanel`;
+$29add1fad43dc941$export$778fb839eaa0528c = `PDBWga_spectrum-TabsPanel--horizontal`;
+$29add1fad43dc941$export$9a6e2fb72c648072 = `PDBWga_spectrum-TabsPanel--vertical`;
+$29add1fad43dc941$export$e09869956b4c96f2 = `PDBWga_spectrum-TabsPanel-collapseWrapper`;
+$29add1fad43dc941$export$acb5da0970288266 = `PDBWga_spectrum-TabsPanel-tabpanel`;
+$29add1fad43dc941$export$4a157a691c854e23 = `PDBWga_spectrum-TabsPanel-tabs`;
+
+
+//# sourceMappingURL=tabs_vars_css.main.js.map

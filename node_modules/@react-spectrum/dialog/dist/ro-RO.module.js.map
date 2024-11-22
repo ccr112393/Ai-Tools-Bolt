@@ -1,0 +1,1 @@
+{"mappings":";AAAA,4BAAiB;IAAG,SAAS,CAAC,YAAM,CAAC;IACnC,WAAW,CAAC,QAAQ,CAAC;AACvB","sources":["packages/@react-spectrum/dialog/intl/ro-RO.json"],"sourcesContent":["{\n  \"alert\": \"Alertă\",\n  \"dismiss\": \"Revocare\"\n}\n"],"names":[],"version":3,"file":"ro-RO.module.js.map"}

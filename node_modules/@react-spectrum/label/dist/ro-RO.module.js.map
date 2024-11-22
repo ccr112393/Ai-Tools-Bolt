@@ -1,0 +1,1 @@
+{"mappings":";AAAA,4BAAiB;IAAG,cAAc,CAAC,gBAAU,CAAC;IAC5C,cAAc,CAAC,aAAa,CAAC;AAC/B","sources":["packages/@react-spectrum/label/intl/ro-RO.json"],"sourcesContent":["{\n  \"(optional)\": \"(opţional)\",\n  \"(required)\": \"(obligatoriu)\"\n}\n"],"names":[],"version":3,"file":"ro-RO.module.js.map"}

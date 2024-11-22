@@ -1,0 +1,88 @@
+
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
+var $32d597b82a7aad64$exports = {};
+
+$parcel$export($32d597b82a7aad64$exports, "focus-ring", () => $32d597b82a7aad64$export$f39a09f249340e2a, (v) => $32d597b82a7aad64$export$f39a09f249340e2a = v);
+$parcel$export($32d597b82a7aad64$exports, "i18nFontFamily", () => $32d597b82a7aad64$export$8c4ee2c50c22c514, (v) => $32d597b82a7aad64$export$8c4ee2c50c22c514 = v);
+$parcel$export($32d597b82a7aad64$exports, "is-disabled", () => $32d597b82a7aad64$export$d35bc1e505d1ebbf, (v) => $32d597b82a7aad64$export$d35bc1e505d1ebbf = v);
+$parcel$export($32d597b82a7aad64$exports, "is-hovered", () => $32d597b82a7aad64$export$b8813cd5d7824ce7, (v) => $32d597b82a7aad64$export$b8813cd5d7824ce7 = v);
+$parcel$export($32d597b82a7aad64$exports, "is-selected", () => $32d597b82a7aad64$export$1e0fb04f31d3c22a, (v) => $32d597b82a7aad64$export$1e0fb04f31d3c22a = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-FocusRing-ring", () => $32d597b82a7aad64$export$4109102f950813a6, (v) => $32d597b82a7aad64$export$4109102f950813a6 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-FocusRing", () => $32d597b82a7aad64$export$24c7f46a6e3605dd, (v) => $32d597b82a7aad64$export$24c7f46a6e3605dd = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-FocusRing--quiet", () => $32d597b82a7aad64$export$2927016961429360, (v) => $32d597b82a7aad64$export$2927016961429360 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Icon", () => $32d597b82a7aad64$export$d374b04f30360026, (v) => $32d597b82a7aad64$export$d374b04f30360026 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs", () => $32d597b82a7aad64$export$35c105c0d9c8e56f, (v) => $32d597b82a7aad64$export$35c105c0d9c8e56f = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs--compact", () => $32d597b82a7aad64$export$e15c78184ee03abe, (v) => $32d597b82a7aad64$export$e15c78184ee03abe = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs--emphasized", () => $32d597b82a7aad64$export$87b15021e28e067a, (v) => $32d597b82a7aad64$export$87b15021e28e067a = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs--horizontal", () => $32d597b82a7aad64$export$229f1ac4d3d38f0e, (v) => $32d597b82a7aad64$export$229f1ac4d3d38f0e = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs--isCollapsed", () => $32d597b82a7aad64$export$ea514cd060922d6b, (v) => $32d597b82a7aad64$export$ea514cd060922d6b = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs--quiet", () => $32d597b82a7aad64$export$831e830d5828d42b, (v) => $32d597b82a7aad64$export$831e830d5828d42b = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs--vertical", () => $32d597b82a7aad64$export$e415005be3957065, (v) => $32d597b82a7aad64$export$e415005be3957065 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs-item", () => $32d597b82a7aad64$export$123e4c01a5440a3e, (v) => $32d597b82a7aad64$export$123e4c01a5440a3e = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs-itemLabel", () => $32d597b82a7aad64$export$1f253edac4b98526, (v) => $32d597b82a7aad64$export$1f253edac4b98526 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs-picker", () => $32d597b82a7aad64$export$12dc6b25c6dddfc1, (v) => $32d597b82a7aad64$export$12dc6b25c6dddfc1 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-Tabs-selectionIndicator", () => $32d597b82a7aad64$export$a115f9117a19563e, (v) => $32d597b82a7aad64$export$a115f9117a19563e = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-TabsPanel", () => $32d597b82a7aad64$export$34f1a65c57bb7bb, (v) => $32d597b82a7aad64$export$34f1a65c57bb7bb = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-TabsPanel--horizontal", () => $32d597b82a7aad64$export$778fb839eaa0528c, (v) => $32d597b82a7aad64$export$778fb839eaa0528c = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-TabsPanel--vertical", () => $32d597b82a7aad64$export$9a6e2fb72c648072, (v) => $32d597b82a7aad64$export$9a6e2fb72c648072 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-TabsPanel-collapseWrapper", () => $32d597b82a7aad64$export$e09869956b4c96f2, (v) => $32d597b82a7aad64$export$e09869956b4c96f2 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-TabsPanel-tabpanel", () => $32d597b82a7aad64$export$acb5da0970288266, (v) => $32d597b82a7aad64$export$acb5da0970288266 = v);
+$parcel$export($32d597b82a7aad64$exports, "spectrum-TabsPanel-tabs", () => $32d597b82a7aad64$export$4a157a691c854e23, (v) => $32d597b82a7aad64$export$4a157a691c854e23 = v);
+var $32d597b82a7aad64$export$f39a09f249340e2a;
+var $32d597b82a7aad64$export$8c4ee2c50c22c514;
+var $32d597b82a7aad64$export$d35bc1e505d1ebbf;
+var $32d597b82a7aad64$export$b8813cd5d7824ce7;
+var $32d597b82a7aad64$export$1e0fb04f31d3c22a;
+var $32d597b82a7aad64$export$4109102f950813a6;
+var $32d597b82a7aad64$export$24c7f46a6e3605dd;
+var $32d597b82a7aad64$export$2927016961429360;
+var $32d597b82a7aad64$export$d374b04f30360026;
+var $32d597b82a7aad64$export$35c105c0d9c8e56f;
+var $32d597b82a7aad64$export$e15c78184ee03abe;
+var $32d597b82a7aad64$export$87b15021e28e067a;
+var $32d597b82a7aad64$export$229f1ac4d3d38f0e;
+var $32d597b82a7aad64$export$ea514cd060922d6b;
+var $32d597b82a7aad64$export$831e830d5828d42b;
+var $32d597b82a7aad64$export$e415005be3957065;
+var $32d597b82a7aad64$export$123e4c01a5440a3e;
+var $32d597b82a7aad64$export$1f253edac4b98526;
+var $32d597b82a7aad64$export$12dc6b25c6dddfc1;
+var $32d597b82a7aad64$export$a115f9117a19563e;
+var $32d597b82a7aad64$export$34f1a65c57bb7bb;
+var $32d597b82a7aad64$export$778fb839eaa0528c;
+var $32d597b82a7aad64$export$9a6e2fb72c648072;
+var $32d597b82a7aad64$export$e09869956b4c96f2;
+var $32d597b82a7aad64$export$acb5da0970288266;
+var $32d597b82a7aad64$export$4a157a691c854e23;
+$32d597b82a7aad64$export$f39a09f249340e2a = `PDBWga_focus-ring`;
+$32d597b82a7aad64$export$8c4ee2c50c22c514 = `PDBWga_i18nFontFamily`;
+$32d597b82a7aad64$export$d35bc1e505d1ebbf = `PDBWga_is-disabled`;
+$32d597b82a7aad64$export$b8813cd5d7824ce7 = `PDBWga_is-hovered`;
+$32d597b82a7aad64$export$1e0fb04f31d3c22a = `PDBWga_is-selected`;
+$32d597b82a7aad64$export$4109102f950813a6 = `PDBWga_spectrum-FocusRing-ring`;
+$32d597b82a7aad64$export$24c7f46a6e3605dd = `PDBWga_spectrum-FocusRing ${$32d597b82a7aad64$export$4109102f950813a6}`;
+$32d597b82a7aad64$export$2927016961429360 = `PDBWga_spectrum-FocusRing--quiet`;
+$32d597b82a7aad64$export$d374b04f30360026 = `PDBWga_spectrum-Icon`;
+$32d597b82a7aad64$export$35c105c0d9c8e56f = `PDBWga_spectrum-Tabs`;
+$32d597b82a7aad64$export$e15c78184ee03abe = `PDBWga_spectrum-Tabs--compact`;
+$32d597b82a7aad64$export$87b15021e28e067a = `PDBWga_spectrum-Tabs--emphasized`;
+$32d597b82a7aad64$export$229f1ac4d3d38f0e = `PDBWga_spectrum-Tabs--horizontal`;
+$32d597b82a7aad64$export$ea514cd060922d6b = `PDBWga_spectrum-Tabs--isCollapsed`;
+$32d597b82a7aad64$export$831e830d5828d42b = `PDBWga_spectrum-Tabs--quiet`;
+$32d597b82a7aad64$export$e415005be3957065 = `PDBWga_spectrum-Tabs--vertical`;
+$32d597b82a7aad64$export$123e4c01a5440a3e = `PDBWga_spectrum-Tabs-item`;
+$32d597b82a7aad64$export$1f253edac4b98526 = `PDBWga_spectrum-Tabs-itemLabel`;
+$32d597b82a7aad64$export$12dc6b25c6dddfc1 = `PDBWga_spectrum-Tabs-picker`;
+$32d597b82a7aad64$export$a115f9117a19563e = `PDBWga_spectrum-Tabs-selectionIndicator`;
+$32d597b82a7aad64$export$34f1a65c57bb7bb = `PDBWga_spectrum-TabsPanel`;
+$32d597b82a7aad64$export$778fb839eaa0528c = `PDBWga_spectrum-TabsPanel--horizontal`;
+$32d597b82a7aad64$export$9a6e2fb72c648072 = `PDBWga_spectrum-TabsPanel--vertical`;
+$32d597b82a7aad64$export$e09869956b4c96f2 = `PDBWga_spectrum-TabsPanel-collapseWrapper`;
+$32d597b82a7aad64$export$acb5da0970288266 = `PDBWga_spectrum-TabsPanel-tabpanel`;
+$32d597b82a7aad64$export$4a157a691c854e23 = `PDBWga_spectrum-TabsPanel-tabs`;
+
+
+export {$32d597b82a7aad64$exports as default};
+//# sourceMappingURL=tabs_vars_css.module.js.map

@@ -1,0 +1,1 @@
+{"mappings":";AAAA,4BAAiB;IAAG,SAAS,CAAC,WAAK,CAAC;IAClC,WAAW,CAAC,KAAK,CAAC;AACpB","sources":["packages/@react-spectrum/dialog/intl/tr-TR.json"],"sourcesContent":["{\n  \"alert\": \"Uyarı\",\n  \"dismiss\": \"Kapat\"\n}\n"],"names":[],"version":3,"file":"tr-TR.module.js.map"}

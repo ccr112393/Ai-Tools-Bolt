@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,WAAW,CAAC,cAAQ,CAAC;IACvC,WAAW,CAAC,OAAO,CAAC;AACtB","sources":["packages/@react-spectrum/slider/intl/sl-SI.json"],"sourcesContent":["{\n  \"maximum\": \"Največji\",\n  \"minimum\": \"Najmanj\"\n}\n"],"names":[],"version":3,"file":"sl-SI.main.js.map"}

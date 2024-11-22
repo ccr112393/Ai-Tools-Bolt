@@ -1,0 +1,151 @@
+.VXVB8W_i18nFontFamily {
+  font-synthesis: weight;
+  font-family: adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(ar) {
+  font-family: myriad-arabic, adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(he) {
+  font-family: myriad-hebrew, adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(zh) {
+  font-family: adobe-clean-han-traditional, source-han-traditional, MingLiu, Heiti TC Light, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(zh-Hans) {
+  font-family: adobe-clean-han-simplified-c, source-han-simplified-c, SimSun, Heiti SC Light, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(zh-Hant) {
+  font-family: adobe-clean-han-traditional, source-han-traditional, MingLiu, Microsoft JhengHei UI, Microsoft JhengHei, Heiti TC Light, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(zh-SG), .VXVB8W_i18nFontFamily:lang(zh-CN) {
+  font-family: adobe-clean-han-simplified-c, source-han-simplified-c, SimSun, Heiti SC Light, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(ko) {
+  font-family: adobe-clean-han-korean, source-han-korean, Malgun Gothic, Apple Gothic, sans-serif;
+}
+
+.VXVB8W_i18nFontFamily:lang(ja) {
+  font-family: adobe-clean-han-japanese, Hiragino Kaku Gothic ProN, ヒラギノ角ゴ ProN W3, Osaka, YuGothic, Yu Gothic, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
+}
+
+.VXVB8W_spectrum-FocusRing-ring {
+  --spectrum-focus-ring-border-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
+  --spectrum-focus-ring-gap: var(--spectrum-alias-input-focusring-gap);
+  --spectrum-focus-ring-size: var(--spectrum-alias-input-focusring-size);
+  --spectrum-focus-ring-border-size: 0px;
+  --spectrum-focus-ring-color: var(--spectrum-high-contrast-focus-ring-color, var(--spectrum-alias-focus-ring-color, var(--spectrum-alias-focus-color)));
+}
+
+.VXVB8W_spectrum-FocusRing-ring:after {
+  border-radius: calc(var(--spectrum-focus-ring-border-radius)  + var(--spectrum-focus-ring-gap));
+  content: "";
+  margin: calc(-1 * var(--spectrum-focus-ring-border-size));
+  pointer-events: none;
+  transition: box-shadow var(--spectrum-global-animation-duration-100, .13s) ease-out, margin var(--spectrum-global-animation-duration-100, .13s) ease-out;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.VXVB8W_spectrum-FocusRing.VXVB8W_focus-ring:after {
+  margin: calc(var(--spectrum-focus-ring-gap) * -1 - var(--spectrum-focus-ring-border-size));
+  box-shadow: 0 0 0 var(--spectrum-focus-ring-size) var(--spectrum-focus-ring-color);
+}
+
+.VXVB8W_spectrum-FocusRing--quiet:after {
+  border-radius: 0;
+}
+
+.VXVB8W_spectrum-FocusRing--quiet.VXVB8W_focus-ring:after {
+  margin: 0 0 calc(var(--spectrum-focus-ring-gap) * -1 - var(--spectrum-focus-ring-border-size)) 0;
+  box-shadow: 0 var(--spectrum-focus-ring-size) 0 var(--spectrum-focus-ring-color);
+}
+
+@media (forced-colors: active) {
+  .VXVB8W_spectrum-FocusRing, .VXVB8W_spectrum-FocusRing-ring, .VXVB8W_spectrum-FocusRing--quiet {
+    --spectrum-high-contrast-focus-ring-color: Highlight;
+  }
+
+  :is(.VXVB8W_spectrum-FocusRing, .VXVB8W_spectrum-FocusRing-ring, .VXVB8W_spectrum-FocusRing--quiet):after {
+    forced-color-adjust: none;
+  }
+}
+
+.VXVB8W_spectrum-Rule {
+  border: none;
+  border-width: var(--spectrum-rule-medium-height, var(--spectrum-global-dimension-static-size-25));
+  border-radius: var(--spectrum-rule-medium-height, var(--spectrum-global-dimension-static-size-25));
+  margin: 0;
+  align-self: stretch;
+  margin-inline: 0;
+  overflow: visible;
+}
+
+.VXVB8W_spectrum-Rule--large {
+  border-radius: var(--spectrum-rule-large-border-radius, var(--spectrum-global-dimension-static-size-25));
+}
+
+.VXVB8W_spectrum-Rule--medium {
+  border-radius: var(--spectrum-rule-medium-border-radius, var(--spectrum-global-dimension-static-size-10));
+}
+
+.VXVB8W_spectrum-Rule--small {
+  border-radius: var(--spectrum-rule-small-border-radius, var(--spectrum-global-dimension-static-size-10));
+}
+
+.VXVB8W_spectrum-Rule--horizontal.VXVB8W_spectrum-Rule--large {
+  block-size: var(--spectrum-rule-large-height, var(--spectrum-global-dimension-static-size-50));
+}
+
+.VXVB8W_spectrum-Rule--horizontal.VXVB8W_spectrum-Rule--medium {
+  block-size: var(--spectrum-rule-medium-height, var(--spectrum-global-dimension-static-size-25));
+}
+
+.VXVB8W_spectrum-Rule--horizontal.VXVB8W_spectrum-Rule--small {
+  block-size: var(--spectrum-rule-small-height, var(--spectrum-global-dimension-static-size-10));
+}
+
+.VXVB8W_spectrum-Rule--vertical {
+  height: auto;
+}
+
+.VXVB8W_spectrum-Rule--vertical.VXVB8W_spectrum-Rule--large {
+  inline-size: var(--spectrum-rule-large-height, var(--spectrum-global-dimension-static-size-50));
+}
+
+.VXVB8W_spectrum-Rule--vertical.VXVB8W_spectrum-Rule--medium {
+  inline-size: var(--spectrum-rule-medium-height, var(--spectrum-global-dimension-static-size-25));
+}
+
+.VXVB8W_spectrum-Rule--vertical.VXVB8W_spectrum-Rule--small {
+  inline-size: var(--spectrum-rule-small-height, var(--spectrum-global-dimension-static-size-10));
+}
+
+.VXVB8W_spectrum-Rule--large {
+  background-color: var(--spectrum-rule-large-background-color, var(--spectrum-global-color-gray-800));
+}
+
+.VXVB8W_spectrum-Rule--medium {
+  background-color: var(--spectrum-rule-medium-background-color, var(--spectrum-global-color-gray-300));
+}
+
+.VXVB8W_spectrum-Rule--small {
+  background-color: var(--spectrum-rule-small-background-color, var(--spectrum-global-color-gray-300));
+}
+
+@media (forced-colors: active) {
+  .VXVB8W_spectrum-Rule {
+    forced-color-adjust: none;
+    --spectrum-rule-large-background-color: CanvasText;
+    --spectrum-rule-medium-background-color: CanvasText;
+    --spectrum-rule-small-background-color: CanvasText;
+  }
+}
+/*# sourceMappingURL=vars.e377bd1e.css.map */

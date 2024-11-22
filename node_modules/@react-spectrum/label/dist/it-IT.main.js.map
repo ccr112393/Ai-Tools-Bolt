@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,cAAc,CAAC,aAAa,CAAC;IAC/C,cAAc,CAAC,cAAc,CAAC;AAChC","sources":["packages/@react-spectrum/label/intl/it-IT.json"],"sourcesContent":["{\n  \"(optional)\": \"(facoltativo)\",\n  \"(required)\": \"(obbligatorio)\"\n}\n"],"names":[],"version":3,"file":"it-IT.main.js.map"}

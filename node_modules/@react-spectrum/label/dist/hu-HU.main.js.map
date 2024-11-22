@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,cAAc,CAAC,eAAY,CAAC;IAC9C,cAAc,CAAC,mBAAU,CAAC;AAC5B","sources":["packages/@react-spectrum/label/intl/hu-HU.json"],"sourcesContent":["{\n  \"(optional)\": \"(opcionális)\",\n  \"(required)\": \"(kötelező)\"\n}\n"],"names":[],"version":3,"file":"hu-HU.main.js.map"}

@@ -1,0 +1,1 @@
+{"mappings":";AAAA,4BAAiB;IAAG,SAAS,CAAC,mCAAK,CAAC;IAClC,WAAW,CAAC,mCAAK,CAAC;AACpB","sources":["packages/@react-spectrum/dialog/intl/he-IL.json"],"sourcesContent":["{\n  \"alert\": \"התראה\",\n  \"dismiss\": \"התעלם\"\n}\n"],"names":[],"version":3,"file":"he-IL.module.js.map"}

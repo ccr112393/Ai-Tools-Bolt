@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,kBAAkB,CAAC,oKAA0B,CAAC;AAClE","sources":["packages/@react-spectrum/dropzone/intl/ru-RU.json"],"sourcesContent":["{\n  \"replaceMessage\": \"Перетащите файл для замены\"\n}\n"],"names":[],"version":3,"file":"ru-RU.main.js.map"}

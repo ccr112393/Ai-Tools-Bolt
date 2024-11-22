@@ -1,0 +1,168 @@
+._9-Xiq_i18nFontFamily {
+  font-synthesis: weight;
+  font-family: adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(ar) {
+  font-family: myriad-arabic, adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(he) {
+  font-family: myriad-hebrew, adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(zh) {
+  font-family: adobe-clean-han-traditional, source-han-traditional, MingLiu, Heiti TC Light, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(zh-Hans) {
+  font-family: adobe-clean-han-simplified-c, source-han-simplified-c, SimSun, Heiti SC Light, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(zh-Hant) {
+  font-family: adobe-clean-han-traditional, source-han-traditional, MingLiu, Microsoft JhengHei UI, Microsoft JhengHei, Heiti TC Light, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(zh-SG), ._9-Xiq_i18nFontFamily:lang(zh-CN) {
+  font-family: adobe-clean-han-simplified-c, source-han-simplified-c, SimSun, Heiti SC Light, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(ko) {
+  font-family: adobe-clean-han-korean, source-han-korean, Malgun Gothic, Apple Gothic, sans-serif;
+}
+
+._9-Xiq_i18nFontFamily:lang(ja) {
+  font-family: adobe-clean-han-japanese, Hiragino Kaku Gothic ProN, ヒラギノ角ゴ ProN W3, Osaka, YuGothic, Yu Gothic, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
+}
+
+._9-Xiq_spectrum-FocusRing-ring {
+  --spectrum-focus-ring-border-radius: var(--spectrum-textfield-border-radius, var(--spectrum-alias-border-radius-regular));
+  --spectrum-focus-ring-gap: var(--spectrum-alias-input-focusring-gap);
+  --spectrum-focus-ring-size: var(--spectrum-alias-input-focusring-size);
+  --spectrum-focus-ring-border-size: 0px;
+  --spectrum-focus-ring-color: var(--spectrum-high-contrast-focus-ring-color, var(--spectrum-alias-focus-ring-color, var(--spectrum-alias-focus-color)));
+}
+
+._9-Xiq_spectrum-FocusRing-ring:after {
+  border-radius: calc(var(--spectrum-focus-ring-border-radius)  + var(--spectrum-focus-ring-gap));
+  content: "";
+  margin: calc(-1 * var(--spectrum-focus-ring-border-size));
+  pointer-events: none;
+  transition: box-shadow var(--spectrum-global-animation-duration-100, .13s) ease-out, margin var(--spectrum-global-animation-duration-100, .13s) ease-out;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+._9-Xiq_spectrum-FocusRing._9-Xiq_focus-ring:after {
+  margin: calc(var(--spectrum-focus-ring-gap) * -1 - var(--spectrum-focus-ring-border-size));
+  box-shadow: 0 0 0 var(--spectrum-focus-ring-size) var(--spectrum-focus-ring-color);
+}
+
+._9-Xiq_spectrum-FocusRing--quiet:after {
+  border-radius: 0;
+}
+
+._9-Xiq_spectrum-FocusRing--quiet._9-Xiq_focus-ring:after {
+  margin: 0 0 calc(var(--spectrum-focus-ring-gap) * -1 - var(--spectrum-focus-ring-border-size)) 0;
+  box-shadow: 0 var(--spectrum-focus-ring-size) 0 var(--spectrum-focus-ring-color);
+}
+
+@media (forced-colors: active) {
+  ._9-Xiq_spectrum-FocusRing, ._9-Xiq_spectrum-FocusRing-ring, ._9-Xiq_spectrum-FocusRing--quiet {
+    --spectrum-high-contrast-focus-ring-color: Highlight;
+  }
+
+  :is(._9-Xiq_spectrum-FocusRing, ._9-Xiq_spectrum-FocusRing-ring, ._9-Xiq_spectrum-FocusRing--quiet):after {
+    forced-color-adjust: none;
+  }
+}
+
+._9-Xiq_spectrum-Link {
+  -webkit-text-decoration-skip: objects;
+  transition: color var(--spectrum-global-animation-duration-100, .13s) ease-in-out;
+  cursor: pointer;
+  background-color: #0000;
+  outline: none;
+  text-decoration: underline;
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_is-hovered, ._9-Xiq_spectrum-Link._9-Xiq_focus-ring {
+  text-decoration: underline;
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_focus-ring {
+  text-decoration: underline double;
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_is-disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_is-disabled._9-Xiq_is-hovered, ._9-Xiq_spectrum-Link._9-Xiq_is-disabled:focus {
+  text-decoration: none;
+}
+
+._9-Xiq_spectrum-Link--secondary, ._9-Xiq_spectrum-Link--overBackground {
+  text-decoration: underline;
+}
+
+._9-Xiq_spectrum-Link--quiet {
+  text-decoration: none;
+}
+
+._9-Xiq_spectrum-Link {
+  --spectrum-link-text-color: var(--spectrum-accent-color-1000);
+  --spectrum-link-text-color-hover: var(--spectrum-accent-color-1000);
+  --spectrum-link-text-color-down: var(--spectrum-accent-color-1100);
+  --spectrum-link-text-color-key-focus: var(--spectrum-accent-color-1000);
+  color: var(--spectrum-link-text-color, var(--spectrum-global-color-blue-600));
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_is-hovered {
+  color: var(--spectrum-link-text-color-hover, var(--spectrum-global-color-blue-600));
+}
+
+._9-Xiq_spectrum-Link:active {
+  color: var(--spectrum-link-text-color-down, var(--spectrum-global-color-blue-700));
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_focus-ring {
+  color: var(--spectrum-link-text-color-key-focus, var(--spectrum-alias-text-color-key-focus));
+}
+
+._9-Xiq_spectrum-Link._9-Xiq_is-disabled {
+  color: var(--spectrum-link-text-color-disabled, var(--spectrum-alias-text-color-disabled));
+}
+
+._9-Xiq_spectrum-Link--secondary, ._9-Xiq_spectrum-Link--secondary._9-Xiq_is-hovered, ._9-Xiq_spectrum-Link--secondary:active, ._9-Xiq_spectrum-Link--secondary:focus {
+  color: inherit;
+}
+
+._9-Xiq_spectrum-Link--overBackground {
+  color: var(--spectrum-link-over-background-text-color, var(--spectrum-global-color-static-white));
+}
+
+._9-Xiq_spectrum-Link--overBackground._9-Xiq_is-hovered {
+  color: var(--spectrum-link-over-background-text-color-hover, var(--spectrum-global-color-static-white));
+}
+
+._9-Xiq_spectrum-Link--overBackground:active {
+  color: var(--spectrum-link-over-background-text-color-down, var(--spectrum-global-color-static-white));
+}
+
+._9-Xiq_spectrum-Link--overBackground:focus {
+  color: var(--spectrum-link-over-background-text-color-key-focus, var(--spectrum-global-color-static-white));
+}
+
+._9-Xiq_spectrum-Link--overBackground._9-Xiq_is-disabled {
+  color: var(--spectrum-link-over-background-text-color-disabled, #ffffff80);
+}
+
+@media (forced-colors: active) {
+  ._9-Xiq_spectrum-Link, ._9-Xiq_spectrum-Link._9-Xiq_is-hovered, ._9-Xiq_spectrum-Link:active, ._9-Xiq_spectrum-Link:focus {
+    color: linktext;
+  }
+}
+/*# sourceMappingURL=vars.04bcd764.css.map */

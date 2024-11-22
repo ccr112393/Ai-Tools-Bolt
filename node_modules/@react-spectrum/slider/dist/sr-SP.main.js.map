@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,WAAW,CAAC,aAAO,CAAC;IACtC,WAAW,CAAC,QAAQ,CAAC;AACvB","sources":["packages/@react-spectrum/slider/intl/sr-SP.json"],"sourcesContent":["{\n  \"maximum\": \"Najviše\",\n  \"minimum\": \"Najmanje\"\n}\n"],"names":[],"version":3,"file":"sr-SP.main.js.map"}

@@ -1,0 +1,1 @@
+{"mappings":";AAAA,4BAAiB;IAAG,WAAW,CAAC,OAAO,CAAC;IACtC,WAAW,CAAC,MAAM,CAAC;AACrB","sources":["packages/@react-spectrum/slider/intl/fi-FI.json"],"sourcesContent":["{\n  \"maximum\": \"Maksimi\",\n  \"minimum\": \"Minimi\"\n}\n"],"names":[],"version":3,"file":"fi-FI.module.js.map"}

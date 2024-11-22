@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,WAAW,CAAC,wBAAG,CAAC;IAClC,WAAW,CAAC,wBAAG,CAAC;AAClB","sources":["packages/@react-spectrum/slider/intl/zh-TW.json"],"sourcesContent":["{\n  \"maximum\": \"最大值\",\n  \"minimum\": \"最小值\"\n}\n"],"names":[],"version":3,"file":"zh-TW.main.js.map"}

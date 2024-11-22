@@ -1,0 +1,1 @@
+{"mappings":";AAAA,4BAAiB;IAAG,WAAW,CAAC,cAAc,CAAC;IAC7C,eAAe,CAAC,aAAM,CAAC;AACzB","sources":["packages/@react-spectrum/picker/intl/nb-NO.json"],"sourcesContent":["{\n  \"loading\": \"Laster inn ...\",\n  \"placeholder\": \"Velg …\"\n}\n"],"names":[],"version":3,"file":"nb-NO.module.js.map"}

@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,SAAS,CAAC,KAAK,CAAC;IAClC,WAAW,CAAC,SAAM,CAAC;AACrB","sources":["packages/@react-spectrum/dialog/intl/et-EE.json"],"sourcesContent":["{\n  \"alert\": \"Teade\",\n  \"dismiss\": \"Lõpeta\"\n}\n"],"names":[],"version":3,"file":"et-EE.main.js.map"}

@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,WAAW,CAAC,iBAAW,CAAC;IAC1C,eAAe,CAAC,mBAAY,CAAC;AAC/B","sources":["packages/@react-spectrum/picker/intl/lt-LT.json"],"sourcesContent":["{\n  \"loading\": \"Įkeliama...\",\n  \"placeholder\": \"Pasirinkite…\"\n}\n"],"names":[],"version":3,"file":"lt-LT.main.js.map"}

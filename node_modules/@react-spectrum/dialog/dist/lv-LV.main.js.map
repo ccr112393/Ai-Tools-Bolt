@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,SAAS,CAAC,uBAAW,CAAC;IACxC,WAAW,CAAC,mBAAO,CAAC;AACtB","sources":["packages/@react-spectrum/dialog/intl/lv-LV.json"],"sourcesContent":["{\n  \"alert\": \"Brīdinājums\",\n  \"dismiss\": \"Nerādīt\"\n}\n"],"names":[],"version":3,"file":"lv-LV.main.js.map"}

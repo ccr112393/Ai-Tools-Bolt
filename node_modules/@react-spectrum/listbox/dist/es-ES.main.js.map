@@ -1,0 +1,1 @@
+{"mappings":"AAAA,iBAAiB;IAAG,WAAW,CAAC,gBAAS,CAAC;IACxC,eAAe,CAAC,uBAAa,CAAC;AAChC","sources":["packages/@react-spectrum/listbox/intl/es-ES.json"],"sourcesContent":["{\n  \"loading\": \"Cargando…\",\n  \"loadingMore\": \"Cargando más…\"\n}\n"],"names":[],"version":3,"file":"es-ES.main.js.map"}
