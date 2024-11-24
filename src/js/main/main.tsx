@@ -1,33 +1,16 @@
 import {
-  ActionButton,
-  Content,
   defaultTheme,
-  Dialog,
-  DialogTrigger,
-  Divider,
   Flex,
-  Form,
-  Grid,
-  Heading,
   Item,
   Provider,
   TabList,
   TabPanels,
   Tabs,
-  Text,
-  TextField,
   View,
 } from "@adobe/react-spectrum";
-import {
-  Disclosure,
-  DisclosureHeader,
-  DisclosurePanel,
-} from "@react-spectrum/accordion";
-import Settings from "@spectrum-icons/workflow/Settings";
-import UnitPicker from "./components/UnitPicker";
-import { registrationModule } from "./modules/registration";
+import { createElement } from "react";
 import { MainModule } from "./modules/mainModule";
-import React, { createElement, Fragment, useState } from "react";
+import { registrationModule } from "./modules/registration";
 
 const modules = [registrationModule];
 
@@ -65,25 +48,3 @@ const Main = () => {
   );
 };
 export default Main;
-
-const DefaultsPopoverDialog = () => {
-  return (
-    <DialogTrigger type="popover">
-      <ActionButton isQuiet>
-        <Settings />
-      </ActionButton>
-      <Dialog>
-        <Heading>Settings</Heading>
-        <Divider />
-        <Content>
-          <Grid areas={["label field"]} gap={"size-100"} alignItems={"center"}>
-            <Text>Registration Unit</Text>
-            <UnitPicker />
-            <Text>Laser Unit</Text>
-            <UnitPicker />
-          </Grid>
-        </Content>
-      </Dialog>
-    </DialogTrigger>
-  );
-};
