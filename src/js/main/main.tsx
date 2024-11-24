@@ -10,9 +10,11 @@ import {
 } from "@adobe/react-spectrum";
 import { createElement } from "react";
 import { MainModule } from "./modules/mainModule";
-import { registrationModule } from "./modules/registration";
+import { RegistrationModule } from "./modules/registration";
+import { SignagentModule } from "./modules/signagent";
+import { LaserModule } from "./modules/laser";
 
-const modules = [registrationModule];
+const modules = [RegistrationModule, SignagentModule, LaserModule];
 
 const Main = () => {
   return (
@@ -31,7 +33,11 @@ const Main = () => {
         padding={"15px"}
         paddingTop={"10px"}
       >
-        <Flex direction={"column"} gap={"size-100"}>
+        <Flex
+          direction={"column"}
+          maxWidth={"static-size-5000"}
+          margin={"auto"}
+        >
           <Tabs items={modules}>
             <TabList flex="auto">
               {(item: MainModule) => <Item>{item.name}</Item>}

@@ -18,8 +18,12 @@ const config: CEP_Config = {
   iconDarkNormalRollOver: "./src/assets/light-icon.png",
   iconNormalRollOver: "./src/assets/dark-icon.png",
   parameters: ["--v=0", "--enable-nodejs", "--mixed-context"],
-  width: 360,
-  height: 550,
+  width: 375,
+  height: 650,
+  minWidth: 300,
+  minHeight: 400,
+  maxWidth: 800,
+  maxHeight: 1000,
 
   panels: [
     {
@@ -29,6 +33,10 @@ const config: CEP_Config = {
       autoVisible: true,
       width: 375,
       height: 650,
+      minWidth: 300,
+      minHeight: 400,
+      maxWidth: 800,
+      maxHeight: 1000,
     },
   ],
   build: {

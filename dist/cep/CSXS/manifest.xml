@@ -42,6 +42,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <Width>375</Width>
             <Height>650</Height>
           </Size>
+          <MaxSize>
+            <Width>800</Width>
+            <Height>1000</Height>
+          </MaxSize>
+          <MinSize>
+            <Width>300</Width>
+            <Height>400</Height>
+          </MinSize>
         </Geometry>
         <Icons>
           <Icon Type="Normal">./src/assets/dark-icon.png</Icon>

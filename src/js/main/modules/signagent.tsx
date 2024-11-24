@@ -9,7 +9,7 @@ import UnitField from "../components/UnitField";
 import UnitPicker from "../components/UnitPicker";
 import { MainModule } from "./mainModule";
 
-function Registration() {
+function SignAgentTools() {
   return (
     <Flex direction={"column"} alignSelf={"center"}>
       <Flex
@@ -17,19 +17,20 @@ function Registration() {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Heading level={2}>Registration Setup</Heading>
-        <PreferencesPopover options={[["Unit Type", <UnitPicker />]]} />
+        <Heading level={2}>SignAgent Tools</Heading>
+        <PreferencesPopover
+          heading={"Defaults"}
+          options={[["Unit Type", <UnitPicker />]]}
+        />
       </Flex>
       <Form
         isRequired
         necessityIndicator="icon"
-        labelPosition="top"
-        labelAlign="start"
+        labelPosition="side"
+        labelAlign="end"
         maxWidth={"size-4600"}
       >
-        <TextField label="Layer Name" defaultValue="Registration"></TextField>
-        <UnitField label="Diameter" defaultValue={0.25} unit="inch" />
-        <UnitField label="Distance from Edge" defaultValue={0.5} unit="inch" />
+        <TextField label="Layer Name" defaultValue="SignAgent"></TextField>
       </Form>
 
       <Disclosure>
@@ -42,10 +43,10 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default SignAgentTools;
 
-export const RegistrationModule: MainModule = {
-  key: "reg",
-  name: "Registration",
-  component: Registration,
+export const SignagentModule: MainModule = {
+  key: "sat",
+  name: "SignAgent™️ Tools",
+  component: SignAgentTools,
 };
