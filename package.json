@@ -12,8 +12,7 @@
     "delsymlink": "cross-env ACTION=delsymlink vite"
   },
   "dependencies": {
-    "@adobe/react-spectrum": "^3.37.1",
-    "@react-spectrum/accordion": "^3.0.0-alpha.35",
+    "@adobe/react-spectrum": "^3.38.0",
     "@spectrum-icons/workflow": "^4.2.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

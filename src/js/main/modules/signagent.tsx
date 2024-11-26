@@ -1,9 +1,12 @@
-import { Flex, Form, Heading, TextField } from "@adobe/react-spectrum";
 import {
+  Flex,
+  Form,
+  Heading,
+  TextField,
   Disclosure,
-  DisclosureHeader,
+  DisclosureTitle,
   DisclosurePanel,
-} from "@react-spectrum/accordion";
+} from "@adobe/react-spectrum";
 import PreferencesPopover from "../components/PreferencesPopover";
 import UnitField from "../components/UnitField";
 import UnitPicker from "../components/UnitPicker";
@@ -34,7 +37,7 @@ function SignAgentTools() {
       </Form>
 
       <Disclosure>
-        <DisclosureHeader>Options</DisclosureHeader>
+        <DisclosureTitle>Options</DisclosureTitle>
         <DisclosurePanel>
           <UnitField />
         </DisclosurePanel>

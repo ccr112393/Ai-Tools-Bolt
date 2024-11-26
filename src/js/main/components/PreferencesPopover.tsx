@@ -18,11 +18,11 @@ interface PreferencesPopoverProps {
 
 const PreferencesPopover: React.FC<PreferencesPopoverProps> = (props) => {
   return (
-    <DialogTrigger type="popover">
+    <DialogTrigger type="popover" placement="bottom end">
       <ActionButton isQuiet>
-        <Settings />
+        <Settings size="S" />
       </ActionButton>
-      <Dialog>
+      <Dialog maxWidth={"size-1600"}>
         <Heading>{props.heading ? props.heading : "Preferences"}</Heading>
         <Divider />
         <Content>

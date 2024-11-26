@@ -31,12 +31,6 @@ const config: CEP_Config = {
       name: "main",
       panelDisplayName: "Ai Tools Bolt",
       autoVisible: true,
-      width: 375,
-      height: 650,
-      minWidth: 300,
-      minHeight: 400,
-      maxWidth: 800,
-      maxHeight: 1000,
     },
   ],
   build: {

@@ -1,7 +1,9 @@
 import {
+  darkTheme,
   defaultTheme,
   Flex,
   Item,
+  lightTheme,
   Provider,
   TabList,
   TabPanels,
@@ -18,7 +20,12 @@ const modules = [RegistrationModule, SignagentModule, LaserModule];
 
 const Main = () => {
   return (
-    <Provider theme={defaultTheme} colorScheme="dark" height={"100%"}>
+    <Provider
+      theme={darkTheme}
+      colorScheme="light"
+      height={"100%"}
+      scale="medium"
+    >
       <style>{`
         html, body, #root{
           margin: 0;
@@ -27,6 +34,7 @@ const Main = () => {
           overflow: hidden;
         }
       `}</style>
+
       <View
         height="100%"
         backgroundColor="gray-200"
@@ -38,10 +46,8 @@ const Main = () => {
           maxWidth={"static-size-5000"}
           margin={"auto"}
         >
-          <Tabs items={modules}>
-            <TabList flex="auto">
-              {(item: MainModule) => <Item>{item.name}</Item>}
-            </TabList>
+          <Tabs items={modules} density="compact">
+            <TabList>{(item: MainModule) => <Item>{item.name}</Item>}</TabList>
             <TabPanels>
               {(item: MainModule) => (
                 <Item>{createElement(item.component)}</Item>
