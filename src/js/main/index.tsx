@@ -10,6 +10,14 @@ initBolt();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
+    <style>{`
+        html, body, #root{
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: hidden;
+        }
+      `}</style>
     <Main />
   </React.StrictMode>
 );

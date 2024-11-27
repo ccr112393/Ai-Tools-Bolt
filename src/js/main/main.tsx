@@ -26,20 +26,9 @@ const Main = () => {
       height={"100%"}
       scale="medium"
     >
-      <style>{`
-        html, body, #root{
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          overflow: hidden;
-        }
-      `}</style>
-
       <View
-        height="100%"
-        backgroundColor="gray-200"
-        padding={"15px"}
-        paddingTop={"10px"}
+        padding={"calc(single-line-height / 2"}
+        paddingTop={"calc(single-line-height / 2.5"}
       >
         <Flex
           direction={"column"}

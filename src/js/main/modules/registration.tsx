@@ -23,10 +23,20 @@ import UnitPicker from "../components/UnitPicker";
 import { MainModule } from "./mainModule";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
-
-const componentWidth = "size-1700";
+import { useState } from "react";
 
 function Registration() {
+  const componentWidth = "size-1700";
+  const [componentValues, setComponentValues] = useState({});
+  const [unit, setUnit] = useState("inch");
+
+  const handleInputChange = (e: any) => {
+    setComponentValues({
+      ...componentValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <>
       <Flex
@@ -36,7 +46,11 @@ function Registration() {
         alignContent={"center"}
       >
         <Heading level={3}>Setup</Heading>
-        <PreferencesPopover options={[["Unit Type", <UnitPicker />]]} />
+        <PreferencesPopover
+          options={[
+            ["Unit Type", <UnitPicker onSelectionChange={() => setUnit} />],
+          ]}
+        />
       </Flex>
 
       <Grid
@@ -46,11 +60,28 @@ function Registration() {
         maxWidth={"size-4600"}
       >
         <Text>Layer Name</Text>
-        <TextField defaultValue="Registration" width={componentWidth} />
+        <TextField
+          name="layerName"
+          defaultValue="Registration"
+          width={componentWidth}
+          onChange={handleInputChange}
+        />
         <Text>Diameter</Text>
-        <UnitField defaultValue={0.25} unit="inch" width={componentWidth} />
+        <UnitField
+          name="diameter"
+          defaultValue={0.25}
+          unit="inch"
+          width={componentWidth}
+          onChange={handleInputChange}
+        />
         <Text>Edge Offset</Text>
-        <UnitField defaultValue={0.5} unit="inch" width={componentWidth} />
+        <UnitField
+          name="edgeOffset"
+          defaultValue={0.5}
+          unit="inch"
+          width={componentWidth}
+          onChange={handleInputChange}
+        />
       </Grid>
 
       <Disclosure marginTop={"size-100"} isQuiet>
@@ -65,28 +96,38 @@ function Registration() {
             alignItems={"center"}
             maxWidth={"size-4600"}
           >
-            <Checkbox defaultSelected gridColumn={"1 / -1"}>
+            <Checkbox
+              defaultSelected
+              gridColumn={"1 / -1"}
+              onChange={handleInputChange}
+            >
               Primary Marks
             </Checkbox>
 
-            <Checkbox defaultSelected>Orientation Marks</Checkbox>
+            <Checkbox defaultSelected onChange={handleInputChange}>
+              Orientation Marks
+            </Checkbox>
             <Picker
               defaultSelectedKey={"top-left"}
               gridColumn={"field"}
               width={componentWidth}
+              onSelectionChange={handleInputChange}
             >
               <Item key={"top-left"}>Top Left</Item>
               <Item key={"top-right"}>Top Right</Item>
               <Item key={"bottom-left"}>Bottom Left</Item>
               <Item key={"bottom-right"}>Bottom Right</Item>
             </Picker>
-            <Checkbox gridColumn={"1 / -1"}>Center Marks</Checkbox>
-            <Checkbox>Specified Distance</Checkbox>
+            <Checkbox onChange={handleInputChange} gridColumn={"1 / -1"}>
+              Center Marks
+            </Checkbox>
+            <Checkbox onChange={handleInputChange}>Specified Distance</Checkbox>
             <UnitField
               defaultValue={24}
               unit="inch"
               gridColumn={"field"}
               width={componentWidth}
+              onChange={handleInputChange}
             />
           </Grid>
         </DisclosurePanel>
@@ -100,7 +141,9 @@ function Registration() {
             <SaveFloppy size="S" />
           </Item>
         </ActionGroup>
-        <Button variant="primary">Apply</Button>
+        <Button variant="primary" onPress={() => console.log(componentValues)}>
+          Apply
+        </Button>
       </Flex>
     </>
   );
