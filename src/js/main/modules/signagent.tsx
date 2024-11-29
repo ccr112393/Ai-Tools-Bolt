@@ -10,7 +10,7 @@ import {
 import PreferencesPopover from "../components/PreferencesPopover";
 import UnitField from "../components/UnitField";
 import UnitPicker from "../components/UnitPicker";
-import { MainModule } from "./mainModule";
+import { MainModule } from "./main-module";
 
 function SignAgentTools() {
   return (

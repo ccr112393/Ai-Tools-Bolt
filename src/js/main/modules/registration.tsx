@@ -1,41 +1,41 @@
 import {
-  ActionButton,
   ActionGroup,
   Button,
+  Checkbox,
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
   Flex,
-  Form,
   Grid,
   Heading,
   Item,
   Picker,
   Text,
   TextField,
-  Disclosure,
-  DisclosureTitle,
-  DisclosurePanel,
-  Checkbox,
-  Header,
 } from "@adobe/react-spectrum";
 
-import PreferencesPopover from "../components/PreferencesPopover";
-import UnitField from "../components/UnitField";
-import UnitPicker from "../components/UnitPicker";
-import { MainModule } from "./mainModule";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
 import { useState } from "react";
+import PreferencesPopover from "../components/PreferencesPopover";
+import UnitField from "../components/UnitField";
+import UnitPicker from "../components/UnitPicker";
+import { MainModule } from "./main-module";
+import { evalTS } from "../../lib/utils/bolt";
 
 function Registration() {
   const componentWidth = "size-1700";
-  const [componentValues, setComponentValues] = useState({});
   const [unit, setUnit] = useState("inch");
-
-  const handleInputChange = (e: any) => {
-    setComponentValues({
-      ...componentValues,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [layerName, setLayerName] = useState("Registration");
+  const [diameter, setDiameter] = useState(0.25);
+  const [edgeOffset, setEdgeOffset] = useState(0.5);
+  const [marksPrimary, setMarksPrimary] = useState(true);
+  const [marksOrientation, setMarksOrientation] = useState(true);
+  const [marksOrientationLocation, setMarksOrientationLocation] =
+    useState("top-left");
+  const [marksCenter, setMarksCenter] = useState(false);
+  const [marksDistance, setMarksDistance] = useState(false);
+  const [marksDistanceValue, setMarksDistanceValue] = useState(24);
 
   return (
     <>
@@ -62,25 +62,25 @@ function Registration() {
         <Text>Layer Name</Text>
         <TextField
           name="layerName"
-          defaultValue="Registration"
+          value={layerName}
+          onChange={setLayerName}
           width={componentWidth}
-          onChange={handleInputChange}
         />
         <Text>Diameter</Text>
         <UnitField
           name="diameter"
-          defaultValue={0.25}
-          unit="inch"
+          value={diameter}
+          unit={unit}
+          onChange={setDiameter}
           width={componentWidth}
-          onChange={handleInputChange}
         />
         <Text>Edge Offset</Text>
         <UnitField
           name="edgeOffset"
-          defaultValue={0.5}
-          unit="inch"
+          value={edgeOffset}
+          unit={unit}
+          onChange={setEdgeOffset}
           width={componentWidth}
-          onChange={handleInputChange}
         />
       </Grid>
 
@@ -97,37 +97,57 @@ function Registration() {
             maxWidth={"size-4600"}
           >
             <Checkbox
-              defaultSelected
-              gridColumn={"1 / -1"}
-              onChange={handleInputChange}
+              name="marksPrimary"
+              isSelected={marksPrimary}
+              onChange={setMarksPrimary}
+              gridColumn={"1 / -1"} // Use both columns
             >
               Primary Marks
             </Checkbox>
 
-            <Checkbox defaultSelected onChange={handleInputChange}>
+            <Checkbox
+              name="marksOrientation"
+              isSelected={marksOrientation}
+              onChange={setMarksOrientation}
+            >
               Orientation Marks
             </Checkbox>
             <Picker
-              defaultSelectedKey={"top-left"}
-              gridColumn={"field"}
+              name="marksOrientationLocation"
+              selectedKey={marksOrientationLocation}
+              onSelectionChange={(key) =>
+                setMarksOrientationLocation(key as string)
+              }
+              gridColumn={"field"} // 2nd Column
               width={componentWidth}
-              onSelectionChange={handleInputChange}
             >
               <Item key={"top-left"}>Top Left</Item>
               <Item key={"top-right"}>Top Right</Item>
               <Item key={"bottom-left"}>Bottom Left</Item>
               <Item key={"bottom-right"}>Bottom Right</Item>
             </Picker>
-            <Checkbox onChange={handleInputChange} gridColumn={"1 / -1"}>
+            <Checkbox
+              name="marksCenter"
+              isSelected={marksCenter}
+              onChange={setMarksCenter}
+              gridColumn={"1 / -1"} // Use both columns
+            >
               Center Marks
             </Checkbox>
-            <Checkbox onChange={handleInputChange}>Specified Distance</Checkbox>
+            <Checkbox
+              name="marksDistance"
+              isSelected={marksDistance}
+              onChange={setMarksDistance}
+            >
+              Specified Distance
+            </Checkbox>
             <UnitField
-              defaultValue={24}
-              unit="inch"
-              gridColumn={"field"}
+              name="marksDistanceValue"
+              defaultValue={marksDistanceValue}
+              unit={unit}
+              onChange={setMarksDistanceValue}
+              gridColumn={"field"} // 2nd Column
               width={componentWidth}
-              onChange={handleInputChange}
             />
           </Grid>
         </DisclosurePanel>
@@ -141,7 +161,10 @@ function Registration() {
             <SaveFloppy size="S" />
           </Item>
         </ActionGroup>
-        <Button variant="primary" onPress={() => console.log(componentValues)}>
+        <Button
+          variant="primary"
+          onPress={() => evalTS("createLayer", layerName)}
+        >
           Apply
         </Button>
       </Flex>

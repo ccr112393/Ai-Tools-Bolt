@@ -52,11 +52,65 @@ var config = {
 
 var ns = config.id;
 
-var example = function example() {};
+var currentDocument = function currentDocument() {
+  return app.activeDocument;
+};
+var openDocuments = function openDocuments() {
+  return app.documents;
+};
+var getDocumentWidth = function getDocumentWidth() {
+  return currentDocument().width;
+};
+var convertToPoints = function convertToPoints(value, unit) {
+  return UnitValue(value, unit).as("pt").value;
+};
+function setDocumentColorSpaceRGB() {
+  app.executeMenuCommand("doc-color-rgb");
+}
+function setDocumentColorSpaceCMYK() {
+  app.executeMenuCommand("doc-color-cmyk");
+}
+var createColorCMYK = function createColorCMYK(cyan, magenta, yellow, black) {
+  var color = new CMYKColor();
+  color.cyan = cyan;
+  color.magenta = magenta;
+  color.yellow = yellow;
+  color.black = black;
+  return color;
+};
+var createLayer = function createLayer(name) {
+  var layer = currentDocument().layers.add();
+  layer.name = name;
+  return layer;
+};
+var getLayerByName = function getLayerByName(name) {
+  return currentDocument().layers.getByName(name);
+};
+function drawEllipse(layer, y, x, diameter, fillColor, strokeColor, strokeWidth) {
+  var ellipse = layer.pathItems.ellipse(y, x, diameter, diameter);
+  fillColor && (ellipse.fillColor = fillColor);
+  strokeColor && (ellipse.strokeColor = strokeColor);
+  strokeWidth && (ellipse.strokeWidth = strokeWidth);
+}
+function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, marksOrientation, marksOrientationLocation, marksCenter, marksDistance, marksDistanceValue) {
+  var doc = currentDocument();
+  doc.width;
+  doc.height;
+}
 
 var ilst = /*#__PURE__*/__objectFreeze({
   __proto__: null,
-  example: example
+  currentDocument: currentDocument,
+  openDocuments: openDocuments,
+  getDocumentWidth: getDocumentWidth,
+  convertToPoints: convertToPoints,
+  setDocumentColorSpaceRGB: setDocumentColorSpaceRGB,
+  setDocumentColorSpaceCMYK: setDocumentColorSpaceCMYK,
+  createColorCMYK: createColorCMYK,
+  createLayer: createLayer,
+  getLayerByName: getLayerByName,
+  drawEllipse: drawEllipse,
+  addRegistration: addRegistration
 });
 
 var host = typeof $ !== "undefined" ? $ : window;
