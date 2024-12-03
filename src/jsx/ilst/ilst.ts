@@ -5,12 +5,22 @@ export const openDocuments = (): Documents => {
   return app.documents;
 };
 
+export const getCurrentLayer = (): Layer => {
+  return app.activeDocument.activeLayer as Layer;
+};
+
 export const getDocumentWidth = (): number => {
   return currentDocument().width;
 };
 
-export const convertToPoints = (value: number, unit: UnitName): number => {
-  return UnitValue(value, unit).as("pt").value;
+export const getDocumentHeight = (): number => {
+  return currentDocument().height;
+};
+
+export const convertToPoints = (value: number, unit: string): number => {
+  var unitValue = UnitValue(`${value} ${unit}`);
+  unitValue.convert("pt");
+  return unitValue.value;
 };
 
 export function setDocumentColorSpaceRGB() {
@@ -41,12 +51,18 @@ export const createLayer = (name: string): Layer => {
   return layer;
 };
 
-export const getLayerByName = (name: string): Layer => {
-  return currentDocument().layers.getByName(name);
+export const getLayerByName = (name: string): Layer | null => {
+  var layer;
+  try {
+    layer = currentDocument().layers.getByName(name);
+  } catch (error) {
+    layer = null;
+  }
+  return layer;
 };
 
 export function drawEllipse(
-  layer: Layer,
+  layerName: string,
   y: number,
   x: number,
   diameter: number,
@@ -54,10 +70,12 @@ export function drawEllipse(
   strokeColor?: Color,
   strokeWidth?: number
 ) {
-  var ellipse = layer.pathItems.ellipse(y, x, diameter, diameter);
+  var selLayer = getCurrentLayer();
+  var ellipse = selLayer.pathItems.ellipse(y, x, diameter, diameter);
   fillColor && (ellipse.fillColor = fillColor);
   strokeColor && (ellipse.strokeColor = strokeColor);
   strokeWidth && (ellipse.strokeWidth = strokeWidth);
+  return ellipse;
 }
 
 export function addRegistration(
@@ -67,16 +85,49 @@ export function addRegistration(
   edgeOffset: number,
   marksPrimary: boolean,
   marksOrientation: boolean,
-  marksOrientationLocation:
-    | "top-left"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-right",
+  marksOrientationLocation: string,
   marksCenter: boolean,
   marksDistance: boolean,
   marksDistanceValue: number
 ) {
-  var doc = currentDocument();
-  var docWidth = doc.width;
-  var docHeight = doc.height;
+  const doc = currentDocument();
+  const docWidth = doc.width;
+  const docHeight = doc.height;
+  const colorRegistration = createColorCMYK(0, 0, 0, 100);
+  const layer = getLayerByName(layerName) || createLayer(layerName);
+  const diameterPoints = convertToPoints(diameter, unit as UnitName);
+  const halfDiameter = diameterPoints / 2;
+  const edgeOffsetPoints = convertToPoints(edgeOffset, unit as UnitName);
+  const marksDistancePoints = convertToPoints(
+    marksDistanceValue,
+    unit as UnitName
+  );
+
+  doc.rulerOrigin = [0, 0];
+
+  if (marksPrimary) {
+    const coordinates = [
+      // [ Y, X ]
+      [edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter], // Bottom Left
+      [
+        docHeight - edgeOffsetPoints + halfDiameter,
+        edgeOffsetPoints - halfDiameter,
+      ], // Top Left
+      [
+        edgeOffsetPoints + halfDiameter,
+        docWidth - edgeOffsetPoints - halfDiameter,
+      ], // Bottom Right
+      [
+        docHeight - edgeOffsetPoints + halfDiameter,
+        docWidth - edgeOffsetPoints - halfDiameter,
+      ], // Top Right
+    ];
+
+    for (let index = 0; index < coordinates.length; index++) {
+      const y = coordinates[index][0];
+      const x = coordinates[index][1];
+      drawEllipse(layer.name, y, x, diameterPoints, colorRegistration);
+    }
+    return coordinates;
+  }
 }

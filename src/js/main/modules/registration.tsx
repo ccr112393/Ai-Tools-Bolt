@@ -23,6 +23,49 @@ import UnitPicker from "../components/UnitPicker";
 import { MainModule } from "./main-module";
 import { evalTS } from "../../lib/utils/bolt";
 
+async function applyRegistration(
+  layerName: string,
+  unit: string,
+  diameter: number,
+  edgeOffset: number,
+  marksPrimary: boolean,
+  marksOrientation: boolean,
+  marksOrientationLocation: string,
+  marksCenter: boolean,
+  marksDistance: boolean,
+  marksDistanceValue: number
+) {
+  console.log("applyRegistration");
+  const doc = await evalTS("currentDocument");
+  const docWidth = await evalTS("getDocumentWidth");
+  const docHeight = await evalTS("getDocumentHeight");
+  const fillColor = await evalTS("createColorCMYK", 0, 0, 0, 100);
+  const layer =
+    (await evalTS("getLayerByName", layerName)) ||
+    (await evalTS("createLayer", layerName));
+  const diameterPoints = await evalTS("convertToPoints", diameter, unit);
+  const edgeOffsetPoints =
+    (await evalTS("convertToPoints", edgeOffset, unit)) - diameterPoints / 2;
+  const marksDistancePoints = await evalTS(
+    "convertToPoints",
+    marksDistanceValue,
+    unit
+  );
+
+  if (marksPrimary) {
+    const coordinates = [
+      [0 + edgeOffsetPoints, 0 + edgeOffsetPoints], // Bottom Left
+      [docHeight - edgeOffsetPoints, 0 + edgeOffsetPoints], // Top Left
+      [0 + edgeOffsetPoints, docWidth - edgeOffsetPoints], // Bottom Right
+      [docHeight - edgeOffsetPoints, docWidth - edgeOffsetPoints], // Top Right
+    ];
+
+    coordinates.forEach((set) =>
+      evalTS("drawEllipse", layer, set[0], set[1], diameterPoints, fillColor)
+    );
+  }
+}
+
 function Registration() {
   const componentWidth = "size-1700";
   const [unit, setUnit] = useState("inch");
@@ -36,6 +79,7 @@ function Registration() {
   const [marksCenter, setMarksCenter] = useState(false);
   const [marksDistance, setMarksDistance] = useState(false);
   const [marksDistanceValue, setMarksDistanceValue] = useState(24);
+  const [colorMode, setColorMode] = useState("cmyk");
 
   return (
     <>
@@ -48,7 +92,25 @@ function Registration() {
         <Heading level={3}>Setup</Heading>
         <PreferencesPopover
           options={[
-            ["Unit Type", <UnitPicker onSelectionChange={() => setUnit} />],
+            [
+              "Unit Type",
+              <UnitPicker
+                defaultSelectedKey={unit}
+                onSelectionChange={() => setUnit}
+                maxWidth={"size-1250"}
+              />,
+            ],
+            [
+              "Color Mode",
+              <Picker
+                defaultSelectedKey={colorMode}
+                onSelectionChange={() => setColorMode}
+                maxWidth={"size-1250"}
+              >
+                <Item key={"cmyk"}>CMYK</Item>
+                <Item key={"rgb"}>RGB</Item>
+              </Picker>,
+            ],
           ]}
         />
       </Flex>
@@ -163,7 +225,26 @@ function Registration() {
         </ActionGroup>
         <Button
           variant="primary"
-          onPress={() => evalTS("createLayer", layerName)}
+          onPress={() =>
+            // evalTS("getLayerByName", "Testing1234").then((result) =>
+            //   console.log(result)
+            // )
+            evalTS(
+              "addRegistration",
+              layerName,
+              unit,
+              diameter,
+              edgeOffset,
+              marksPrimary,
+              marksOrientation,
+              marksOrientationLocation,
+              marksCenter,
+              marksDistance,
+              marksDistanceValue
+            )
+              .catch((err) => console.log(err))
+              .then((result) => console.log(result))
+          }
         >
           Apply
         </Button>
@@ -179,3 +260,20 @@ export const RegistrationModule: MainModule = {
   name: "Registration",
   component: Registration,
 };
+
+/* 
+evalTS(
+              "addRegistration",
+              layerName,
+              unit,
+              diameter,
+              edgeOffset,
+              marksPrimary,
+              marksOrientation,
+              marksOrientationLocation,
+              marksCenter,
+              marksDistance,
+              marksDistanceValue
+            )
+          }
+*/

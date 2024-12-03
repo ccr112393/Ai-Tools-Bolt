@@ -9,8 +9,8 @@ interface UnitPickerProps
 
 const UnitPicker: React.FC<UnitPickerProps> = (props) => {
   return (
-    <Picker width="75px" defaultSelectedKey="in" items={UnitList} {...props}>
-      {(item) => <Item key={item.key}>{item.key}</Item>}
+    <Picker defaultSelectedKey="inch" items={UnitList} {...props}>
+      {(item) => <Item key={item.key}>{item.abbr}</Item>}
     </Picker>
   );
 };

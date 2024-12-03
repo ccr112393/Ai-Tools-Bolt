@@ -1,12 +1,12 @@
 export type UnitItem = {
   key: string;
-  unit: string;
+  abbr: string;
 };
 
 export const UnitList: UnitItem[] = [
-  { key: "in", unit: "inch" },
-  { key: "mm", unit: "millimeter" },
-  { key: "cm", unit: "centimeter" },
-  { key: "ft", unit: "foot" },
-  { key: "m", unit: "meter" },
+  { key: "inch", abbr: "in" },
+  { key: "millimeter", abbr: "mm" },
+  { key: "centimeter", abbr: "cm" },
+  { key: "foot", abbr: "ft" },
+  { key: "meter", abbr: "m" },
 ];

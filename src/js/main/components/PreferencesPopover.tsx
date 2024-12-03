@@ -7,6 +7,7 @@ import {
   Grid,
   Heading,
   Text,
+  View,
 } from "@adobe/react-spectrum";
 import Settings from "@spectrum-icons/workflow/Settings";
 import { Fragment } from "react/jsx-runtime";
@@ -26,11 +27,16 @@ const PreferencesPopover: React.FC<PreferencesPopoverProps> = (props) => {
         <Heading>{props.heading ? props.heading : "Preferences"}</Heading>
         <Divider />
         <Content>
-          <Grid areas={["label field"]} gap={"size-100"} alignItems={"center"}>
+          <Grid
+            areas={["label component"]}
+            gap={"size-100"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
             {props.options.map(([name, component], index) => (
               <Fragment key={index}>
                 <Text>{name}</Text>
-                {component}
+                <>{component}</>
               </Fragment>
             ))}
           </Grid>

@@ -58,11 +58,19 @@ var currentDocument = function currentDocument() {
 var openDocuments = function openDocuments() {
   return app.documents;
 };
+var getCurrentLayer = function getCurrentLayer() {
+  return app.activeDocument.activeLayer;
+};
 var getDocumentWidth = function getDocumentWidth() {
   return currentDocument().width;
 };
+var getDocumentHeight = function getDocumentHeight() {
+  return currentDocument().height;
+};
 var convertToPoints = function convertToPoints(value, unit) {
-  return UnitValue(value, unit).as("pt").value;
+  var unitValue = UnitValue("".concat(value, " ").concat(unit));
+  unitValue.convert("pt");
+  return unitValue.value;
 };
 function setDocumentColorSpaceRGB() {
   app.executeMenuCommand("doc-color-rgb");
@@ -84,25 +92,60 @@ var createLayer = function createLayer(name) {
   return layer;
 };
 var getLayerByName = function getLayerByName(name) {
-  return currentDocument().layers.getByName(name);
+  var layer;
+  try {
+    layer = currentDocument().layers.getByName(name);
+  } catch (error) {
+    layer = null;
+  }
+  return layer;
 };
-function drawEllipse(layer, y, x, diameter, fillColor, strokeColor, strokeWidth) {
-  var ellipse = layer.pathItems.ellipse(y, x, diameter, diameter);
+function drawEllipse(layerName, y, x, diameter, fillColor, strokeColor, strokeWidth) {
+  var selLayer = getCurrentLayer();
+  var ellipse = selLayer.pathItems.ellipse(y, x, diameter, diameter);
   fillColor && (ellipse.fillColor = fillColor);
   strokeColor && (ellipse.strokeColor = strokeColor);
   strokeWidth && (ellipse.strokeWidth = strokeWidth);
+  return ellipse;
 }
 function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, marksOrientation, marksOrientationLocation, marksCenter, marksDistance, marksDistanceValue) {
   var doc = currentDocument();
-  doc.width;
-  doc.height;
+  var docWidth = doc.width;
+  var docHeight = doc.height;
+  var colorRegistration = createColorCMYK(0, 0, 0, 100);
+  var layer = getLayerByName(layerName) || createLayer(layerName);
+  var diameterPoints = convertToPoints(diameter, unit);
+  var halfDiameter = diameterPoints / 2;
+  var edgeOffsetPoints = convertToPoints(edgeOffset, unit);
+  convertToPoints(marksDistanceValue, unit);
+  doc.rulerOrigin = [0, 0];
+  if (marksPrimary) {
+    var coordinates = [
+    // [ Y, X ]
+    [edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter],
+    // Bottom Left
+    [docHeight - edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter],
+    // Top Left
+    [edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter],
+    // Bottom Right
+    [docHeight - edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter] // Top Right
+    ];
+    for (var index = 0; index < coordinates.length; index++) {
+      var y = coordinates[index][0];
+      var x = coordinates[index][1];
+      drawEllipse(layer.name, y, x, diameterPoints, colorRegistration);
+    }
+    return coordinates;
+  }
 }
 
 var ilst = /*#__PURE__*/__objectFreeze({
   __proto__: null,
   currentDocument: currentDocument,
   openDocuments: openDocuments,
+  getCurrentLayer: getCurrentLayer,
   getDocumentWidth: getDocumentWidth,
+  getDocumentHeight: getDocumentHeight,
   convertToPoints: convertToPoints,
   setDocumentColorSpaceRGB: setDocumentColorSpaceRGB,
   setDocumentColorSpaceCMYK: setDocumentColorSpaceCMYK,
