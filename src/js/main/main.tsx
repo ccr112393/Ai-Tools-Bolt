@@ -10,7 +10,7 @@ import {
   Tabs,
   View,
 } from "@adobe/react-spectrum";
-import { createElement } from "react";
+import { createElement, useEffect } from "react";
 import { MainModule } from "./modules/main-module";
 import { RegistrationModule } from "./modules/registration";
 import { SignagentModule } from "./modules/signagent";
@@ -32,12 +32,17 @@ const TabModules = () => {
 
 const Main = () => {
   return (
-    <Provider
-      theme={darkTheme}
-      colorScheme="light"
-      height={"100%"}
-      scale="medium"
-    >
+    // TODO: Enable Theme Switching to match UI - root bg color is set manually
+    <Provider theme={darkTheme} colorScheme="light" scale="medium">
+      <style>{`
+        html, body, #root{
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: auto;
+          background-color: #323232;
+        }
+      `}</style>
       <View
         padding={"calc(single-line-height / 2"}
         paddingTop={"calc(single-line-height / 2.5"}
