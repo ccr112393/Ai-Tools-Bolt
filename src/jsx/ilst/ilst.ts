@@ -105,8 +105,10 @@ export function addRegistration(
 
   doc.rulerOrigin = [0, 0];
 
+  var coordinates: number[][] = [];
+
   if (marksPrimary) {
-    const coordinates = [
+    const coordinatesPrimary: number[][] = [
       // [ Y, X ]
       [edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter], // Bottom Left
       [
@@ -122,12 +124,80 @@ export function addRegistration(
         docWidth - edgeOffsetPoints - halfDiameter,
       ], // Top Right
     ];
-
-    for (let index = 0; index < coordinates.length; index++) {
-      const y = coordinates[index][0];
-      const x = coordinates[index][1];
-      drawEllipse(layer.name, y, x, diameterPoints, colorRegistration);
-    }
-    return coordinates;
+    coordinates.push(...coordinatesPrimary);
   }
+
+  if (marksOrientation) {
+    const coordinatesOrientation: number[][] = [];
+    const gap = 144;
+    switch (marksOrientationLocation) {
+      case "bottom-left":
+        coordinatesOrientation.push([
+          edgeOffsetPoints + halfDiameter + gap,
+          edgeOffsetPoints - halfDiameter,
+        ]);
+        coordinatesOrientation.push([
+          edgeOffsetPoints + halfDiameter,
+          edgeOffsetPoints - halfDiameter + gap,
+        ]);
+        break;
+      case "bottom-right":
+        coordinatesOrientation.push([
+          edgeOffsetPoints + halfDiameter + gap,
+          docWidth - edgeOffsetPoints - halfDiameter,
+        ]);
+        coordinatesOrientation.push([
+          edgeOffsetPoints + halfDiameter,
+          docWidth - edgeOffsetPoints - halfDiameter - gap,
+        ]);
+        break;
+      case "top-right":
+        coordinatesOrientation.push([
+          docHeight - edgeOffsetPoints + halfDiameter - gap,
+          docWidth - edgeOffsetPoints - halfDiameter,
+        ]);
+        coordinatesOrientation.push([
+          docHeight - edgeOffsetPoints + halfDiameter,
+          docWidth - edgeOffsetPoints - halfDiameter - gap,
+        ]);
+        break;
+      case "top-left":
+      default:
+        coordinatesOrientation.push([
+          docHeight - edgeOffsetPoints + halfDiameter - gap,
+          edgeOffsetPoints - halfDiameter,
+        ]);
+        coordinatesOrientation.push([
+          docHeight - edgeOffsetPoints + halfDiameter,
+          edgeOffsetPoints - halfDiameter + gap,
+        ]);
+        break;
+    }
+
+    coordinates.push(...coordinatesOrientation);
+  }
+
+  if (marksCenter) {
+    const coordinatesCenter: number[][] = [
+      [
+        docHeight - edgeOffsetPoints + halfDiameter,
+        docWidth / 2 - halfDiameter,
+      ], // Top Edge
+      [edgeOffsetPoints + halfDiameter, docWidth / 2 - halfDiameter], // Bottom Edge
+      [docHeight / 2 + halfDiameter, edgeOffsetPoints - halfDiameter], // Left Edge
+      [
+        docHeight / 2 + halfDiameter,
+        docWidth - edgeOffsetPoints - halfDiameter,
+      ], // Right Edge
+    ];
+    coordinates.push(...coordinatesCenter);
+  }
+
+  // Draw each Ellipse from Coordinates
+  for (let index = 0; index < coordinates.length; index++) {
+    const y = coordinates[index][0];
+    const x = coordinates[index][1];
+    drawEllipse(layer.name, y, x, diameterPoints, colorRegistration);
+  }
+  return coordinates;
 }

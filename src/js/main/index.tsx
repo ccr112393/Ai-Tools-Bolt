@@ -15,7 +15,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           margin: 0;
           padding: 0;
           height: 100%;
-          overflow: hidden;
+          overflow: auto;
+          background-color: var(--spectrum-global-color-gray-100)
         }
       `}</style>
     <Main />

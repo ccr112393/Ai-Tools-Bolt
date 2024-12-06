@@ -9,7 +9,8 @@ function withUnitFieldDefaults(WrappedComponent: typeof NumberField) {
   return function UnitField({ unit = "inch", ...props }: UnitFieldProps) {
     const defaultProps: Partial<SpectrumNumberFieldProps> = {
       defaultValue: 3,
-      step: 0.125,
+      hideStepper: true,
+      //step: 0.125,
     };
 
     return (
@@ -19,6 +20,7 @@ function withUnitFieldDefaults(WrappedComponent: typeof NumberField) {
         formatOptions={{
           style: "unit",
           unit,
+          maximumFractionDigits: 4,
         }}
       />
     );
