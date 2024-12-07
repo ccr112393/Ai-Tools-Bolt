@@ -1,17 +1,15 @@
 import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
   Flex,
   Form,
   Heading,
   TextField,
-  Disclosure,
-  DisclosureTitle,
-  DisclosurePanel,
 } from "@adobe/react-spectrum";
 
-import PreferencesPopover from "../components/PreferencesPopover";
-import UnitField from "../components/UnitField";
-import UnitPicker from "../components/UnitPicker";
-import { MainModule } from "./main-module";
+import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
+import { ModuleType } from "./moduleType";
 
 function Laser() {
   return (
@@ -49,7 +47,7 @@ function Laser() {
 
 export default Laser;
 
-export const LaserModule: MainModule = {
+export const LaserModule: ModuleType = {
   key: "lsr",
   name: "Laser Setup",
   component: Laser,

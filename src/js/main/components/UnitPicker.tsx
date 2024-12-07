@@ -7,12 +7,10 @@ interface UnitPickerProps
   // Add any additional props specific to UnitPicker here
 }
 
-const UnitPicker: React.FC<UnitPickerProps> = (props) => {
+export const UnitPicker: React.FC<UnitPickerProps> = (props) => {
   return (
     <Picker defaultSelectedKey="inch" items={UnitList} {...props}>
       {(item) => <Item key={item.key}>{item.abbr}</Item>}
     </Picker>
   );
 };
-
-export default UnitPicker;

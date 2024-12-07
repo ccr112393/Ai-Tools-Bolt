@@ -1,30 +1,28 @@
 import {
   darkTheme,
-  defaultTheme,
   Flex,
   Item,
-  lightTheme,
   Provider,
   TabList,
   TabPanels,
   Tabs,
   View,
 } from "@adobe/react-spectrum";
-import { createElement, useEffect } from "react";
-import { MainModule } from "./modules/main-module";
-import { RegistrationModule } from "./modules/registration";
-import { SignagentModule } from "./modules/signagent";
-import { LaserModule } from "./modules/laser";
-import { DeveloperModule } from "./modules/dev";
+import { createElement } from "react";
+import {
+  DeveloperModule,
+  ModuleType,
+  RegistrationModule,
+} from "./modules/index";
 
 const modules = [RegistrationModule, DeveloperModule];
 
 const TabModules = () => {
   return (
     <Tabs items={modules} density="compact">
-      <TabList>{(item: MainModule) => <Item>{item.name}</Item>}</TabList>
+      <TabList>{(item: ModuleType) => <Item>{item.name}</Item>}</TabList>
       <TabPanels>
-        {(item: MainModule) => <Item>{createElement(item.component)}</Item>}
+        {(item: ModuleType) => <Item>{createElement(item.component)}</Item>}
       </TabPanels>
     </Tabs>
   );

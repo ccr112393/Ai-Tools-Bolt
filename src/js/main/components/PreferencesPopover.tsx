@@ -17,7 +17,9 @@ interface PreferencesPopoverProps {
   options: Array<[string, React.ReactElement]>;
 }
 
-const PreferencesPopover: React.FC<PreferencesPopoverProps> = (props) => {
+export const PreferencesPopover: React.FC<PreferencesPopoverProps> = (
+  props
+) => {
   return (
     <DialogTrigger type="popover" placement="bottom end">
       <ActionButton isQuiet>
@@ -45,5 +47,3 @@ const PreferencesPopover: React.FC<PreferencesPopoverProps> = (props) => {
     </DialogTrigger>
   );
 };
-
-export default PreferencesPopover;

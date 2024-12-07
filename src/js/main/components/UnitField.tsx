@@ -27,6 +27,4 @@ function withUnitFieldDefaults(WrappedComponent: typeof NumberField) {
   };
 }
 
-const UnitField = withUnitFieldDefaults(NumberField);
-
-export default UnitField;
+export const UnitField = withUnitFieldDefaults(NumberField);

@@ -17,11 +17,9 @@ import {
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
 import { useState } from "react";
-import PreferencesPopover from "../components/PreferencesPopover";
-import UnitField from "../components/UnitField";
-import UnitPicker from "../components/UnitPicker";
-import { MainModule } from "./main-module";
 import { evalTS } from "../../lib/utils/bolt";
+import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
+import { ModuleType } from "./index";
 
 async function applyRegistration(
   layerName: string,
@@ -255,7 +253,7 @@ function Registration() {
 
 export default Registration;
 
-export const RegistrationModule: MainModule = {
+export const RegistrationModule: ModuleType = {
   key: "reg",
   name: "Registration",
   component: Registration,

@@ -1,16 +1,14 @@
 import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
   Flex,
   Form,
   Heading,
   TextField,
-  Disclosure,
-  DisclosureTitle,
-  DisclosurePanel,
 } from "@adobe/react-spectrum";
-import PreferencesPopover from "../components/PreferencesPopover";
-import UnitField from "../components/UnitField";
-import UnitPicker from "../components/UnitPicker";
-import { MainModule } from "./main-module";
+import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
+import { ModuleType } from "./moduleType";
 
 function SignAgentTools() {
   return (
@@ -48,7 +46,7 @@ function SignAgentTools() {
 
 export default SignAgentTools;
 
-export const SignagentModule: MainModule = {
+export const SignagentModule: ModuleType = {
   key: "sat",
   name: "SignAgent™️ Tools",
   component: SignAgentTools,

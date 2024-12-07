@@ -1,5 +1,5 @@
 import { TextArea } from "@adobe/react-spectrum";
-import { MainModule } from "./main-module";
+import { ModuleType } from "./moduleType";
 
 function DevModule() {
   return (
@@ -11,7 +11,7 @@ function DevModule() {
 
 export default DevModule;
 
-export const DeveloperModule: MainModule = {
+export const DeveloperModule: ModuleType = {
   key: "dev",
   name: "Developer",
   component: DevModule,
