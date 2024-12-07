@@ -193,6 +193,30 @@ export function addRegistration(
     coordinates.push(...coordinatesCenter);
   }
 
+  if (marksDistance) {
+    const coordinatesDistance: number[][] = [];
+
+    // Bottom Row
+    // Initial Coordinates (Bottom Left)
+    var coordY = edgeOffsetPoints + halfDiameter;
+    var coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
+    while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
+      coordinatesDistance.push([coordY, coordX]);
+      coordX += marksDistancePoints;
+    }
+
+    // Top Row
+    // Initial Coordinates (Top Left)
+    coordY = docHeight - edgeOffsetPoints + halfDiameter;
+    coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
+    while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
+      coordinatesDistance.push([coordY, coordX]);
+      coordX += marksDistancePoints;
+    }
+
+    coordinates.push(...coordinatesDistance);
+  }
+
   // Draw each Ellipse from Coordinates
   for (let index = 0; index < coordinates.length; index++) {
     const y = coordinates[index][0];

@@ -117,7 +117,7 @@ function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, ma
   var diameterPoints = convertToPoints(diameter, unit);
   var halfDiameter = diameterPoints / 2;
   var edgeOffsetPoints = convertToPoints(edgeOffset, unit);
-  convertToPoints(marksDistanceValue, unit);
+  var marksDistancePoints = convertToPoints(marksDistanceValue, unit);
   doc.rulerOrigin = [0, 0];
   var coordinates = [];
   if (marksPrimary) {
@@ -167,6 +167,28 @@ function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, ma
     [docHeight / 2 + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter] // Right Edge
     ];
     coordinates.push.apply(coordinates, coordinatesCenter);
+  }
+  if (marksDistance) {
+    var coordinatesDistance = [];
+
+    // Bottom Row
+    // Initial Coordinates (Bottom Left)
+    var coordY = edgeOffsetPoints + halfDiameter;
+    var coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
+    while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
+      coordinatesDistance.push([coordY, coordX]);
+      coordX += marksDistancePoints;
+    }
+
+    // Top Row
+    // Initial Coordinates (Top Left)
+    coordY = docHeight - edgeOffsetPoints + halfDiameter;
+    coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
+    while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
+      coordinatesDistance.push([coordY, coordX]);
+      coordX += marksDistancePoints;
+    }
+    coordinates.push.apply(coordinates, coordinatesDistance);
   }
 
   // Draw each Ellipse from Coordinates
