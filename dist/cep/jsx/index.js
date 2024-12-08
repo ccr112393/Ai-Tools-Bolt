@@ -93,15 +93,11 @@ var createLayer = function createLayer(name) {
 };
 var getLayerByName = function getLayerByName(name) {
   var layer;
-  try {
-    layer = currentDocument().layers.getByName(name);
-  } catch (error) {
-    layer = null;
-  }
+  layer = currentDocument().layers.getByName(name);
   return layer;
 };
 function drawEllipse(layerName, y, x, diameter, fillColor, strokeColor, strokeWidth) {
-  var selLayer = getCurrentLayer();
+  var selLayer = getLayerByName(layerName);
   var ellipse = selLayer.pathItems.ellipse(y, x, diameter, diameter);
   fillColor && (ellipse.fillColor = fillColor);
   strokeColor && (ellipse.strokeColor = strokeColor);
@@ -113,7 +109,7 @@ function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, ma
   var docWidth = doc.width;
   var docHeight = doc.height;
   var colorRegistration = createColorCMYK(0, 0, 0, 100);
-  var layer = getLayerByName(layerName) || createLayer(layerName);
+  var layer = getLayerByName(layerName).name === layerName ? getLayerByName(layerName) : createLayer(layerName);
   var diameterPoints = convertToPoints(diameter, unit);
   var halfDiameter = diameterPoints / 2;
   var edgeOffsetPoints = convertToPoints(edgeOffset, unit);

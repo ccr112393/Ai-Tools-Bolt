@@ -51,13 +51,9 @@ export const createLayer = (name: string): Layer => {
   return layer;
 };
 
-export const getLayerByName = (name: string): Layer | null => {
-  var layer;
-  try {
-    layer = currentDocument().layers.getByName(name);
-  } catch (error) {
-    layer = null;
-  }
+export const getLayerByName = (name: string): Layer => {
+  var layer: Layer;
+  layer = currentDocument().layers.getByName(name);
   return layer;
 };
 
@@ -70,7 +66,7 @@ export function drawEllipse(
   strokeColor?: Color,
   strokeWidth?: number
 ) {
-  var selLayer = getCurrentLayer();
+  var selLayer = getLayerByName(layerName);
   var ellipse = selLayer.pathItems.ellipse(y, x, diameter, diameter);
   fillColor && (ellipse.fillColor = fillColor);
   strokeColor && (ellipse.strokeColor = strokeColor);
@@ -94,7 +90,10 @@ export function addRegistration(
   const docWidth = doc.width;
   const docHeight = doc.height;
   const colorRegistration = createColorCMYK(0, 0, 0, 100);
-  const layer = getLayerByName(layerName) || createLayer(layerName);
+  const layer =
+    getLayerByName(layerName).name === layerName
+      ? getLayerByName(layerName)
+      : createLayer(layerName);
   const diameterPoints = convertToPoints(diameter, unit as UnitName);
   const halfDiameter = diameterPoints / 2;
   const edgeOffsetPoints = convertToPoints(edgeOffset, unit as UnitName);
