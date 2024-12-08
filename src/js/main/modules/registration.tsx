@@ -281,7 +281,13 @@ export function Registration() {
               })
               .then((result) => {
                 console.log(result);
-                ToastQueue.positive("Registration Applied", { timeout: 1000 });
+                result
+                  ? ToastQueue.positive("Registration Applied", {
+                      timeout: 1000,
+                    })
+                  : ToastQueue.negative("Unable to apply registration", {
+                      timeout: 1000,
+                    });
               });
           }}
         >

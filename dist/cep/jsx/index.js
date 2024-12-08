@@ -92,126 +92,133 @@ var createLayer = function createLayer(name) {
   return layer;
 };
 var getLayerByName = function getLayerByName(name) {
-  var layer;
-  layer = currentDocument().layers.getByName(name);
-  return layer;
+  var layers = currentDocument().layers;
+  for (var index = 0; index < layers.length; index++) {
+    var layer = layers[index];
+    if (layer.name === name) {
+      return layer;
+    }
+  }
 };
-function drawEllipse(layerName, y, x, diameter, fillColor, strokeColor, strokeWidth) {
-  var selLayer = getLayerByName(layerName);
-  var ellipse = selLayer.pathItems.ellipse(y, x, diameter, diameter);
+function drawEllipse(layer, y, x, diameter, fillColor, strokeColor, strokeWidth) {
+  var ellipse = layer.pathItems.ellipse(y, x, diameter, diameter);
   fillColor && (ellipse.fillColor = fillColor);
   strokeColor && (ellipse.strokeColor = strokeColor);
   strokeWidth && (ellipse.strokeWidth = strokeWidth);
   return ellipse;
 }
 function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, marksOrientation, marksOrientationLocation, marksCenter, marksDistance, marksDistanceValue) {
-  var doc = currentDocument();
-  var docWidth = doc.width;
-  var docHeight = doc.height;
-  var colorRegistration = createColorCMYK(0, 0, 0, 100);
-  var layer = getLayerByName(layerName).name === layerName ? getLayerByName(layerName) : createLayer(layerName);
-  var diameterPoints = convertToPoints(diameter, unit);
-  var halfDiameter = diameterPoints / 2;
-  var edgeOffsetPoints = convertToPoints(edgeOffset, unit);
-  var marksDistancePoints = convertToPoints(marksDistanceValue, unit);
-  doc.rulerOrigin = [0, 0];
-  var coordinates = [];
-  if (marksPrimary) {
-    var coordinatesPrimary = [
-    // [ Y, X ]
-    [edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter],
-    // Bottom Left
-    [docHeight - edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter],
-    // Top Left
-    [edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter],
-    // Bottom Right
-    [docHeight - edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter] // Top Right
-    ];
-    coordinates.push.apply(coordinates, coordinatesPrimary);
-  }
-  if (marksOrientation) {
-    var coordinatesOrientation = [];
-    var gap = 144;
-    switch (marksOrientationLocation) {
-      case "bottom-left":
-        coordinatesOrientation.push([edgeOffsetPoints + halfDiameter + gap, edgeOffsetPoints - halfDiameter]);
-        coordinatesOrientation.push([edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter + gap]);
-        break;
-      case "bottom-right":
-        coordinatesOrientation.push([edgeOffsetPoints + halfDiameter + gap, docWidth - edgeOffsetPoints - halfDiameter]);
-        coordinatesOrientation.push([edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter - gap]);
-        break;
-      case "top-right":
-        coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter - gap, docWidth - edgeOffsetPoints - halfDiameter]);
-        coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter - gap]);
-        break;
-      case "top-left":
-      default:
-        coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter - gap, edgeOffsetPoints - halfDiameter]);
-        coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter + gap]);
-        break;
+  try {
+    var doc = currentDocument();
+    var docWidth = doc.width;
+    var docHeight = doc.height;
+    var colorRegistration = createColorCMYK(0, 0, 0, 100);
+    var layer = getLayerByName(layerName) || createLayer(layerName);
+    var diameterPoints = convertToPoints(diameter, unit);
+    var halfDiameter = diameterPoints / 2;
+    var edgeOffsetPoints = convertToPoints(edgeOffset, unit);
+    var marksDistancePoints = convertToPoints(marksDistanceValue, unit);
+    doc.rulerOrigin = [0, 0];
+    var coordinates = [];
+    if (marksPrimary) {
+      var coordinatesPrimary = [
+      // [ Y, X ]
+      [edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter],
+      // Bottom Left
+      [docHeight - edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter],
+      // Top Left
+      [edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter],
+      // Bottom Right
+      [docHeight - edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter] // Top Right
+      ];
+      coordinates.push.apply(coordinates, coordinatesPrimary);
     }
-    coordinates.push.apply(coordinates, coordinatesOrientation);
-  }
-  if (marksCenter) {
-    var coordinatesCenter = [[docHeight - edgeOffsetPoints + halfDiameter, docWidth / 2 - halfDiameter],
-    // Top Edge
-    [edgeOffsetPoints + halfDiameter, docWidth / 2 - halfDiameter],
-    // Bottom Edge
-    [docHeight / 2 + halfDiameter, edgeOffsetPoints - halfDiameter],
-    // Left Edge
-    [docHeight / 2 + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter] // Right Edge
-    ];
-    coordinates.push.apply(coordinates, coordinatesCenter);
-  }
-  if (marksDistance) {
-    var coordinatesDistance = [];
+    if (marksOrientation) {
+      var coordinatesOrientation = [];
+      var gap = 144;
+      switch (marksOrientationLocation) {
+        case "bottom-left":
+          coordinatesOrientation.push([edgeOffsetPoints + halfDiameter + gap, edgeOffsetPoints - halfDiameter]);
+          coordinatesOrientation.push([edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter + gap]);
+          break;
+        case "bottom-right":
+          coordinatesOrientation.push([edgeOffsetPoints + halfDiameter + gap, docWidth - edgeOffsetPoints - halfDiameter]);
+          coordinatesOrientation.push([edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter - gap]);
+          break;
+        case "top-right":
+          coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter - gap, docWidth - edgeOffsetPoints - halfDiameter]);
+          coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter - gap]);
+          break;
+        case "top-left":
+        default:
+          coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter - gap, edgeOffsetPoints - halfDiameter]);
+          coordinatesOrientation.push([docHeight - edgeOffsetPoints + halfDiameter, edgeOffsetPoints - halfDiameter + gap]);
+          break;
+      }
+      coordinates.push.apply(coordinates, coordinatesOrientation);
+    }
+    if (marksCenter) {
+      var coordinatesCenter = [[docHeight - edgeOffsetPoints + halfDiameter, docWidth / 2 - halfDiameter],
+      // Top Edge
+      [edgeOffsetPoints + halfDiameter, docWidth / 2 - halfDiameter],
+      // Bottom Edge
+      [docHeight / 2 + halfDiameter, edgeOffsetPoints - halfDiameter],
+      // Left Edge
+      [docHeight / 2 + halfDiameter, docWidth - edgeOffsetPoints - halfDiameter] // Right Edge
+      ];
+      coordinates.push.apply(coordinates, coordinatesCenter);
+    }
+    if (marksDistance) {
+      var coordinatesDistance = [];
 
-    // Bottom Row
-    // Initial Coordinates (Bottom Left)
-    var coordY = edgeOffsetPoints + halfDiameter;
-    var coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
-    while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
-      coordinatesDistance.push([coordY, coordX]);
-      coordX += marksDistancePoints;
+      // Bottom Row
+      // Initial Coordinates (Bottom Left)
+      var coordY = edgeOffsetPoints + halfDiameter;
+      var coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
+      while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
+        coordinatesDistance.push([coordY, coordX]);
+        coordX += marksDistancePoints;
+      }
+
+      // Top Row
+      // Initial Coordinates (Top Left)
+      coordY = docHeight - edgeOffsetPoints + halfDiameter;
+      coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
+      while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
+        coordinatesDistance.push([coordY, coordX]);
+        coordX += marksDistancePoints;
+      }
+
+      // Left Column
+      // Initial Coordinates (Bottom Left)
+      coordY = edgeOffsetPoints + halfDiameter + marksDistancePoints;
+      coordX = edgeOffsetPoints - halfDiameter;
+      while (coordY < docHeight - edgeOffsetPoints - halfDiameter) {
+        coordinatesDistance.push([coordY, coordX]);
+        coordY += marksDistancePoints;
+      }
+
+      // Right Column
+      // Initial Coordinates (Bottom Right)
+      coordY = edgeOffsetPoints + halfDiameter + marksDistancePoints;
+      coordX = docWidth - edgeOffsetPoints - halfDiameter;
+      while (coordY < docHeight - edgeOffsetPoints - halfDiameter) {
+        coordinatesDistance.push([coordY, coordX]);
+        coordY += marksDistancePoints;
+      }
+      coordinates.push.apply(coordinates, coordinatesDistance);
     }
 
-    // Top Row
-    // Initial Coordinates (Top Left)
-    coordY = docHeight - edgeOffsetPoints + halfDiameter;
-    coordX = edgeOffsetPoints - halfDiameter + marksDistancePoints;
-    while (coordX < docWidth - edgeOffsetPoints - halfDiameter) {
-      coordinatesDistance.push([coordY, coordX]);
-      coordX += marksDistancePoints;
+    // Draw each Ellipse from Coordinates
+    for (var index = 0; index < coordinates.length; index++) {
+      var y = coordinates[index][0];
+      var x = coordinates[index][1];
+      drawEllipse(layer, y, x, diameterPoints, colorRegistration);
     }
-
-    // Left Column
-    // Initial Coordinates (Bottom Left)
-    coordY = edgeOffsetPoints + halfDiameter + marksDistancePoints;
-    coordX = edgeOffsetPoints - halfDiameter;
-    while (coordY < docHeight - edgeOffsetPoints - halfDiameter) {
-      coordinatesDistance.push([coordY, coordX]);
-      coordY += marksDistancePoints;
-    }
-
-    // Right Column
-    // Initial Coordinates (Bottom Right)
-    coordY = edgeOffsetPoints + halfDiameter + marksDistancePoints;
-    coordX = docWidth - edgeOffsetPoints - halfDiameter;
-    while (coordY < docHeight - edgeOffsetPoints - halfDiameter) {
-      coordinatesDistance.push([coordY, coordX]);
-      coordY += marksDistancePoints;
-    }
-    coordinates.push.apply(coordinates, coordinatesDistance);
+    return true;
+  } catch (error) {
+    return false;
   }
-
-  // Draw each Ellipse from Coordinates
-  for (var index = 0; index < coordinates.length; index++) {
-    var y = coordinates[index][0];
-    var x = coordinates[index][1];
-    drawEllipse(layer.name, y, x, diameterPoints, colorRegistration);
-  }
-  return coordinates;
 }
 
 var ilst = /*#__PURE__*/__objectFreeze({
