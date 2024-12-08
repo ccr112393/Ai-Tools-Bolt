@@ -13,31 +13,16 @@ import {
   Text,
   TextField,
 } from "@adobe/react-spectrum";
-
+import { ToastContainer, ToastQueue } from "@react-spectrum/toast";
+import Import from "@spectrum-icons/workflow/Import";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
 import { useEffect, useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
-import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
-import { ModuleType } from "./index";
-import { ToastContainer, ToastQueue } from "@react-spectrum/toast";
-import Import from "@spectrum-icons/workflow/Import";
+import { PreferencesPopover, UnitField, UnitPicker } from "../components";
+import { RegistrationSettings } from "./registrationType";
 
-interface RegistrationSettings {
-  unit: string;
-  layerName: string;
-  diameter: number;
-  edgeOffset: number;
-  marksPrimary: boolean;
-  marksOrientation: boolean;
-  marksOrientationLocation: string;
-  marksCenter: boolean;
-  marksDistance: boolean;
-  marksDistanceValue: number;
-  colorMode: string;
-}
-
-function Registration() {
+export function Registration() {
   const componentWidth = "size-1700";
   const [unit, setUnit] = useState("inch");
   const [layerName, setLayerName] = useState("Registration");
@@ -307,11 +292,3 @@ function Registration() {
     </>
   );
 }
-
-export default Registration;
-
-export const RegistrationModule: ModuleType = {
-  key: "reg",
-  name: "Registration",
-  component: Registration,
-};
