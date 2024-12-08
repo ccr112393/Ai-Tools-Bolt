@@ -16,53 +16,25 @@ import {
 
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
 import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
 import { ModuleType } from "./index";
 import { ToastContainer, ToastQueue } from "@react-spectrum/toast";
+import Import from "@spectrum-icons/workflow/Import";
 
-async function applyRegistration(
-  layerName: string,
-  unit: string,
-  diameter: number,
-  edgeOffset: number,
-  marksPrimary: boolean,
-  marksOrientation: boolean,
-  marksOrientationLocation: string,
-  marksCenter: boolean,
-  marksDistance: boolean,
-  marksDistanceValue: number
-) {
-  console.log("applyRegistration");
-  const doc = await evalTS("currentDocument");
-  const docWidth = await evalTS("getDocumentWidth");
-  const docHeight = await evalTS("getDocumentHeight");
-  const fillColor = await evalTS("createColorCMYK", 0, 0, 0, 100);
-  const layer =
-    (await evalTS("getLayerByName", layerName)) ||
-    (await evalTS("createLayer", layerName));
-  const diameterPoints = await evalTS("convertToPoints", diameter, unit);
-  const edgeOffsetPoints =
-    (await evalTS("convertToPoints", edgeOffset, unit)) - diameterPoints / 2;
-  const marksDistancePoints = await evalTS(
-    "convertToPoints",
-    marksDistanceValue,
-    unit
-  );
-
-  if (marksPrimary) {
-    const coordinates = [
-      [0 + edgeOffsetPoints, 0 + edgeOffsetPoints], // Bottom Left
-      [docHeight - edgeOffsetPoints, 0 + edgeOffsetPoints], // Top Left
-      [0 + edgeOffsetPoints, docWidth - edgeOffsetPoints], // Bottom Right
-      [docHeight - edgeOffsetPoints, docWidth - edgeOffsetPoints], // Top Right
-    ];
-
-    coordinates.forEach((set) =>
-      evalTS("drawEllipse", layer, set[0], set[1], diameterPoints, fillColor)
-    );
-  }
+interface RegistrationSettings {
+  unit: string;
+  layerName: string;
+  diameter: number;
+  edgeOffset: number;
+  marksPrimary: boolean;
+  marksOrientation: boolean;
+  marksOrientationLocation: string;
+  marksCenter: boolean;
+  marksDistance: boolean;
+  marksDistanceValue: number;
+  colorMode: string;
 }
 
 function Registration() {
@@ -79,6 +51,62 @@ function Registration() {
   const [marksDistance, setMarksDistance] = useState(false);
   const [marksDistanceValue, setMarksDistanceValue] = useState(24);
   const [colorMode, setColorMode] = useState("cmyk");
+
+  const saveSettings = () => {
+    const settings: RegistrationSettings = {
+      unit,
+      layerName,
+      diameter,
+      edgeOffset,
+      marksPrimary,
+      marksOrientation,
+      marksOrientationLocation,
+      marksCenter,
+      marksDistance,
+      marksDistanceValue,
+      colorMode,
+    };
+    try {
+      localStorage.setItem("registrationSettings", JSON.stringify(settings));
+      ToastQueue.positive("Saved default values", { timeout: 1500 });
+    } catch (error) {
+      if (error instanceof Error) {
+        ToastQueue.negative(error.message, { timeout: 2000 });
+      } else {
+        ToastQueue.negative("Unable to save values", { timeout: 1500 });
+      }
+    }
+  };
+
+  const loadSettings = () => {
+    try {
+      const storedSettings = localStorage.getItem("registrationSettings");
+      if (storedSettings) {
+        const settings: RegistrationSettings = JSON.parse(storedSettings);
+        setUnit(settings.unit),
+          setLayerName(settings.layerName),
+          setDiameter(settings.diameter),
+          setEdgeOffset(settings.edgeOffset),
+          setMarksPrimary(settings.marksPrimary),
+          setMarksOrientation(settings.marksOrientation),
+          setMarksOrientationLocation(settings.marksOrientationLocation),
+          setMarksCenter(settings.marksCenter),
+          setMarksDistance(settings.marksDistance),
+          setMarksDistanceValue(settings.marksDistanceValue),
+          setColorMode(settings.colorMode);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        ToastQueue.negative(error.message, { timeout: 2000 });
+      } else {
+        ToastQueue.negative("Unable to load saved defaults", { timeout: 1500 });
+      }
+    }
+  };
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
 
   return (
     <>
@@ -216,29 +244,34 @@ function Registration() {
       <Flex justifyContent={"space-between"} marginTop={"size-200"}>
         <ActionGroup
           overflowMode="collapse"
-          buttonLabelBehavior="collapse"
-          maxWidth={180}
+          buttonLabelBehavior="hide"
           onAction={(key: React.Key) => {
             switch (key) {
-              case "reset":
-                ToastQueue.info("Reset to default values", { timeout: 1500 });
+              case "reload":
+                window.location.reload();
+              case "load":
+                loadSettings();
+                ToastQueue.info("Loaded default values", { timeout: 1500 });
                 break;
               case "save":
-                ToastQueue.positive("Saved default values", { timeout: 1500 });
-                break;
+                saveSettings();
 
               default:
                 break;
             }
           }}
         >
-          <Item key="reset">
-            <RotateCCWBold size="S" marginStart={5} />
-            <Text>Reset</Text>
+          <Item key="reload">
+            <RotateCCWBold size="S" marginStart={6.5} />
+            <Text>Reload</Text>
           </Item>
           <Item key="save">
-            <SaveFloppy size="S" marginStart={5} />
+            <SaveFloppy size="S" marginStart={6.5} />
             <Text>Save Settings</Text>
+          </Item>
+          <Item key="load">
+            <Import size="S" marginStart={6.5} />
+            <Text>Load Settings</Text>
           </Item>
         </ActionGroup>
         <Button
