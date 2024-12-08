@@ -20,6 +20,7 @@ import { useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
 import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
 import { ModuleType } from "./index";
+import { ToastContainer, ToastQueue } from "@react-spectrum/toast";
 
 async function applyRegistration(
   layerName: string,
@@ -213,20 +214,36 @@ function Registration() {
         </DisclosurePanel>
       </Disclosure>
       <Flex justifyContent={"space-between"} marginTop={"size-200"}>
-        <ActionGroup>
+        <ActionGroup
+          overflowMode="collapse"
+          buttonLabelBehavior="collapse"
+          maxWidth={180}
+          onAction={(key: React.Key) => {
+            switch (key) {
+              case "reset":
+                ToastQueue.info("Reset to default values", { timeout: 1500 });
+                break;
+              case "save":
+                ToastQueue.positive("Saved default values", { timeout: 1500 });
+                break;
+
+              default:
+                break;
+            }
+          }}
+        >
           <Item key="reset">
-            <RotateCCWBold size="S" />
+            <RotateCCWBold size="S" marginStart={5} />
+            <Text>Reset</Text>
           </Item>
           <Item key="save">
-            <SaveFloppy size="S" />
+            <SaveFloppy size="S" marginStart={5} />
+            <Text>Save Settings</Text>
           </Item>
         </ActionGroup>
         <Button
           variant="primary"
-          onPress={() =>
-            // evalTS("getLayerByName", "Testing1234").then((result) =>
-            //   console.log(result)
-            // )
+          onPress={() => {
             evalTS(
               "addRegistration",
               layerName,
@@ -240,13 +257,20 @@ function Registration() {
               marksDistance,
               marksDistanceValue
             )
-              .catch((err) => console.log(err))
-              .then((result) => console.log(result))
-          }
+              .catch((err) => {
+                console.log(err);
+                ToastQueue.negative(err, { timeout: 1000 });
+              })
+              .then((result) => {
+                console.log(result);
+                ToastQueue.positive("Registration Applied", { timeout: 1000 });
+              });
+          }}
         >
           Apply
         </Button>
       </Flex>
+      <ToastContainer />
     </>
   );
 }
@@ -258,20 +282,3 @@ export const RegistrationModule: ModuleType = {
   name: "Registration",
   component: Registration,
 };
-
-/* 
-evalTS(
-              "addRegistration",
-              layerName,
-              unit,
-              diameter,
-              edgeOffset,
-              marksPrimary,
-              marksOrientation,
-              marksOrientationLocation,
-              marksCenter,
-              marksDistance,
-              marksDistanceValue
-            )
-          }
-*/

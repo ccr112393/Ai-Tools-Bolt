@@ -214,6 +214,24 @@ export function addRegistration(
       coordX += marksDistancePoints;
     }
 
+    // Left Column
+    // Initial Coordinates (Bottom Left)
+    coordY = edgeOffsetPoints + halfDiameter + marksDistancePoints;
+    coordX = edgeOffsetPoints - halfDiameter;
+    while (coordY < docHeight - edgeOffsetPoints - halfDiameter) {
+      coordinatesDistance.push([coordY, coordX]);
+      coordY += marksDistancePoints;
+    }
+
+    // Right Column
+    // Initial Coordinates (Bottom Right)
+    coordY = edgeOffsetPoints + halfDiameter + marksDistancePoints;
+    coordX = docWidth - edgeOffsetPoints - halfDiameter;
+    while (coordY < docHeight - edgeOffsetPoints - halfDiameter) {
+      coordinatesDistance.push([coordY, coordX]);
+      coordY += marksDistancePoints;
+    }
+
     coordinates.push(...coordinatesDistance);
   }
 
