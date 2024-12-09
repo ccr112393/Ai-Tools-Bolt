@@ -1,5 +1,7 @@
+import { Icon } from "@adobe/react-spectrum";
 import { ModuleType } from "./index";
 import { Registration } from "./registration";
+import UploadToCloud from "@spectrum-icons/workflow/UploadToCloud";
 
 export interface RegistrationSettings {
   unit: string;
@@ -15,10 +17,28 @@ export interface RegistrationSettings {
   colorMode: string;
 }
 
+export const RegistrationSettingsKey = "registrationSettings";
+
+export const RegistrationIcon = (
+  <Icon>
+    <svg width=".25in" height=".25in" viewBox="0 0 18 18">
+      <circle cx="1.5" cy="1.5" r="1" />
+      <circle cx="1.5" cy="6.0" r="1" />
+      <circle cx="6.0" cy="1.5" r="1" />
+      <circle cx="1.5" cy="13.5" r="1" />
+      <circle cx="13.5" cy="1.5" r="1" />
+      <circle cx="13.5" cy="13.5" r="1" />
+    </svg>
+  </Icon>
+);
+
+export const defaultIcon = <UploadToCloud />;
+
 export default Registration;
 
 export const RegistrationModule: ModuleType = {
   key: "reg",
   name: "Registration",
   component: Registration,
+  icon: RegistrationIcon,
 };

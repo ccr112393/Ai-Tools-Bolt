@@ -6,23 +6,30 @@ import {
   TabList,
   TabPanels,
   Tabs,
+  Text,
   View,
 } from "@adobe/react-spectrum";
+import { ToastContainer } from "@react-spectrum/toast";
 import { createElement } from "react";
-import {
-  DeveloperModule,
-  ModuleType,
-  RegistrationModule,
-} from "./modules/index";
+import { LaserModule, ModuleType, RegistrationModule } from "./modules/index";
 
-const modules = [RegistrationModule, DeveloperModule];
+const modules = [RegistrationModule, LaserModule];
 
 const TabModules = () => {
   return (
     <Tabs items={modules} density="compact">
-      <TabList>{(item: ModuleType) => <Item>{item.name}</Item>}</TabList>
+      <TabList>
+        {(item: ModuleType) => (
+          <Item key={item.name}>
+            {/* {item.icon} */}
+            <Text>{item.name}</Text>
+          </Item>
+        )}
+      </TabList>
       <TabPanels>
-        {(item: ModuleType) => <Item>{createElement(item.component)}</Item>}
+        {(item: ModuleType) => (
+          <Item key={item.name}>{createElement(item.component)}</Item>
+        )}
       </TabPanels>
     </Tabs>
   );
@@ -52,6 +59,7 @@ const Main = () => {
         >
           <TabModules />
         </Flex>
+        <ToastContainer />
       </View>
     </Provider>
   );

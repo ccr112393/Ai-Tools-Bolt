@@ -2,6 +2,8 @@ import {
   ActionGroup,
   Button,
   Checkbox,
+  ColorEditor,
+  ColorPicker,
   Disclosure,
   DisclosurePanel,
   DisclosureTitle,
@@ -13,14 +15,18 @@ import {
   Text,
   TextField,
 } from "@adobe/react-spectrum";
-import { ToastContainer, ToastQueue } from "@react-spectrum/toast";
+import { ToastQueue } from "@react-spectrum/toast";
 import Import from "@spectrum-icons/workflow/Import";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
 import { useEffect, useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
 import { PreferencesPopover, UnitField, UnitPicker } from "../components";
-import { RegistrationSettings } from "./registrationType";
+import {
+  RegistrationSettings,
+  RegistrationSettingsKey,
+} from "./registrationType";
+import { readLocalStorage, toastTimeout, writeLocalStorage } from "./util";
 
 export function Registration() {
   const componentWidth = "size-1700";
@@ -51,46 +57,32 @@ export function Registration() {
       marksDistanceValue,
       colorMode,
     };
-    try {
-      localStorage.setItem("registrationSettings", JSON.stringify(settings));
-      ToastQueue.positive("Saved default values", { timeout: 1500 });
-    } catch (error) {
-      if (error instanceof Error) {
-        ToastQueue.negative(error.message, { timeout: 2000 });
-      } else {
-        ToastQueue.negative("Unable to save values", { timeout: 1500 });
-      }
-    }
+    writeLocalStorage(RegistrationSettingsKey, settings);
   };
 
-  const loadSettings = () => {
-    try {
-      const storedSettings = localStorage.getItem("registrationSettings");
-      if (storedSettings) {
-        const settings: RegistrationSettings = JSON.parse(storedSettings);
-        setUnit(settings.unit),
-          setLayerName(settings.layerName),
-          setDiameter(settings.diameter),
-          setEdgeOffset(settings.edgeOffset),
-          setMarksPrimary(settings.marksPrimary),
-          setMarksOrientation(settings.marksOrientation),
-          setMarksOrientationLocation(settings.marksOrientationLocation),
-          setMarksCenter(settings.marksCenter),
-          setMarksDistance(settings.marksDistance),
-          setMarksDistanceValue(settings.marksDistanceValue),
-          setColorMode(settings.colorMode);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        ToastQueue.negative(error.message, { timeout: 2000 });
-      } else {
-        ToastQueue.negative("Unable to load saved defaults", { timeout: 1500 });
-      }
+  const loadSettings = (hideSuccess = false) => {
+    const storedSettings = readLocalStorage(
+      RegistrationSettingsKey,
+      hideSuccess
+    );
+    if (storedSettings) {
+      const settings: RegistrationSettings = storedSettings;
+      setUnit(settings.unit),
+        setLayerName(settings.layerName),
+        setDiameter(settings.diameter),
+        setEdgeOffset(settings.edgeOffset),
+        setMarksPrimary(settings.marksPrimary),
+        setMarksOrientation(settings.marksOrientation),
+        setMarksOrientationLocation(settings.marksOrientationLocation),
+        setMarksCenter(settings.marksCenter),
+        setMarksDistance(settings.marksDistance),
+        setMarksDistanceValue(settings.marksDistanceValue),
+        setColorMode(settings.colorMode);
     }
   };
 
   useEffect(() => {
-    loadSettings();
+    loadSettings(true);
   }, []);
 
   return (
@@ -122,6 +114,12 @@ export function Registration() {
                 <Item key={"cmyk"}>CMYK</Item>
                 <Item key={"rgb"}>RGB</Item>
               </Picker>,
+            ],
+            [
+              "Registration Color",
+              <ColorPicker defaultValue={"000000"}>
+                <ColorEditor />
+              </ColorPicker>,
             ],
           ]}
         />
@@ -236,7 +234,6 @@ export function Registration() {
                 window.location.reload();
               case "load":
                 loadSettings();
-                ToastQueue.info("Loaded default values", { timeout: 1500 });
                 break;
               case "save":
                 saveSettings();
@@ -277,16 +274,16 @@ export function Registration() {
             )
               .catch((err) => {
                 console.log(err);
-                ToastQueue.negative(err, { timeout: 1000 });
+                ToastQueue.negative(err, { timeout: toastTimeout });
               })
               .then((result) => {
                 console.log(result);
                 result
                   ? ToastQueue.positive("Registration Applied", {
-                      timeout: 1000,
+                      timeout: toastTimeout,
                     })
                   : ToastQueue.negative("Unable to apply registration", {
-                      timeout: 1000,
+                      timeout: toastTimeout,
                     });
               });
           }}
@@ -294,7 +291,6 @@ export function Registration() {
           Apply
         </Button>
       </Flex>
-      <ToastContainer />
     </>
   );
 }
