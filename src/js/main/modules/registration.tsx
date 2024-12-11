@@ -14,6 +14,8 @@ import {
   Picker,
   Text,
   TextField,
+  Tooltip,
+  TooltipTrigger,
 } from "@adobe/react-spectrum";
 import { ToastQueue } from "@react-spectrum/toast";
 import Import from "@spectrum-icons/workflow/Import";
@@ -106,20 +108,16 @@ export function Registration() {
             ],
             [
               "Color Mode",
+
               <Picker
                 defaultSelectedKey={colorMode}
                 onSelectionChange={() => setColorMode}
                 maxWidth={"size-1250"}
+                contextualHelp={"Testing"}
               >
                 <Item key={"cmyk"}>CMYK</Item>
                 <Item key={"rgb"}>RGB</Item>
               </Picker>,
-            ],
-            [
-              "Registration Color",
-              <ColorPicker defaultValue={"000000"}>
-                <ColorEditor />
-              </ColorPicker>,
             ],
           ]}
         />

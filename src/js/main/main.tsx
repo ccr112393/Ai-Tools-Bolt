@@ -7,7 +7,7 @@ import {
   TabPanels,
   Tabs,
   Text,
-  View,
+  View
 } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
 import { createElement } from "react";
@@ -48,6 +48,7 @@ const Main = () => {
           background-color: #323232;
         }
       `}</style>
+
       <View
         padding={"calc(single-line-height / 2"}
         paddingTop={"calc(single-line-height / 2.5"}

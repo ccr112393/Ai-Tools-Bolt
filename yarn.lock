@@ -12,17 +12,17 @@
   resolved "https://registry.npmjs.org/@adobe/react-spectrum-workflow/-/react-spectrum-workflow-2.3.5.tgz"
   integrity sha512-b53VIPwPWKb/T5gzE3qs+QlGP5gVrw/LnWV3xMksDU+CRl3rzOKUwxIGiZO8ICyYh1WiyqY4myGlPU/nAynBUg==
 
-"@adobe/react-spectrum@^3.38.0":
-  version "3.38.0"
-  resolved "https://registry.yarnpkg.com/@adobe/react-spectrum/-/react-spectrum-3.38.0.tgz#51803b4ae1ef4d088b654e185fd1fb71db6f8853"
-  integrity sha512-0/zFmTz/sKf8rvB8EHMuWIE5miY1gSAvTr5q4fPIiQJQwMAlQyXfH3oy++/MsiC30HyT3Mp93scxX2F1ErKL4g==
+"@adobe/react-spectrum@^3.38.1":
+  version "3.38.1"
+  resolved "https://registry.yarnpkg.com/@adobe/react-spectrum/-/react-spectrum-3.38.1.tgz#246ec1bbbf4a42c5ab2620c789e86d951286b2cc"
+  integrity sha512-+y25e8rkRk97SZl2ezOChdDCAzqgvxTcbNDOQeIMhKuiiBXtql2jOdh6QtrIK5Xq+HXm72+G6VujZzJSq3pzwA==
   dependencies:
     "@internationalized/string" "^3.2.5"
     "@react-aria/i18n" "^3.12.4"
     "@react-aria/ssr" "^3.9.7"
     "@react-aria/utils" "^3.26.0"
     "@react-aria/visually-hidden" "^3.8.18"
-    "@react-spectrum/accordion" "^3.0.0"
+    "@react-spectrum/accordion" "^3.0.1"
     "@react-spectrum/actionbar" "^3.6.2"
     "@react-spectrum/actiongroup" "^3.10.10"
     "@react-spectrum/avatar" "^3.0.17"
@@ -2093,10 +2093,10 @@
     "@react-types/shared" "^3.26.0"
     "@swc/helpers" "^0.5.0"
 
-"@react-spectrum/accordion@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@react-spectrum/accordion/-/accordion-3.0.0.tgz#3098038bd18f1626da5341e2884a9a3dca2d55d4"
-  integrity sha512-kozGFCKbM7U7EDfdS/uVMYRcRqZbkdHDalC+CMm3JvKi9eOIYjPd9z1q7nbi4cpgIWo1sPr6pZwtSLvMsjs7gw==
+"@react-spectrum/accordion@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@react-spectrum/accordion/-/accordion-3.0.1.tgz#9af8b588bbc85ee4d4a52420a316dedae8aed57c"
+  integrity sha512-FhxOYXKCIyuO7by6VmKAE1AdxlUw4QTEvtHtU6KYlqZBLuNnkz1C7v90UtVC6vJlxuRt73bzEpjKmat7zOcveQ==
   dependencies:
     "@react-aria/i18n" "^3.12.4"
     "@react-spectrum/utils" "^3.12.0"

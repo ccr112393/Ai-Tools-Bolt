@@ -11,7 +11,6 @@ import {
 
 import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
 import { ModuleType } from "./moduleType";
-import Light from "@spectrum-icons/workflow/Light";
 
 function Laser() {
   return (
