@@ -19,7 +19,7 @@ export function RenameComponent() {
   const [selectedOption, setSelectedOption] = useState("layers");
   return (
     <>
-      <Heading>Rename</Heading>
+      <Heading level={2}>Rename</Heading>
       <Grid
         areas={["label field"]}
         alignItems={"center"}

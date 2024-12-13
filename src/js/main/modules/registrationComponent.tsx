@@ -90,7 +90,7 @@ export function RegistrationComponent() {
         justifyContent={"space-between"}
         alignContent={"center"}
       >
-        <Heading level={3}>Setup</Heading>
+        <Heading level={2}>Registration</Heading>
       </Flex>
 
       <Grid

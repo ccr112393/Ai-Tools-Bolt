@@ -9,9 +9,14 @@ import {
 } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
 import { createElement, Key, useState } from "react";
-import { ModuleType, RegistrationModule, RenameModule } from "./modules/index";
+import {
+  ModuleType,
+  RegistrationModule,
+  RenameModule,
+  SignAgentModule,
+} from "./modules/index";
 
-const modules = [RegistrationModule, RenameModule];
+const modules = [RegistrationModule, RenameModule, SignAgentModule];
 
 const Modules = () => {
   const [selectedTab, setSelectedTab] = useState<string>("reg");
