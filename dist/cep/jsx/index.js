@@ -107,6 +107,62 @@ function drawEllipse(layer, y, x, diameter, fillColor, strokeColor, strokeWidth)
   strokeWidth && (ellipse.strokeWidth = strokeWidth);
   return ellipse;
 }
+function renameLayers(search, replace) {
+  var count = 0;
+  var layers = currentDocument().layers;
+  for (var index = 0; index < layers.length; index++) {
+    var layer = layers[index];
+    if (layer.name.indexOf(search) !== -1) {
+      layer.name = layer.name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+function renamePathItems(search, replace) {
+  var count = 0;
+  var items = currentDocument().pathItems;
+  for (var index = 0; index < items.length; index++) {
+    if (items[index].name.indexOf(search) !== -1) {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+function renameSelection(search, replace) {
+  var count = 0;
+  var items = currentDocument().selection;
+  for (var index = 0; index < items.length; index++) {
+    if (items[index].name.indexOf(search) !== -1) {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+function renameSelectedLayers(search, replace) {
+  var count = 0;
+  var items = currentDocument().selection;
+  for (var index = 0; index < items.length; index++) {
+    if (items[index].name.indexOf(search) !== -1 && items[index].typename === "Layer") {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+function renameSelectedPaths(search, replace) {
+  var count = 0;
+  var items = currentDocument().selection;
+  for (var index = 0; index < items.length; index++) {
+    if (items[index].name.indexOf(search) !== -1 && items[index].typename !== "Layer") {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
 function addRegistration(layerName, unit, diameter, edgeOffset, marksPrimary, marksOrientation, marksOrientationLocation, marksCenter, marksDistance, marksDistanceValue) {
   try {
     var doc = currentDocument();
@@ -235,6 +291,11 @@ var ilst = /*#__PURE__*/__objectFreeze({
   createLayer: createLayer,
   getLayerByName: getLayerByName,
   drawEllipse: drawEllipse,
+  renameLayers: renameLayers,
+  renamePathItems: renamePathItems,
+  renameSelection: renameSelection,
+  renameSelectedLayers: renameSelectedLayers,
+  renameSelectedPaths: renameSelectedPaths,
   addRegistration: addRegistration
 });
 

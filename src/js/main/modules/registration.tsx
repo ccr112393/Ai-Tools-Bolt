@@ -2,8 +2,6 @@ import {
   ActionGroup,
   Button,
   Checkbox,
-  ColorEditor,
-  ColorPicker,
   Disclosure,
   DisclosurePanel,
   DisclosureTitle,
@@ -14,21 +12,18 @@ import {
   Picker,
   Text,
   TextField,
-  Tooltip,
-  TooltipTrigger,
 } from "@adobe/react-spectrum";
-import { ToastQueue } from "@react-spectrum/toast";
 import Import from "@spectrum-icons/workflow/Import";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
 import { useEffect, useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
-import { PreferencesPopover, UnitField, UnitPicker } from "../components";
+import { NumberFieldDefault, UnitPicker } from "../components";
 import {
   RegistrationSettings,
   RegistrationSettingsKey,
 } from "./registrationType";
-import { readLocalStorage, toastTimeout, writeLocalStorage } from "./util";
+import { postToast, readLocalStorage, writeLocalStorage } from "./util";
 
 export function Registration() {
   const componentWidth = "size-1700";
@@ -69,7 +64,7 @@ export function Registration() {
     );
     if (storedSettings) {
       const settings: RegistrationSettings = storedSettings;
-      setUnit(settings.unit),
+      setUnit(settings.unit.toString()),
         setLayerName(settings.layerName),
         setDiameter(settings.diameter),
         setEdgeOffset(settings.edgeOffset),
@@ -96,31 +91,6 @@ export function Registration() {
         alignContent={"center"}
       >
         <Heading level={3}>Setup</Heading>
-        <PreferencesPopover
-          options={[
-            [
-              "Unit Type",
-              <UnitPicker
-                defaultSelectedKey={unit}
-                onSelectionChange={() => setUnit}
-                maxWidth={"size-1250"}
-              />,
-            ],
-            [
-              "Color Mode",
-
-              <Picker
-                defaultSelectedKey={colorMode}
-                onSelectionChange={() => setColorMode}
-                maxWidth={"size-1250"}
-                contextualHelp={"Testing"}
-              >
-                <Item key={"cmyk"}>CMYK</Item>
-                <Item key={"rgb"}>RGB</Item>
-              </Picker>,
-            ],
-          ]}
-        />
       </Flex>
 
       <Grid
@@ -129,6 +99,13 @@ export function Registration() {
         alignItems={"center"}
         maxWidth={"size-4600"}
       >
+        <Text>Unit Type</Text>
+        <UnitPicker
+          selectedKey={unit}
+          onSelectionChange={(key) => setUnit(key.toString())}
+          maxWidth={componentWidth}
+        />
+
         <Text>Layer Name</Text>
         <TextField
           name="layerName"
@@ -136,19 +113,19 @@ export function Registration() {
           onChange={setLayerName}
           width={componentWidth}
         />
+
         <Text>Diameter</Text>
-        <UnitField
+        <NumberFieldDefault
           name="diameter"
           value={diameter}
-          unit={unit}
           onChange={setDiameter}
           width={componentWidth}
         />
+
         <Text>Edge Offset</Text>
-        <UnitField
+        <NumberFieldDefault
           name="edgeOffset"
           value={edgeOffset}
-          unit={unit}
           onChange={setEdgeOffset}
           width={componentWidth}
         />
@@ -211,10 +188,9 @@ export function Registration() {
             >
               Specified Distance
             </Checkbox>
-            <UnitField
+            <NumberFieldDefault
               name="marksDistanceValue"
               defaultValue={marksDistanceValue}
-              unit={unit}
               onChange={setMarksDistanceValue}
               gridColumn={"field"} // 2nd Column
               width={componentWidth}
@@ -272,17 +248,13 @@ export function Registration() {
             )
               .catch((err) => {
                 console.log(err);
-                ToastQueue.negative(err, { timeout: toastTimeout });
+                postToast("negative", err);
               })
               .then((result) => {
                 console.log(result);
                 result
-                  ? ToastQueue.positive("Registration Applied", {
-                      timeout: toastTimeout,
-                    })
-                  : ToastQueue.negative("Unable to apply registration", {
-                      timeout: toastTimeout,
-                    });
+                  ? postToast("positive", "Registration Applied")
+                  : postToast("negative", "Unable to apply registration");
               });
           }}
         >

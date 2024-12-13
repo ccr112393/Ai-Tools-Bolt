@@ -23,7 +23,7 @@ function Laser() {
         <Heading level={2}>SignAgent Tools</Heading>
         <PreferencesPopover
           heading={"Defaults"}
-          options={[["Unit Type", <UnitPicker />]]}
+          options={[["Unit Type", <UnitPicker maxWidth={"size-1250"} />]]}
         />
       </Flex>
       <Form

@@ -1,4 +1,5 @@
 import {
+  ActionGroup,
   darkTheme,
   Flex,
   Item,
@@ -7,32 +8,74 @@ import {
   TabPanels,
   Tabs,
   Text,
-  View
+  Tooltip,
+  TooltipTrigger,
+  View,
 } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
-import { createElement } from "react";
-import { LaserModule, ModuleType, RegistrationModule } from "./modules/index";
+import { createElement, Key, useEffect, useState } from "react";
+import { ModuleType, RegistrationModule, RenameModule } from "./modules/index";
 
-const modules = [RegistrationModule, LaserModule];
+const modules = [RegistrationModule, RenameModule];
 
 const TabModules = () => {
+  const [selectedTab, setSelectedTab] = useState<string>("reg");
+
+  const handleTabChange = (key: Key) => {
+    setSelectedTab(key.toString());
+  };
+
   return (
-    <Tabs items={modules} density="compact">
-      <TabList>
+    <>
+      <ActionGroup
+        items={modules}
+        selectionMode="single"
+        onAction={handleTabChange}
+        defaultSelectedKeys={["reg"]}
+        selectedKeys={[selectedTab]}
+        buttonLabelBehavior="hide"
+      >
         {(item: ModuleType) => (
-          <Item key={item.name}>
-            {/* {item.icon} */}
+          <Item key={item.key}>
+            {item.icon}
             <Text>{item.name}</Text>
           </Item>
         )}
-      </TabList>
-      <TabPanels>
-        {(item: ModuleType) => (
-          <Item key={item.name}>{createElement(item.component)}</Item>
-        )}
-      </TabPanels>
-    </Tabs>
+      </ActionGroup>
+      <View>
+        {modules.map((item: ModuleType) => (
+          <View key={item.key} isHidden={selectedTab !== item.key}>
+            {createElement(item.component)}
+          </View>
+        ))}
+      </View>
+    </>
   );
+
+  // return (
+  //   <Tabs
+  //     items={modules}
+  //     density="compact"
+  //     selectedKey={selectedTab}
+  //     onSelectionChange={handleTabChange}
+  //   >
+  //     <TabList>
+  //       {(item: ModuleType) => (
+  //         <Item key={item.key}>
+  //           {item.icon}
+  //           <Text>{item.name}</Text>
+  //         </Item>
+  //       )}
+  //     </TabList>
+  //     <View>
+  //       {modules.map((item: ModuleType) => (
+  //         <View key={item.key} isHidden={selectedTab !== item.key}>
+  //           {createElement(item.component)}
+  //         </View>
+  //       ))}
+  //     </View>
+  //   </Tabs>
+  // );
 };
 
 const Main = () => {

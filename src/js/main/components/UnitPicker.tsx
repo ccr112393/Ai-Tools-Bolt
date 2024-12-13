@@ -10,7 +10,7 @@ interface UnitPickerProps
 export const UnitPicker: React.FC<UnitPickerProps> = (props) => {
   return (
     <Picker defaultSelectedKey="inch" items={UnitList} {...props}>
-      {(item) => <Item key={item.key}>{item.abbr}</Item>}
+      {(item) => <Item key={item.key}>{item.name}</Item>}
     </Picker>
   );
 };

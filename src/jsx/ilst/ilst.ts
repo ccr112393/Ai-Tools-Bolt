@@ -77,6 +77,73 @@ export function drawEllipse(
   return ellipse;
 }
 
+export function renameLayers(search: string, replace: string): number {
+  var count = 0;
+  var layers = currentDocument().layers;
+  for (let index = 0; index < layers.length; index++) {
+    const layer = layers[index];
+    if (layer.name.indexOf(search) !== -1) {
+      layer.name = layer.name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+
+export function renamePathItems(search: string, replace: string): number {
+  var count = 0;
+  var items = currentDocument().pathItems;
+  for (let index = 0; index < items.length; index++) {
+    if (items[index].name.indexOf(search) !== -1) {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+
+export function renameSelection(search: string, replace: string): number {
+  var count = 0;
+  var items = currentDocument().selection;
+  for (let index = 0; index < items.length; index++) {
+    if (items[index].name.indexOf(search) !== -1) {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+
+export function renameSelectedLayers(search: string, replace: string): number {
+  var count = 0;
+  var items = currentDocument().selection;
+  for (let index = 0; index < items.length; index++) {
+    if (
+      items[index].name.indexOf(search) !== -1 &&
+      items[index].typename === "Layer"
+    ) {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+
+export function renameSelectedPaths(search: string, replace: string): number {
+  var count = 0;
+  var items = currentDocument().selection;
+  for (let index = 0; index < items.length; index++) {
+    if (
+      items[index].name.indexOf(search) !== -1 &&
+      items[index].typename !== "Layer"
+    ) {
+      items[index].name = items[index].name.replace(search, replace);
+      count++;
+    }
+  }
+  return count;
+}
+
 export function addRegistration(
   layerName: string,
   unit: string,
