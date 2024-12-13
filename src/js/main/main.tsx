@@ -4,21 +4,16 @@ import {
   Flex,
   Item,
   Provider,
-  TabList,
-  TabPanels,
-  Tabs,
   Text,
-  Tooltip,
-  TooltipTrigger,
   View,
 } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
-import { createElement, Key, useEffect, useState } from "react";
+import { createElement, Key, useState } from "react";
 import { ModuleType, RegistrationModule, RenameModule } from "./modules/index";
 
 const modules = [RegistrationModule, RenameModule];
 
-const TabModules = () => {
+const Modules = () => {
   const [selectedTab, setSelectedTab] = useState<string>("reg");
 
   const handleTabChange = (key: Key) => {
@@ -51,31 +46,6 @@ const TabModules = () => {
       </View>
     </>
   );
-
-  // return (
-  //   <Tabs
-  //     items={modules}
-  //     density="compact"
-  //     selectedKey={selectedTab}
-  //     onSelectionChange={handleTabChange}
-  //   >
-  //     <TabList>
-  //       {(item: ModuleType) => (
-  //         <Item key={item.key}>
-  //           {item.icon}
-  //           <Text>{item.name}</Text>
-  //         </Item>
-  //       )}
-  //     </TabList>
-  //     <View>
-  //       {modules.map((item: ModuleType) => (
-  //         <View key={item.key} isHidden={selectedTab !== item.key}>
-  //           {createElement(item.component)}
-  //         </View>
-  //       ))}
-  //     </View>
-  //   </Tabs>
-  // );
 };
 
 const Main = () => {
@@ -101,7 +71,7 @@ const Main = () => {
           maxWidth={"static-size-5000"}
           margin={"auto"}
         >
-          <TabModules />
+          <Modules />
         </Flex>
         <ToastContainer />
       </View>

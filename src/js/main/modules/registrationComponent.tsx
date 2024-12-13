@@ -22,10 +22,10 @@ import { NumberFieldDefault, UnitPicker } from "../components";
 import {
   RegistrationSettings,
   RegistrationSettingsKey,
-} from "./registrationType";
+} from "./registrationModule";
 import { postToast, readLocalStorage, writeLocalStorage } from "./util";
 
-export function Registration() {
+export function RegistrationComponent() {
   const componentWidth = "size-1700";
   const [unit, setUnit] = useState("inch");
   const [layerName, setLayerName] = useState("Registration");

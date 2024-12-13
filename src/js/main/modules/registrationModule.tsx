@@ -1,7 +1,6 @@
 import { Icon } from "@adobe/react-spectrum";
 import { ModuleType } from "./index";
-import { Registration } from "./registration";
-import UploadToCloud from "@spectrum-icons/workflow/UploadToCloud";
+import { RegistrationComponent } from "./registrationComponent";
 
 export interface RegistrationSettings {
   unit: string;
@@ -32,13 +31,11 @@ export const RegistrationIcon = (
   </Icon>
 );
 
-export const defaultIcon = <UploadToCloud />;
-
-export default Registration;
+export default RegistrationComponent;
 
 export const RegistrationModule: ModuleType = {
   key: "reg",
   name: "Registration",
-  component: Registration,
+  component: RegistrationComponent,
   icon: RegistrationIcon,
 };

@@ -7,10 +7,10 @@ import {
   Heading,
   TextField,
 } from "@adobe/react-spectrum";
-import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
-import { ModuleType } from "./moduleType";
 
-function SignAgentTools() {
+import { PreferencesPopover, UnitField, UnitPicker } from "../components/index";
+
+export function LaserComponent() {
   return (
     <Flex direction={"column"} alignSelf={"center"}>
       <Flex
@@ -21,7 +21,7 @@ function SignAgentTools() {
         <Heading level={2}>SignAgent Tools</Heading>
         <PreferencesPopover
           heading={"Defaults"}
-          options={[["Unit Type", <UnitPicker />]]}
+          options={[["Unit Type", <UnitPicker maxWidth={"size-1250"} />]]}
         />
       </Flex>
       <Form
@@ -43,11 +43,3 @@ function SignAgentTools() {
     </Flex>
   );
 }
-
-export default SignAgentTools;
-
-export const SignagentModule: ModuleType = {
-  key: "sat",
-  name: "SignAgent™️ Tools",
-  component: SignAgentTools,
-};

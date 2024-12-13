@@ -4,16 +4,14 @@ import {
   Flex,
   Grid,
   Heading,
-  Icon,
   Text,
   TextField,
 } from "@adobe/react-spectrum";
-import { ModuleType } from "./moduleType";
 import { useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
 import { postToast } from "./util";
 
-function RenameContent() {
+export function RenameComponent() {
   const [textFind, setTextFind] = useState("");
   const [textReplace, setTextReplace] = useState("");
   const [renameLayers, setRenameLayers] = useState(false);
@@ -63,7 +61,10 @@ function RenameContent() {
         <Button
           variant="primary"
           onPress={() => {
-            if (textFind != "") {
+            if (
+              textFind != "" &&
+              (renameLayers || renamePathItems || selectionOnly)
+            ) {
               handleApply(
                 renameLayers,
                 renamePathItems,
@@ -80,7 +81,9 @@ function RenameContent() {
                   : postToast("info", "No objects renamed");
               });
             } else {
-              postToast("negative", "Find cannot be empty");
+              textFind == ""
+                ? postToast("negative", "Find cannot be empty")
+                : postToast("negative", "Select at least one option");
             }
           }}
         >
@@ -106,10 +109,6 @@ async function handleApply(
   var countLayers = 0;
   var countPathItems = 0;
 
-  // DEBUG
-  console.log(
-    `${renameLayers}, ${renamePathItems}, ${selectionOnly}, ${textFind}, ${textReplace}`
-  );
   // Rename Selection (All)
   if (
     (selectionOnly && renameLayers && renamePathItems) ||
@@ -169,25 +168,3 @@ async function handleApply(
 
   return { countLayers, countPathItems, countSelection };
 }
-
-export const RenameIcon = (
-  <Icon>
-    <svg x="0px" y="0px" viewBox="0 0 18 18">
-      <rect x="15.5" width="1" height="18" />
-      <path
-        d="M12.8,15.9l-5-13.7C7.8,2,7.8,2,7.7,2H5.6C5.6,2,5.5,2,5.5,2.1c0,0,0,0,0,0v0c0,0.3,0,0.6-0.2,0.9L0.7,15.8
-	c0,0.1,0,0.2,0.1,0.2h1.4c0.1,0,0.2,0,0.2-0.1L4,11.5h5.3l1.6,4.4C11,16,11,16,11.1,16h1.6C12.8,16,12.8,15.9,12.8,15.9z M6.7,3.4
-	L6.7,3.4c0.4,1.4,1.7,5,2.2,6.6H4.5C5.3,7.7,6.3,4.7,6.7,3.4z"
-      />
-    </svg>
-  </Icon>
-);
-
-export default RenameContent;
-
-export const RenameModule: ModuleType = {
-  key: "rnm",
-  name: "Rename",
-  component: RenameContent,
-  icon: RenameIcon,
-};
