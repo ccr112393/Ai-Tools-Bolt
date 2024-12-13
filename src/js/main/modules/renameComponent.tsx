@@ -6,6 +6,8 @@ import {
   Heading,
   Text,
   TextField,
+  Radio,
+  RadioGroup,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
@@ -14,9 +16,7 @@ import { postToast } from "./util";
 export function RenameComponent() {
   const [textFind, setTextFind] = useState("");
   const [textReplace, setTextReplace] = useState("");
-  const [renameLayers, setRenameLayers] = useState(false);
-  const [renamePathItems, setRenamePathItems] = useState(false);
-  const [selectionOnly, setSelectionOnly] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("layers");
   return (
     <>
       <Heading>Rename</Heading>
@@ -33,57 +33,64 @@ export function RenameComponent() {
           value={textReplace}
           onChange={setTextReplace}
         />
-        <Checkbox
+        <RadioGroup
+          value={selectedOption}
+          onChange={setSelectedOption}
           gridColumnStart={"field"}
           marginTop={"size-100"}
-          isSelected={renameLayers}
-          onChange={setRenameLayers}
         >
-          Rename Layers
-        </Checkbox>
-        <Checkbox
-          gridColumnStart={"field"}
-          isSelected={renamePathItems}
-          onChange={setRenamePathItems}
-        >
-          Rename Path Items
-        </Checkbox>
-        <Checkbox
-          gridColumnStart={"field"}
-          isSelected={selectionOnly}
-          onChange={setSelectionOnly}
-        >
-          Selection Only
-        </Checkbox>
+          <Radio value="layers">Rename Layers</Radio>
+          <Radio value="paths">Rename Path Items</Radio>
+          <Radio value="selection">Rename Selected Path Items</Radio>
+        </RadioGroup>
       </Grid>
 
-      <Flex justifyContent={"end"}>
+      <Flex justifyContent={"end"} marginTop={"size-200"}>
         <Button
           variant="primary"
           onPress={() => {
-            if (
-              textFind != "" &&
-              (renameLayers || renamePathItems || selectionOnly)
-            ) {
-              handleApply(
-                renameLayers,
-                renamePathItems,
-                selectionOnly,
-                textFind,
-                textReplace
-              ).then((result) => {
-                let sum =
-                  result.countLayers +
-                  result.countPathItems +
-                  result.countSelection;
-                sum > 0
-                  ? postToast("positive", `${sum} object(s) renamed`)
-                  : postToast("info", "No objects renamed");
-              });
+            if (textFind != "") {
+              handleApply(selectedOption, textFind, textReplace).then(
+                (result) => {
+                  if (result.countRename > 0) {
+                    switch (selectedOption) {
+                      case "layers":
+                        postToast(
+                          "positive",
+                          `${result.countRename} ${
+                            result.countRename == 1 ? "layer" : "layers"
+                          } renamed`
+                        );
+                        break;
+
+                      case "paths":
+                        postToast(
+                          "positive",
+                          `${result.countRename} ${
+                            result.countRename == 1 ? "item" : "items"
+                          } renamed`
+                        );
+                        break;
+
+                      case "selection":
+                        postToast(
+                          "positive",
+                          `${result.countRename} ${
+                            result.countRename == 1 ? "item" : "items"
+                          } renamed`
+                        );
+                        break;
+
+                      default:
+                        break;
+                    }
+                  } else {
+                    postToast("info", "Nothing to rename");
+                  }
+                }
+              );
             } else {
-              textFind == ""
-                ? postToast("negative", "Find cannot be empty")
-                : postToast("negative", "Select at least one option");
+              postToast("negative", "Find cannot be empty");
             }
           }}
         >
@@ -95,76 +102,38 @@ export function RenameComponent() {
 }
 
 async function handleApply(
-  renameLayers: boolean,
-  renamePathItems: boolean,
-  selectionOnly: boolean,
+  selection: string,
   textFind: string,
   textReplace: string
 ): Promise<{
-  countSelection: number;
-  countLayers: number;
-  countPathItems: number;
+  countRename: number;
 }> {
-  var countSelection = 0;
-  var countLayers = 0;
-  var countPathItems = 0;
+  let countRename = 0;
 
-  // Rename Selection (All)
-  if (
-    (selectionOnly && renameLayers && renamePathItems) ||
-    (selectionOnly && !renameLayers && !renamePathItems)
-  ) {
-    console.log("Rename Selection All");
-    await evalTS("renameSelection", textFind, textReplace).then((result) => {
-      countSelection = result;
-    });
+  switch (selection) {
+    case "layers":
+      await evalTS("renameLayers", textFind, textReplace).then((result) => {
+        countRename = result;
+      });
+      break;
+
+    case "paths":
+      await evalTS("renamePathItems", textFind, textReplace).then((result) => {
+        countRename = result;
+      });
+      break;
+
+    case "selection":
+      await evalTS("renameSelectedPaths", textFind, textReplace).then(
+        (result) => {
+          countRename = result;
+        }
+      );
+      break;
+
+    default:
+      break;
   }
 
-  // Rename Selected Layers
-  if (selectionOnly && renameLayers && !renamePathItems) {
-    console.log("Rename Selected Layers");
-    await evalTS("renameSelectedLayers", textFind, textReplace).then(
-      (result) => {
-        countLayers = result;
-      }
-    );
-  }
-
-  // Rename Selected Path Items
-  if (selectionOnly && !renameLayers && renamePathItems) {
-    console.log("Rename Selected Path Items");
-    await evalTS("renameSelectedPaths", textFind, textReplace).then(
-      (result) => {
-        countPathItems = result;
-      }
-    );
-  }
-
-  // Rename All Layers and Path Items
-  if (!selectionOnly && renameLayers && renamePathItems) {
-    console.log("Rename All Layers and Path Items");
-    await evalTS("renameLayers", textFind, textReplace).then((result) => {
-      countLayers = result;
-    });
-    await evalTS("renamePathItems", textFind, textReplace).then((result) => {
-      countPathItems = result;
-    });
-  }
-
-  // Rename All Layers
-  if (!selectionOnly && renameLayers && !renamePathItems) {
-    console.log("Rename All Layers");
-    await evalTS("renameLayers", textFind, textReplace).then((result) => {
-      countLayers = result;
-    });
-  }
-  // Rename All Path Items
-  if (!selectionOnly && !renameLayers && renamePathItems) {
-    console.log("Rename All Path Items");
-    await evalTS("renamePathItems", textFind, textReplace).then((result) => {
-      countPathItems = result;
-    });
-  }
-
-  return { countLayers, countPathItems, countSelection };
+  return { countRename };
 }
