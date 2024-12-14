@@ -13,6 +13,43 @@ import { useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
 import { postToast } from "./util";
 
+async function handleApply(
+  selection: string,
+  textFind: string,
+  textReplace: string
+): Promise<{
+  countRename: number;
+}> {
+  let countRename = 0;
+
+  switch (selection) {
+    case "layers":
+      await evalTS("renameLayers", textFind, textReplace).then((result) => {
+        countRename = result;
+      });
+      break;
+
+    case "paths":
+      await evalTS("renamePathItems", textFind, textReplace).then((result) => {
+        countRename = result;
+      });
+      break;
+
+    case "selection":
+      await evalTS("renameSelectedPaths", textFind, textReplace).then(
+        (result) => {
+          countRename = result;
+        }
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  return { countRename };
+}
+
 export function RenameComponent() {
   const [textFind, setTextFind] = useState("");
   const [textReplace, setTextReplace] = useState("");
@@ -47,7 +84,7 @@ export function RenameComponent() {
 
       <Flex justifyContent={"end"} marginTop={"size-200"}>
         <Button
-          variant="primary"
+          variant="accent"
           onPress={() => {
             if (textFind != "") {
               handleApply(selectedOption, textFind, textReplace).then(
@@ -99,41 +136,4 @@ export function RenameComponent() {
       </Flex>
     </>
   );
-}
-
-async function handleApply(
-  selection: string,
-  textFind: string,
-  textReplace: string
-): Promise<{
-  countRename: number;
-}> {
-  let countRename = 0;
-
-  switch (selection) {
-    case "layers":
-      await evalTS("renameLayers", textFind, textReplace).then((result) => {
-        countRename = result;
-      });
-      break;
-
-    case "paths":
-      await evalTS("renamePathItems", textFind, textReplace).then((result) => {
-        countRename = result;
-      });
-      break;
-
-    case "selection":
-      await evalTS("renameSelectedPaths", textFind, textReplace).then(
-        (result) => {
-          countRename = result;
-        }
-      );
-      break;
-
-    default:
-      break;
-  }
-
-  return { countRename };
 }

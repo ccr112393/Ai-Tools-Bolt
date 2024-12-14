@@ -2,6 +2,10 @@ import { ToastQueue } from "@react-spectrum/toast";
 
 export const toastTimeout: number = 1500;
 export const toastTimeoutExtended: number = 2500;
+export const componentWidth: string = "size-1700";
+export const componentWidthHalf: string = "size-800";
+export const componentGap: string = "size-100";
+export const iconMarginAdjust: number = 6.5;
 
 export function postToast(
   style: "positive" | "negative" | "info" | "neutral",

@@ -23,10 +23,15 @@ import {
   RegistrationSettings,
   RegistrationSettingsKey,
 } from "./registrationModule";
-import { postToast, readLocalStorage, writeLocalStorage } from "./util";
+import {
+  componentWidth,
+  postToast,
+  readLocalStorage,
+  writeLocalStorage,
+  iconMarginAdjust,
+} from "./util";
 
 export function RegistrationComponent() {
-  const componentWidth = "size-1700";
   const [unit, setUnit] = useState("inch");
   const [layerName, setLayerName] = useState("Registration");
   const [diameter, setDiameter] = useState(0.25);
@@ -218,20 +223,20 @@ export function RegistrationComponent() {
           }}
         >
           <Item key="reload">
-            <RotateCCWBold size="S" marginStart={6.5} />
+            <RotateCCWBold size="S" marginStart={iconMarginAdjust} />
             <Text>Reload</Text>
           </Item>
           <Item key="save">
-            <SaveFloppy size="S" marginStart={6.5} />
+            <SaveFloppy size="S" marginStart={iconMarginAdjust} />
             <Text>Save Settings</Text>
           </Item>
           <Item key="load">
-            <Import size="S" marginStart={6.5} />
+            <Import size="S" marginStart={iconMarginAdjust} />
             <Text>Load Settings</Text>
           </Item>
         </ActionGroup>
         <Button
-          variant="primary"
+          variant="accent"
           onPress={() => {
             evalTS(
               "addRegistration",
