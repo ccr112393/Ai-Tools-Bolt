@@ -5,7 +5,13 @@ import { enableSpectrum, initBolt } from "../lib/utils/bolt";
 import Main from "./main";
 
 initBolt();
-enableSpectrum();
+
+const platformOS = navigator.platform.toLowerCase();
+console.log("Operating System: ", platformOS);
+
+if (platformOS.includes("mac")) {
+  enableSpectrum();
+}
 
 document.addEventListener("contextmenu", (e) => {
   e.preventDefault();
