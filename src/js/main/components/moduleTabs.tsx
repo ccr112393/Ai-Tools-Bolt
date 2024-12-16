@@ -1,9 +1,9 @@
 import { ActionGroup, Item, Text, View } from "@adobe/react-spectrum";
 import { useState, Key, createElement } from "react";
-import { ModuleType } from "../modules/moduleInterface";
-import { RegistrationModule } from "../modules/registrationModule";
-import { RenameModule } from "../modules/renameModule";
-import { SignAgentModule } from "../modules/signagentModule";
+import { ModuleType } from "../modules/_moduleInterface";
+import { RegistrationModule } from "../modules/registrationInterface";
+import { RenameModule } from "../modules/renameInterface";
+import { SignAgentModule } from "../modules/signagentInterface";
 
 const modules = [RegistrationModule, RenameModule, SignAgentModule];
 
