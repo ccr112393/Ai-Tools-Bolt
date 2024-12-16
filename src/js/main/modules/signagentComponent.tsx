@@ -35,6 +35,7 @@ import {
   componentWidthHalf,
   iconMarginAdjust,
 } from "./util";
+import { openLinkInBrowser } from "../../lib/utils/bolt";
 
 const SignAgentDisclaimer = () => {
   return (
@@ -46,9 +47,8 @@ const SignAgentDisclaimer = () => {
           <p>
             To learn more, visit their website at{" "}
             <Link
-              href="https://signagent.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              isQuiet
+              onPress={(e) => openLinkInBrowser("https://signagent.com")}
             >
               signagent.com
             </Link>
@@ -86,7 +86,7 @@ export function SignAgentComponent() {
         <Heading level={2}>SignAgent™ Tools</Heading>
         <SignAgentDisclaimer />
       </Flex>
-      <p>Hello {textCase}</p>
+
       <Accordion allowsMultipleExpanded>
         <Disclosure id="justification">
           <DisclosureTitle>Justification</DisclosureTitle>
