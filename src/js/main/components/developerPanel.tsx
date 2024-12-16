@@ -1,6 +1,7 @@
 import {
   ActionButton,
   ActionGroup,
+  ActionMenu,
   Content,
   Dialog,
   DialogTrigger,
@@ -8,6 +9,11 @@ import {
   Flex,
   Heading,
   Item,
+  Keyboard,
+  Menu,
+  MenuTrigger,
+  Section,
+  SubmenuTrigger,
   Text,
 } from "@adobe/react-spectrum";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
@@ -18,6 +24,7 @@ import {
   postToast,
 } from "../modules";
 import Code from "@spectrum-icons/workflow/Code";
+import Copy from "@spectrum-icons/workflow/Copy";
 
 export const EnableDeveloperMode = true;
 
@@ -26,7 +33,18 @@ function handleAction(action: string) {
     case "reload":
       window.location.reload();
       break;
-
+    case "toastPositive":
+      postToast("positive", "Positive Toast!");
+      break;
+    case "toastNegative":
+      postToast("negative", "Negative Toast!");
+      break;
+    case "toastInfo":
+      postToast("info", "Information Toast!");
+      break;
+    case "toastNeutral":
+      postToast("neutral", "Neutral Toast!");
+      break;
     default:
       break;
   }
@@ -51,6 +69,28 @@ export const DeveloperPanel = () => {
         </Content>
       </Dialog>
     </DialogTrigger>
+  );
+};
+
+export const DeveloperMenu = () => {
+  return (
+    <MenuTrigger>
+      <ActionButton>
+        <Code size="S" />
+      </ActionButton>
+      <Menu onAction={(key) => handleAction(key.toString())}>
+        <Item key="reload">Reload</Item>
+        <SubmenuTrigger>
+          <Item>Toasts</Item>
+          <Menu onAction={(key) => handleAction(key.toString())}>
+            <Item key={"toastPositive"}>Positive</Item>
+            <Item key={"toastNegative"}>Negative</Item>
+            <Item key={"toastInfo"}>Information</Item>
+            <Item key={"toastNeutral"}>Neutral</Item>
+          </Menu>
+        </SubmenuTrigger>
+      </Menu>
+    </MenuTrigger>
   );
 };
 

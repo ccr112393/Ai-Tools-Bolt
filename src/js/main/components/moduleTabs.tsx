@@ -5,6 +5,7 @@ import { RegistrationModule } from "../modules/registrationInterface";
 import { RenameModule } from "../modules/renameInterface";
 import { SignAgentModule } from "../modules/signagentInterface";
 import {
+  DeveloperMenu,
   DeveloperPanel,
   EnableDeveloperMode,
   ReloadButton,
@@ -37,7 +38,7 @@ export const ModuleTabs = () => {
             </Item>
           )}
         </ActionGroup>
-        {EnableDeveloperMode ? <DeveloperPanel /> : <ReloadButton />}
+        {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
       </Flex>
       <View>
         {modules.map((item: ModuleType) => (
