@@ -209,8 +209,6 @@ export function RegistrationComponent() {
           buttonLabelBehavior="hide"
           onAction={(key: React.Key) => {
             switch (key) {
-              case "reload":
-                window.location.reload();
               case "load":
                 loadSettings();
                 break;
@@ -222,10 +220,6 @@ export function RegistrationComponent() {
             }
           }}
         >
-          {/* <Item key="reload">
-            <RotateCCWBold size="S" marginStart={iconMarginAdjust} />
-            <Text>Reload</Text>
-          </Item> */}
           <Item key="save">
             <SaveFloppy size="S" marginStart={iconMarginAdjust} />
             <Text>Save Settings</Text>
