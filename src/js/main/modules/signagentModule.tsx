@@ -23,6 +23,7 @@ import {
   Picker,
   Text,
   TextField,
+  Well,
 } from "@adobe/react-spectrum";
 import Erase from "@spectrum-icons/workflow/Erase";
 import Import from "@spectrum-icons/workflow/Import";
@@ -78,18 +79,31 @@ export function SignAgentComponent() {
 
   return (
     <Flex direction={"column"} alignSelf={"center"}>
-      <Flex
-        direction={"row"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-      >
-        <Heading level={2}>SignAgent™ Tools</Heading>
-        <SignAgentDisclaimer />
-      </Flex>
-
+      <Heading level={2}>SignAgent™ Tools</Heading>
       <Accordion allowsMultipleExpanded>
+        <Disclosure id="gettingStarted">
+          <DisclosureTitle>
+            <Text flex>Getting Started</Text>
+            <SignAgentDisclaimer />
+          </DisclosureTitle>
+          <DisclosurePanel>
+            <Content>
+              <Text>Information</Text>
+            </Content>
+          </DisclosurePanel>
+        </Disclosure>
         <Disclosure id="justification">
-          <DisclosureTitle>Justification</DisclosureTitle>
+          <DisclosureTitle>
+            <Text flex>Justification</Text>
+            <ContextualHelp variant="help">
+              {/* <Heading>Justification</Heading> */}
+              <Content marginTop={0}>
+                <Text>Add formatting commands for justification.</Text>
+                <Well marginTop={componentGap}>center, middle</Well>
+              </Content>
+            </ContextualHelp>
+          </DisclosureTitle>
+
           <DisclosurePanel>
             <Grid
               areas={["label field"]}
@@ -132,7 +146,21 @@ export function SignAgentComponent() {
           </DisclosurePanel>
         </Disclosure>
         <Disclosure id="color">
-          <DisclosureTitle>Color</DisclosureTitle>
+          <DisclosureTitle>
+            <Text flex>Color</Text>
+            <ContextualHelp variant="help">
+              {/* <Heading>Color</Heading> */}
+              <Content marginTop={0}>
+                <Text>
+                  Add formatting commands for dynamic colors, using field names
+                  defined within SignAgent.
+                </Text>
+                <Well marginTop={componentGap}>
+                  strokecolor: copy_color, fillcolor: sign_color
+                </Well>
+              </Content>
+            </ContextualHelp>
+          </DisclosureTitle>
           <DisclosurePanel>
             <Grid
               areas={["label field"]}
@@ -188,7 +216,7 @@ export function SignAgentComponent() {
                   <Dialog>
                     <Heading>Color Fields</Heading>
                     <Header>
-                      <ContextualHelp variant="info">
+                      <ContextualHelp variant="help">
                         <Heading>Editing Color Fields</Heading>
                         <Content>
                           <Heading level={4} marginBottom={2} marginTop={0}>
@@ -196,9 +224,8 @@ export function SignAgentComponent() {
                           </Heading>
                           <Text>
                             Enter the name of the color <i>field</i>, not the
-                            the color. Field names are automatically formatted:
-                            <br />
-                            Sign Color {"→"} sign_color
+                            color. Field names are formatted automatically:
+                            <Well>Sign Color {"→"} sign_color</Well>
                           </Text>
                           <Heading level={4} marginBottom={2}>
                             Delete Fields
@@ -230,7 +257,17 @@ export function SignAgentComponent() {
           </DisclosurePanel>
         </Disclosure>
         <Disclosure id="textcase">
-          <DisclosureTitle>Text Options</DisclosureTitle>
+          <DisclosureTitle>
+            <Text flex>Text Options</Text>
+
+            <ContextualHelp variant="help">
+              {/* <Heading>Text Options</Heading> */}
+              <Content marginTop={0}>
+                <Text>Add formatting commands for text.</Text>
+                <Well marginTop={componentGap}>uppercase, leading: 28 pt</Well>
+              </Content>
+            </ContextualHelp>
+          </DisclosureTitle>
           <DisclosurePanel>
             <Grid
               areas={["label field"]}

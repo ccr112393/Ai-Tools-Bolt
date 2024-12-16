@@ -52,10 +52,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           </MinSize>
         </Geometry>
         <Icons>
-          <Icon Type="Normal">./src/assets/dark-icon.png</Icon>
-          <Icon Type="DarkNormal">./src/assets/light-icon.png</Icon>
-          <Icon Type="RollOver">./src/assets/dark-icon.png</Icon>
-          <Icon Type="DarkRollOver">./src/assets/light-icon.png</Icon>
+          <Icon Type="Normal">./assets/dark-icon.png</Icon>
+          <Icon Type="DarkNormal">./assets/light-icon.png</Icon>
+          <Icon Type="RollOver">./assets/dark-icon.png</Icon>
+          <Icon Type="DarkRollOver">./assets/light-icon.png</Icon>
         </Icons>
       </UI>
     </DispatchInfo>

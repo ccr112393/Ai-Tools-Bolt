@@ -46,7 +46,7 @@ var config = {
     jsxBin: "off"
   },
   installModules: [],
-  copyAssets: [],
+  copyAssets: ["assets"],
   copyZipAssets: []
 };
 
