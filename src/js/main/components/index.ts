@@ -1,3 +1,4 @@
+export * from "./developerPanel";
 export * from "./moduleTabs";
 export * from "./NumberFieldDefaults";
 export * from "./PreferencesPopover";

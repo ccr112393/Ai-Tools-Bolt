@@ -222,10 +222,10 @@ export function RegistrationComponent() {
             }
           }}
         >
-          <Item key="reload">
+          {/* <Item key="reload">
             <RotateCCWBold size="S" marginStart={iconMarginAdjust} />
             <Text>Reload</Text>
-          </Item>
+          </Item> */}
           <Item key="save">
             <SaveFloppy size="S" marginStart={iconMarginAdjust} />
             <Text>Save Settings</Text>
