@@ -1,12 +1,11 @@
 import { ActionGroup, Flex, Item, Text, View } from "@adobe/react-spectrum";
-import { useState, Key, createElement } from "react";
+import { Key, createElement, useState } from "react";
 import { ModuleType } from "../modules/_moduleInterface";
 import { RegistrationModule } from "../modules/registrationInterface";
 import { RenameModule } from "../modules/renameInterface";
 import { SignAgentModule } from "../modules/signagentInterface";
 import {
   DeveloperMenu,
-  DeveloperPanel,
   EnableDeveloperMode,
   ReloadButton,
 } from "./developerPanel";

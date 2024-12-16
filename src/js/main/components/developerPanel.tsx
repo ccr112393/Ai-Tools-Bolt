@@ -1,30 +1,27 @@
 import {
   ActionButton,
   ActionGroup,
-  ActionMenu,
   Content,
   Dialog,
   DialogTrigger,
   Divider,
-  Flex,
   Heading,
   Item,
-  Keyboard,
   Menu,
   MenuTrigger,
-  Section,
   SubmenuTrigger,
   Text,
 } from "@adobe/react-spectrum";
+import Code from "@spectrum-icons/workflow/Code";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import {
-  componentGap,
   componentWidth,
   iconMarginAdjust,
+  menuIconMargin,
+  menuTextMargin,
   postToast,
 } from "../modules";
-import Code from "@spectrum-icons/workflow/Code";
-import Copy from "@spectrum-icons/workflow/Copy";
+import PushNotification from "@spectrum-icons/workflow/PushNotification";
 
 export const EnableDeveloperMode = true;
 
@@ -50,28 +47,6 @@ function handleAction(action: string) {
   }
 }
 
-export const DeveloperPanel = () => {
-  return (
-    <DialogTrigger type="popover" placement="bottom end">
-      <ActionButton key="reload">
-        <Code size="S" />
-      </ActionButton>
-      <Dialog size="S" maxWidth={componentWidth}>
-        <Heading>Developer Menu</Heading>
-        <Divider />
-        <Content>
-          <ActionGroup onAction={(action) => handleAction(action.toString())}>
-            <Item key={"reload"}>
-              <RotateCCWBold size="M" marginStart={iconMarginAdjust} />
-              <Text>Reload</Text>
-            </Item>
-          </ActionGroup>
-        </Content>
-      </Dialog>
-    </DialogTrigger>
-  );
-};
-
 export const DeveloperMenu = () => {
   return (
     <MenuTrigger>
@@ -79,9 +54,15 @@ export const DeveloperMenu = () => {
         <Code size="S" />
       </ActionButton>
       <Menu onAction={(key) => handleAction(key.toString())}>
-        <Item key="reload">Reload</Item>
+        <Item key="reload">
+          <RotateCCWBold size="S" slot="icon" margin={menuIconMargin} />
+          <Text marginStart={menuTextMargin}>Reload</Text>
+        </Item>
         <SubmenuTrigger>
-          <Item>Toasts</Item>
+          <Item>
+            <PushNotification size="S" slot="icon" margin={menuIconMargin} />
+            <Text marginStart={menuTextMargin}>Toasts</Text>
+          </Item>
           <Menu onAction={(key) => handleAction(key.toString())}>
             <Item key={"toastPositive"}>Positive</Item>
             <Item key={"toastNegative"}>Negative</Item>
