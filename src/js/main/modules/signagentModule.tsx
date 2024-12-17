@@ -21,6 +21,7 @@ import {
   Link,
   ListBox,
   Picker,
+  StatusLight,
   Text,
   TextField,
   Well,
@@ -95,6 +96,7 @@ export function SignAgentComponent() {
         <Disclosure id="justification">
           <DisclosureTitle>
             <Text flex>Justification</Text>
+            <StatusLight variant="info" marginTop={-7} marginBottom={-10} />
             <ContextualHelp variant="help">
               {/* <Heading>Justification</Heading> */}
               <Content marginTop={0}>
@@ -148,6 +150,7 @@ export function SignAgentComponent() {
         <Disclosure id="color">
           <DisclosureTitle>
             <Text flex>Color</Text>
+            <StatusLight variant="info" marginTop={-7} marginBottom={-10} />
             <ContextualHelp variant="help">
               {/* <Heading>Color</Heading> */}
               <Content marginTop={0}>
@@ -259,7 +262,12 @@ export function SignAgentComponent() {
         <Disclosure id="textcase">
           <DisclosureTitle>
             <Text flex>Text Options</Text>
-
+            <StatusLight
+              isDisabled={!useTextCase}
+              variant="info"
+              marginTop={-7}
+              marginBottom={-10}
+            />
             <ContextualHelp variant="help">
               {/* <Heading>Text Options</Heading> */}
               <Content marginTop={0}>
