@@ -79,3 +79,7 @@ export function readLocalStorage(key: string, hideSuccess = false) {
     return storedData;
   }
 }
+
+export function formatFieldName(fieldName: string): string {
+  return fieldName.toLowerCase().replace(/\s+/g, "_");
+}

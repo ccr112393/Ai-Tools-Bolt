@@ -12,22 +12,7 @@ export const SignAgentIcon = (
   </Icon>
 );
 
-export interface SignAgentProfile {
-  hasHorizontalJustify: true;
-  hasVerticallJustify: true;
-  horizontalJustify: string;
-  verticallJustify: string;
-  hasColor: true;
-  hasFillColor: false;
-  hasStrokeColor: false;
-  color: string;
-  fillColor: string;
-  strokeColor: string;
-  hasTextCase: false;
-  textCase: "up";
-  hasLeading: false;
-  leading: 3;
-}
+export interface SignAgentProps {}
 
 export default SignAgentComponent;
 

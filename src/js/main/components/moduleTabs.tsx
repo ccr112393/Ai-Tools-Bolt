@@ -8,7 +8,7 @@ import {
   DeveloperMenu,
   EnableDeveloperMode,
   ReloadButton,
-} from "./developerPanel";
+} from "./DeveloperPanel";
 
 const modules = [RegistrationModule, RenameModule, SignAgentModule];
 

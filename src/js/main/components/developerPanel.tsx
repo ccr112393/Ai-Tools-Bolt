@@ -1,27 +1,22 @@
 import {
   ActionButton,
-  ActionGroup,
-  Content,
-  Dialog,
-  DialogTrigger,
-  Divider,
-  Heading,
   Item,
   Menu,
   MenuTrigger,
   SubmenuTrigger,
   Text,
 } from "@adobe/react-spectrum";
+import Bug from "@spectrum-icons/workflow/Bug";
 import Code from "@spectrum-icons/workflow/Code";
+import PushNotification from "@spectrum-icons/workflow/PushNotification";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
+import { openLinkInBrowser } from "../../lib/utils/bolt";
 import {
-  componentWidth,
   iconMarginAdjust,
   menuIconMargin,
   menuTextMargin,
   postToast,
 } from "../modules";
-import PushNotification from "@spectrum-icons/workflow/PushNotification";
 
 export const EnableDeveloperMode = true;
 
@@ -29,6 +24,9 @@ function handleAction(action: string) {
   switch (action) {
     case "reload":
       window.location.reload();
+      break;
+    case "openRemoteDebug":
+      openLinkInBrowser("http://localhost:8860/");
       break;
     case "toastPositive":
       postToast("positive", "Positive Toast!");
@@ -57,6 +55,10 @@ export const DeveloperMenu = () => {
         <Item key="reload">
           <RotateCCWBold size="S" slot="icon" margin={menuIconMargin} />
           <Text marginStart={menuTextMargin}>Reload</Text>
+        </Item>
+        <Item key="openRemoteDebug">
+          <Bug size="S" slot="icon" margin={menuIconMargin} />
+          <Text marginStart={menuTextMargin}>Remote Debug</Text>
         </Item>
         <SubmenuTrigger>
           <Item>
