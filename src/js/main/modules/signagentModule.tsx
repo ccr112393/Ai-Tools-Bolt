@@ -3,7 +3,6 @@ import {
   ActionButton,
   ActionGroup,
   Button,
-  ButtonGroup,
   Checkbox,
   Content,
   ContextualHelp,
@@ -19,9 +18,9 @@ import {
   Heading,
   Item,
   Link,
-  ListBox,
   Picker,
   StatusLight,
+  TagGroup,
   Text,
   TextField,
   Well,
@@ -30,14 +29,15 @@ import Erase from "@spectrum-icons/workflow/Erase";
 import Import from "@spectrum-icons/workflow/Import";
 import SaveAsFloppy from "@spectrum-icons/workflow/SaveAsFloppy";
 import { useState } from "react";
+import { openLinkInBrowser } from "../../lib/utils/bolt";
 import { NumberFieldDefault, UnitPicker } from "../components";
 import {
   componentGap,
   componentWidth,
   componentWidthHalf,
   iconMarginAdjust,
+  postToast,
 } from "./util";
-import { openLinkInBrowser } from "../../lib/utils/bolt";
 
 const SignAgentDisclaimer = () => {
   return (
@@ -63,20 +63,25 @@ const SignAgentDisclaimer = () => {
 };
 
 export function SignAgentComponent() {
-  const [useHorizontalJustify, setUseHorizontalJustify] = useState(true);
-  const [useVerticallJustify, setUseVerticalJustify] = useState(true);
+  const [hasHorizontalJustify, setHasHorizontalJustify] = useState(true);
+  const [hasVerticallJustify, setHasVerticalJustify] = useState(true);
   const [horizontalJustify, setHorizontalJustify] = useState("left");
   const [verticallJustify, setVerticalJustify] = useState("top");
-  const [useColor, setUseColor] = useState(true);
-  const [useFillColor, setUseFillColor] = useState(false);
-  const [useStrokeColor, setUseStrokeColor] = useState(false);
+  const [hasColor, setHasColor] = useState(true);
+  const [hasFillColor, setHasFillColor] = useState(false);
+  const [hasStrokeColor, setHasStrokeColor] = useState(false);
   const [color, setColor] = useState("signcolor");
   const [fillColor, setFillColor] = useState("signcolor");
   const [strokeColor, setStrokeColor] = useState("signcolor");
-  const [useTextCase, setUseTextCase] = useState(false);
+  const [hasTextCase, setHasTextCase] = useState(false);
   const [textCase, setTextCase] = useState("up");
-  const [useLeading, setUseLeading] = useState(false);
+  const [hasLeading, setHasLeading] = useState(false);
   const [leading, setLeading] = useState(3);
+  const [colorList, setColorList] = useState([
+    { id: "signcolor", name: "Sign Color" },
+    { id: "textcolor", name: "Text Color" },
+  ]);
+  const [newColor, setNewColor] = useState("");
 
   return (
     <Flex direction={"column"} alignSelf={"center"}>
@@ -89,14 +94,33 @@ export function SignAgentComponent() {
           </DisclosureTitle>
           <DisclosurePanel>
             <Content>
-              <Text>Information</Text>
+              <Text>
+                Use this tool to rename the currently selected bounding box(es)
+                with the selected command(s).
+                <br />
+                <br />
+                For example, assume we've selected horizontal center, vertical
+                middle, uppercase, and leading 28 pt. The selected bounding box
+                would be renamed to:
+              </Text>
+              <Well marginY={componentGap}>
+                center, middle, uppercase, leading: 28 pt
+              </Well>
+              <StatusLight variant="info">
+                Status Light will turn blue when section has selection
+              </StatusLight>
             </Content>
           </DisclosurePanel>
         </Disclosure>
         <Disclosure id="justification">
           <DisclosureTitle>
             <Text flex>Justification</Text>
-            <StatusLight variant="info" marginTop={-7} marginBottom={-10} />
+            <StatusLight
+              isDisabled={!hasHorizontalJustify && !hasVerticallJustify}
+              variant="info"
+              marginTop={-7}
+              marginBottom={-10}
+            />
             <ContextualHelp variant="help">
               {/* <Heading>Justification</Heading> */}
               <Content marginTop={0}>
@@ -114,8 +138,8 @@ export function SignAgentComponent() {
               gap={"size-100"}
             >
               <Checkbox
-                isSelected={useHorizontalJustify}
-                onChange={setUseHorizontalJustify}
+                isSelected={hasHorizontalJustify}
+                onChange={setHasHorizontalJustify}
               >
                 Horizontal
               </Checkbox>
@@ -130,8 +154,8 @@ export function SignAgentComponent() {
               </Picker>
 
               <Checkbox
-                isSelected={useVerticallJustify}
-                onChange={setUseVerticalJustify}
+                isSelected={hasVerticallJustify}
+                onChange={setHasVerticalJustify}
               >
                 Vertical
               </Checkbox>
@@ -150,7 +174,12 @@ export function SignAgentComponent() {
         <Disclosure id="color">
           <DisclosureTitle>
             <Text flex>Color</Text>
-            <StatusLight variant="info" marginTop={-7} marginBottom={-10} />
+            <StatusLight
+              isDisabled={!hasColor && !hasFillColor && !hasStrokeColor}
+              variant="info"
+              marginTop={-7}
+              marginBottom={-10}
+            />
             <ContextualHelp variant="help">
               {/* <Heading>Color</Heading> */}
               <Content marginTop={0}>
@@ -171,42 +200,45 @@ export function SignAgentComponent() {
               maxWidth={"size-4600"}
               gap={"size-100"}
             >
-              <Checkbox isSelected={useColor} onChange={setUseColor}>
+              <Checkbox isSelected={hasColor} onChange={setHasColor}>
                 Color
               </Checkbox>
               <Picker
                 width={componentWidth}
+                items={colorList}
                 selectedKey={color}
                 onSelectionChange={(key) => setColor(key as string)}
               >
-                <Item key="signcolor">Sign Color</Item>
+                {(item) => <Item key={item.id}>{item.name}</Item>}
               </Picker>
 
-              <Checkbox isSelected={useFillColor} onChange={setUseFillColor}>
+              <Checkbox isSelected={hasFillColor} onChange={setHasFillColor}>
                 Fill Color
               </Checkbox>
               <Picker
                 width={componentWidth}
+                items={colorList}
                 selectedKey={fillColor}
                 onSelectionChange={(key) => setFillColor(key as string)}
               >
-                <Item key="signcolor">Sign Color</Item>
+                {(item) => <Item key={item.id}>{item.name}</Item>}
               </Picker>
 
               <Checkbox
-                isSelected={useStrokeColor}
-                onChange={setUseStrokeColor}
+                isSelected={hasStrokeColor}
+                onChange={setHasStrokeColor}
               >
                 Stroke Color
               </Checkbox>
               <Picker
                 width={componentWidth}
+                items={colorList}
                 selectedKey={strokeColor}
                 onSelectionChange={(key) => setStrokeColor(key as string)}
               >
-                <Item key="signcolor">Sign Color</Item>
+                {(item) => <Item key={item.id}>{item.name}</Item>}
               </Picker>
-              <DialogTrigger>
+              <DialogTrigger isDismissable>
                 <Button
                   variant="secondary"
                   gridColumn={"field"}
@@ -216,10 +248,14 @@ export function SignAgentComponent() {
                   Edit Colors
                 </Button>
                 {(closeDialog) => (
-                  <Dialog>
-                    <Heading>Color Fields</Heading>
-                    <Header>
-                      <ContextualHelp variant="help">
+                  <Dialog size="S">
+                    <Heading marginTop={componentGap}>Color Fields</Heading>
+                    <Header marginTop={componentGap}>
+                      <ContextualHelp
+                        variant="help"
+                        placement="bottom end"
+                        marginEnd={-30}
+                      >
                         <Heading>Editing Color Fields</Heading>
                         <Content>
                           <Heading level={4} marginBottom={2} marginTop={0}>
@@ -239,20 +275,61 @@ export function SignAgentComponent() {
                     </Header>
                     <Divider />
                     <Content>
-                      <TextField /> <ActionButton>Add</ActionButton>
-                      <ListBox selectionMode="multiple" marginBottom={10}>
-                        <Item key={"signcolor"}>Sign Color</Item>
-                        <Item key={"copycolor"}>Copy Color</Item>
-                      </ListBox>
+                      <Flex
+                        direction={"row"}
+                        justifyContent={"center"}
+                        marginBottom={componentGap}
+                      >
+                        <TextField
+                          value={newColor}
+                          onChange={setNewColor}
+                          marginEnd={componentGap}
+                          flex
+                        />
+                        <ActionButton
+                          onPress={() => {
+                            if (newColor !== "") {
+                              setColorList((prevItems) => [
+                                ...prevItems,
+                                {
+                                  id: newColor
+                                    .toLowerCase()
+                                    .replace(/\s+/g, "_"),
+                                  name: newColor,
+                                },
+                              ]);
+                              setNewColor("");
+                            } else {
+                              postToast(
+                                "negative",
+                                "Field name cannot be empty"
+                              );
+                            }
+                          }}
+                        >
+                          Add
+                        </ActionButton>
+                      </Flex>
+                      <TagGroup
+                        marginBottom={10}
+                        items={colorList}
+                        onRemove={(keys) =>
+                          setColorList((prevItems) =>
+                            prevItems.filter((item) => !keys.has(item.id))
+                          )
+                        }
+                      >
+                        {(item) => <Item key={item.id}>{item.name}</Item>}
+                      </TagGroup>
                     </Content>
-                    <ButtonGroup>
+                    {/* <ButtonGroup>
                       <Button variant="secondary" onPress={closeDialog}>
                         Cancel
                       </Button>
                       <Button variant="accent" onPress={closeDialog}>
                         Save
                       </Button>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                   </Dialog>
                 )}
               </DialogTrigger>
@@ -263,7 +340,7 @@ export function SignAgentComponent() {
           <DisclosureTitle>
             <Text flex>Text Options</Text>
             <StatusLight
-              isDisabled={!useTextCase}
+              isDisabled={!hasTextCase}
               variant="info"
               marginTop={-7}
               marginBottom={-10}
@@ -283,7 +360,7 @@ export function SignAgentComponent() {
               maxWidth={"size-4600"}
               gap={"size-100"}
             >
-              <Checkbox isSelected={useTextCase} onChange={setUseTextCase}>
+              <Checkbox isSelected={hasTextCase} onChange={setHasTextCase}>
                 Text Case
               </Checkbox>
               <Picker
@@ -297,7 +374,7 @@ export function SignAgentComponent() {
                 <Item key={"lo"}>lowercase</Item>
                 <Item key={"tc"}>Title Case</Item>
               </Picker>
-              <Checkbox isSelected={useLeading} onChange={setUseLeading}>
+              <Checkbox isSelected={hasLeading} onChange={setHasLeading}>
                 Leading
               </Checkbox>
               <Flex width={componentWidth}>
