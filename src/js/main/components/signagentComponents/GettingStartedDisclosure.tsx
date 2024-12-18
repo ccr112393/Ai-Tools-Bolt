@@ -5,9 +5,10 @@ import {
   Content,
   Well,
   StatusLight,
+  Text,
 } from "@adobe/react-spectrum";
 import { SignAgentDisclaimer } from "..";
-import { componentGap } from "./util";
+import { componentGap } from "../../modules/util";
 
 export const GettingStartedDisclosure = () => {
   return (

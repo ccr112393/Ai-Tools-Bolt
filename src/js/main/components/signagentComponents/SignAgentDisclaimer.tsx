@@ -1,4 +1,10 @@
-import { ContextualHelp, Heading, Content, Link } from "@adobe/react-spectrum";
+import {
+  ContextualHelp,
+  Heading,
+  Content,
+  Link,
+  Text,
+} from "@adobe/react-spectrum";
 import { openLinkInBrowser } from "../../../lib/utils/bolt";
 
 export const SignAgentDisclaimer = () => {
