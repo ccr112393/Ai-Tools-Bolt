@@ -9,6 +9,8 @@ import {
   TextField,
   TagGroup,
   Item,
+  ContextualHelp,
+  Well,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 import {
@@ -37,6 +39,42 @@ export const ProfilesDialog: React.FC<ProfileDialogProps> = ({
       profiles,
     };
     writeLocalStorage("profiles", settings);
+  };
+
+  const validateProfile = (): boolean => {
+    let valid = true;
+    let message = "";
+    if (newProfile === "") {
+      message = "Profile name cannot be empty";
+      valid = false;
+    }
+    if (profiles.find((item) => item.name === newProfile)) {
+      message = "Profile name already exists";
+      valid = false;
+    }
+    if (profiles.find((item) => item.id === formatFieldName(newProfile))) {
+      message = "Profile name already exists";
+      valid = false;
+    }
+    if (!valid) {
+      postToast("negative", message);
+    }
+    return valid;
+  };
+
+  const addProfile = () => {
+    if (newProfile !== "") {
+      if (validateProfile()) {
+        setProfiles((prevItems) => [
+          ...prevItems,
+          {
+            id: formatFieldName(newProfile),
+            name: newProfile,
+          },
+        ]);
+        setNewProfile("");
+      }
+    }
   };
   return (
     <DialogTrigger isDismissable>
@@ -71,21 +109,20 @@ export const ProfilesDialog: React.FC<ProfileDialogProps> = ({
                 marginEnd={componentGap}
                 flex
                 label="Profile Name"
+                contextualHelp={
+                  <ContextualHelp variant="help">
+                    <Content marginTop={0}>
+                      Creates a new profile with the current selections.
+                    </Content>
+                  </ContextualHelp>
+                }
               />
               <ActionButton
+                onKeyDown={(e) => {
+                  e.key === "Enter" ? addProfile() : null;
+                }}
                 onPress={() => {
-                  if (newProfile !== "") {
-                    setProfiles((prevItems) => [
-                      ...prevItems,
-                      {
-                        id: formatFieldName(newProfile),
-                        name: newProfile,
-                      },
-                    ]);
-                    setNewProfile("");
-                  } else {
-                    postToast("negative", "Profile name cannot be empty");
-                  }
+                  addProfile();
                 }}
               >
                 Add
