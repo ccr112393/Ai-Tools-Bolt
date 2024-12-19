@@ -17,8 +17,17 @@ import { NumberFieldDefault, UnitPicker } from "..";
 import {
   componentGap,
   componentWidth,
+  componentWidth3Quarters,
   componentWidthHalf,
 } from "../../modules/util";
+
+export interface TextOptionsDisclosureSettings {
+  hasTextCase: boolean;
+  textCase: string;
+  hasLeading: boolean;
+  leading: number;
+  leadingUnit: string;
+}
 
 export interface TextOptionsDisclosureProps {
   hasTextCase: boolean;
@@ -29,6 +38,8 @@ export interface TextOptionsDisclosureProps {
   setHasLeading: (value: boolean) => void;
   leading: number;
   setLeading: (value: number) => void;
+  leadingUnit: string;
+  setLeadingUnit: (value: string) => void;
 }
 
 export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
@@ -40,6 +51,8 @@ export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
   setHasLeading,
   leading,
   setLeading,
+  leadingUnit,
+  setLeadingUnit,
 }) => {
   return (
     <Disclosure id="textcase">
@@ -76,9 +89,9 @@ export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
             }}
             width={componentWidth}
           >
-            <Item key={"up"}>UPPERCASE</Item>
-            <Item key={"lo"}>lowercase</Item>
-            <Item key={"tc"}>Title Case</Item>
+            <Item key={"uppercase"}>UPPERCASE</Item>
+            <Item key={"lowercase"}>lowercase</Item>
+            <Item key={"titlecase"}>Title Case</Item>
           </Picker>
           <Checkbox isSelected={hasLeading} onChange={setHasLeading}>
             Leading
@@ -92,8 +105,12 @@ export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
             />
             <UnitPicker
               abbreviate={true}
-              defaultSelectedKey={"point"}
+              selectedKey={leadingUnit}
+              onSelectionChange={(key) => {
+                setLeadingUnit(key as string);
+              }}
               width={componentWidthHalf}
+              menuWidth={componentWidth3Quarters}
             />
           </Flex>
         </Grid>

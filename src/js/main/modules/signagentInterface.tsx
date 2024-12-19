@@ -1,4 +1,9 @@
 import { Icon } from "@adobe/react-spectrum";
+import {
+  ColorDisclosureSettings,
+  JustificationDisclosureSettings,
+  TextOptionsDisclosureSettings,
+} from "../components";
 import { ModuleType } from "./_moduleInterface";
 import { SignAgentComponent } from "./signagentModule";
 
@@ -12,7 +17,30 @@ export const SignAgentIcon = (
   </Icon>
 );
 
-export interface SignAgentProps {}
+export const SignAgentSettingsKey = "signagentSettings";
+
+export interface SignAgentSettings
+  extends JustificationDisclosureSettings,
+    ColorDisclosureSettings,
+    TextOptionsDisclosureSettings {}
+
+export interface SignAgentProfile {
+  id: string;
+  name: string;
+}
+
+export interface SignAgentProfileList {
+  profiles: SignAgentProfile[];
+}
+
+export interface SignAgentColor {
+  id: string;
+  name: string;
+}
+
+export interface SignAgentColorList {
+  colorList: SignAgentColor[];
+}
 
 export default SignAgentComponent;
 

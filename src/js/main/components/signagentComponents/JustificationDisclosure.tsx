@@ -15,6 +15,13 @@ import {
 
 import { componentGap, componentWidth } from "../../modules/util";
 
+export interface JustificationDisclosureSettings {
+  hasHorizontalJustify: boolean;
+  hasVerticalJustify: boolean;
+  horizontalJustify: string;
+  verticalJustify: string;
+}
+
 export interface JustificationDisclosureProps {
   hasHorizontalJustify: boolean;
   setHasHorizontalJustify: (value: boolean) => void;

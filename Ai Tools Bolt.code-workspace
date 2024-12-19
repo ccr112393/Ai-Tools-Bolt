@@ -5,6 +5,9 @@
     }
   ],
   "settings": {
-    "exportall.config.folderListener": ["/src/js/main/components"]
+    "exportall.config.folderListener": [
+      "/src/js/main/components",
+      "/src/js/main/components/signagentComponents"
+    ]
   }
 }

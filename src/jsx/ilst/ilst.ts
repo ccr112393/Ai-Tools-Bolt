@@ -102,34 +102,38 @@ export function renamePathItems(search: string, replace: string): number {
   return count;
 }
 
-export function renameSelection(search: string, replace: string): number {
-  var count = 0;
-  var items = currentDocument().selection;
-  for (let index = 0; index < items.length; index++) {
-    if (items[index].name.indexOf(search) !== -1) {
-      items[index].name = items[index].name.replace(search, replace);
-      count++;
-    }
-  }
-  return count;
-}
+// export function renameSelection(search: string, replace: string): number {
+//   var count = 0;
+//   var items = currentDocument().selection;
+//   for (let index = 0; index < items.length; index++) {
+//     if (items[index].name.indexOf(search) !== -1) {
+//       items[index].name = items[index].name.replace(search, replace);
+//       count++;
+//     }
+//   }
+//   return count;
+// }
 
-export function renameSelectedLayers(search: string, replace: string): number {
-  var count = 0;
-  var items = currentDocument().selection;
-  for (let index = 0; index < items.length; index++) {
-    if (
-      items[index].name.indexOf(search) !== -1 &&
-      items[index].typename === "Layer"
-    ) {
-      items[index].name = items[index].name.replace(search, replace);
-      count++;
-    }
-  }
-  return count;
-}
+// export function renameSelectedLayers(search: string, replace: string): number {
+//   var count = 0;
+//   var items = currentDocument().selection;
+//   for (let index = 0; index < items.length; index++) {
+//     if (
+//       items[index].name.indexOf(search) !== -1 &&
+//       items[index].typename === "Layer"
+//     ) {
+//       items[index].name = items[index].name.replace(search, replace);
+//       count++;
+//     }
+//   }
+//   return count;
+// }
 
-export function renameSelectedPaths(search: string, replace: string): number {
+export function renameSelectedPaths(
+  search: string,
+  replace: string,
+  fullRename?: boolean
+): number {
   var count = 0;
   var items = currentDocument().selection;
   for (let index = 0; index < items.length; index++) {
@@ -137,7 +141,9 @@ export function renameSelectedPaths(search: string, replace: string): number {
       items[index].name.indexOf(search) !== -1 &&
       items[index].typename !== "Layer"
     ) {
-      items[index].name = items[index].name.replace(search, replace);
+      fullRename
+        ? (items[index].name = replace)
+        : (items[index].name = items[index].name.replace(search, replace));
       count++;
     }
   }

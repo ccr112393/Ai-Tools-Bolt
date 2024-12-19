@@ -14,7 +14,6 @@ import {
   TextField,
 } from "@adobe/react-spectrum";
 import Import from "@spectrum-icons/workflow/Import";
-import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
 import { useEffect, useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
@@ -25,10 +24,10 @@ import {
 } from "./registrationInterface";
 import {
   componentWidth,
+  iconMarginAdjust,
   postToast,
   readLocalStorage,
   writeLocalStorage,
-  iconMarginAdjust,
 } from "./util";
 
 export function RegistrationComponent() {

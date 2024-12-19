@@ -6,6 +6,7 @@ import {
   Well,
   StatusLight,
   Text,
+  Divider,
 } from "@adobe/react-spectrum";
 import { SignAgentDisclaimer } from "..";
 import { componentGap } from "../../modules/util";
@@ -20,20 +21,23 @@ export const GettingStartedDisclosure = () => {
       <DisclosurePanel>
         <Content>
           <Text>
-            Use this tool to rename the currently selected bounding box(es) with
-            the selected command(s).
-            <br />
-            <br />
-            For example, assume we've selected horizontal center, vertical
-            middle, uppercase, and leading 28 pt. The selected bounding box
-            would be renamed to:
+            Use this tool to rename the selected bounding box(es) with the
+            selected command(s). A command preview will be shown below all
+            selections.
+          </Text>
+          <StatusLight variant="info" marginY={componentGap}>
+            The status light will turn blue when that section has any selected
+            options.
+          </StatusLight>
+          <Divider size="S" marginY={componentGap} />
+          <Text>
+            Example: assume we've selected horizontal center, vertical middle,
+            uppercase, and leading 28 pt. The selected bounding box would be
+            renamed to:
           </Text>
           <Well marginY={componentGap}>
             center, middle, uppercase, leading: 28 pt
           </Well>
-          <StatusLight variant="info">
-            Status Light will turn blue when section has selection
-          </StatusLight>
         </Content>
       </DisclosurePanel>
     </Disclosure>

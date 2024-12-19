@@ -14,6 +14,16 @@ import {
 } from "@adobe/react-spectrum";
 import { ColorFieldsDialog } from "..";
 import { componentGap, componentWidth } from "../../modules/util";
+import { SignAgentColor } from "../../modules";
+
+export interface ColorDisclosureSettings {
+  hasColor: boolean;
+  hasFillColor: boolean;
+  hasStrokeColor: boolean;
+  color: string;
+  fillColor: string;
+  strokeColor: string;
+}
 
 export interface ColorDisclosureProps {
   hasColor: boolean;
@@ -30,11 +40,6 @@ export interface ColorDisclosureProps {
   setStrokeColor: (value: string) => void;
   colorList: SignAgentColor[];
   setColorList: React.Dispatch<React.SetStateAction<SignAgentColor[]>>;
-}
-
-export interface SignAgentColor {
-  id: string;
-  name: string;
 }
 
 export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({

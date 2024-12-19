@@ -19,8 +19,9 @@ import {
   componentGap,
   formatFieldName,
   postToast,
+  writeLocalStorage,
 } from "../../modules/util";
-import { SignAgentColor } from "./ColorDisclosure";
+import { SignAgentColor, SignAgentColorList } from "../../modules";
 
 export interface ColorFieldsDialogProps {
   colorList: SignAgentColor[];
@@ -32,6 +33,14 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
   setColorList,
 }) => {
   const [newColor, setNewColor] = useState("");
+
+  const saveColorList = () => {
+    const settings: SignAgentColorList = {
+      colorList,
+    };
+    writeLocalStorage("colorList", settings);
+  };
+
   return (
     <DialogTrigger isDismissable>
       <ActionButton
@@ -42,7 +51,13 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
         Manage Colors
       </ActionButton>
       {(closeDialog) => (
-        <Dialog size="S">
+        <Dialog
+          size="S"
+          onDismiss={() => {
+            saveColorList();
+            closeDialog();
+          }}
+        >
           <Heading marginTop={componentGap}>Manage Color Fields</Heading>
           <Divider />
           <Content>
