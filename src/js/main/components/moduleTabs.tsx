@@ -4,11 +4,7 @@ import { ModuleType } from "../modules/_moduleInterface";
 import { RegistrationModule } from "../modules/registrationInterface";
 import { RenameModule } from "../modules/renameInterface";
 import { SignAgentModule } from "../modules/signagentInterface";
-import {
-  DeveloperMenu,
-  EnableDeveloperMode,
-  ReloadButton,
-} from "./DeveloperPanel";
+import { DeveloperMenu, EnableDeveloperMode, ReloadButton } from "./index";
 
 const modules = [RegistrationModule, RenameModule, SignAgentModule];
 
