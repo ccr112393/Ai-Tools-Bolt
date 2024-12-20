@@ -11,6 +11,10 @@ import {
   Well,
   TagGroup,
   Item,
+  Button,
+  TooltipTrigger,
+  Tooltip,
+  Footer,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 
@@ -73,34 +77,33 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
                 marginEnd={componentGap}
                 flex
                 label="Field Name"
-                contextualHelp={
-                  <ContextualHelp variant="help">
-                    <Content marginTop={0}>
-                      Enter the name of the color <i>field</i>, not the color.
-                      Field names are formatted automatically:
-                      <Well>Sign Color {"→"} sign_color</Well>
-                    </Content>
-                  </ContextualHelp>
-                }
               />
-              <ActionButton
-                onPress={() => {
-                  if (newColor !== "") {
-                    setColorList((prevItems) => [
-                      ...prevItems,
-                      {
-                        id: formatFieldName(newColor),
-                        name: newColor,
-                      },
-                    ]);
-                    setNewColor("");
-                  } else {
-                    postToast("negative", "Field name cannot be empty");
-                  }
-                }}
-              >
-                Add
-              </ActionButton>
+              <TooltipTrigger>
+                <Button
+                  variant="secondary"
+                  onPress={() => {
+                    if (newColor !== "") {
+                      setColorList((prevItems) => [
+                        ...prevItems,
+                        {
+                          id: formatFieldName(newColor),
+                          name: newColor,
+                        },
+                      ]);
+                      setNewColor("");
+                    } else {
+                      postToast("negative", "Field name cannot be empty");
+                    }
+                  }}
+                >
+                  Add
+                </Button>
+                <Tooltip>
+                  Enter the name of the color <i>field</i>, not the color. Field
+                  names are formatted automatically:
+                  <Well>Sign Color {"→"} sign_color</Well>
+                </Tooltip>
+              </TooltipTrigger>
             </Flex>
             <TagGroup
               marginTop={componentGap}

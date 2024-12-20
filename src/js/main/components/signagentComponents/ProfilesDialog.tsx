@@ -1,26 +1,28 @@
 import {
-  DialogTrigger,
   ActionButton,
-  Dialog,
-  Heading,
-  Divider,
+  Button,
   Content,
-  Flex,
-  TextField,
-  TagGroup,
-  Item,
   ContextualHelp,
-  Well,
+  Dialog,
+  DialogTrigger,
+  Divider,
+  Flex,
+  Heading,
+  Item,
+  TagGroup,
+  TextField,
+  Tooltip,
+  TooltipTrigger,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 import {
-  SignAgentProfileList,
-  writeLocalStorage,
-  componentWidth,
   componentGap,
+  componentWidth,
   formatFieldName,
   postToast,
   SignAgentProfile,
+  SignAgentProfileList,
+  writeLocalStorage,
 } from "../../modules";
 
 export interface ProfileDialogProps {
@@ -109,24 +111,23 @@ export const ProfilesDialog: React.FC<ProfileDialogProps> = ({
                 marginEnd={componentGap}
                 flex
                 label="Profile Name"
-                contextualHelp={
-                  <ContextualHelp variant="help">
-                    <Content marginTop={0}>
-                      Creates a new profile with the current selections.
-                    </Content>
-                  </ContextualHelp>
-                }
               />
-              <ActionButton
-                onKeyDown={(e) => {
-                  e.key === "Enter" ? addProfile() : null;
-                }}
-                onPress={() => {
-                  addProfile();
-                }}
-              >
-                Add
-              </ActionButton>
+              <TooltipTrigger>
+                <Button
+                  variant="secondary"
+                  onKeyDown={(e) => {
+                    e.key === "Enter" ? addProfile() : null;
+                  }}
+                  onPress={() => {
+                    addProfile();
+                  }}
+                >
+                  Add
+                </Button>
+                <Tooltip>
+                  Create a new profile with the current selections.
+                </Tooltip>
+              </TooltipTrigger>
             </Flex>
             <TagGroup
               items={profiles.filter((item) => item.id !== "default")}

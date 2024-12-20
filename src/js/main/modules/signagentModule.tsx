@@ -35,13 +35,14 @@ import {
   SignAgentSettingsKey,
 } from "./signagentInterface";
 import { evalTS } from "../../lib/utils/bolt";
+import Revert from "@spectrum-icons/workflow/Revert";
 
 export function SignAgentComponent() {
-  const [hasHorizontalJustify, setHasHorizontalJustify] = useState(false);
-  const [hasVerticalJustify, setHasVerticalJustify] = useState(false);
+  const [hasHorizontalJustify, setHasHorizontalJustify] = useState(true);
+  const [hasVerticalJustify, setHasVerticalJustify] = useState(true);
   const [horizontalJustify, setHorizontalJustify] = useState("left");
   const [verticalJustify, setVerticalJustify] = useState("top");
-  const [hasColor, setHasColor] = useState(true);
+  const [hasColor, setHasColor] = useState(false);
   const [hasFillColor, setHasFillColor] = useState(false);
   const [hasStrokeColor, setHasStrokeColor] = useState(false);
   const [color, setColor] = useState("signcolor");
@@ -249,8 +250,9 @@ export function SignAgentComponent() {
                 saveSettings(activeProfile);
                 break;
 
-              case "clearSelections":
-                loadSettings();
+              case "revertProfile":
+                loadSettings(false, activeProfile);
+                postToast("positive", "Profile settings reverted");
                 break;
 
               default:
@@ -266,9 +268,9 @@ export function SignAgentComponent() {
             <SaveAsFloppy size="S" marginStart={iconMarginAdjust} />
             <Text>Save Profile Settings</Text>
           </Item>
-          <Item key="clearSelections">
-            <Erase size="S" marginStart={iconMarginAdjust} />
-            <Text>Clear</Text>
+          <Item key="revertProfile">
+            <Revert size="S" marginStart={iconMarginAdjust} />
+            <Text>Revert to last profile save</Text>
           </Item>
         </ActionGroup>
         <Button
