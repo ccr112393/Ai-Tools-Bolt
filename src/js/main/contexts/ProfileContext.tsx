@@ -1,29 +1,37 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useLog } from "./LogContext";
+import React, { createContext, useContext, useState } from "react";
 import {
+  deleteLocalStorage,
+  formatFieldName,
+  getLocalStorageProfiles,
+  postToast,
   readLocalStorage,
   writeLocalStorage,
-  formatFieldName,
-  postToast,
-  deleteLocalStorage,
-  getLocalStorageProfiles,
 } from "../modules";
+import { useLog } from "./LogContext";
 
 import { ProfileKey, ProfileSettings, emptyProfileSettings } from "../modules";
 
 interface ProfileContextType {
-  activeProfileID: string;
-  setActiveProfileID: React.Dispatch<React.SetStateAction<string>>;
+  // States
   activeProfile: ProfileSettings;
   setActiveProfile: React.Dispatch<React.SetStateAction<ProfileSettings>>;
   profileList: { id: string; name: string }[];
-  writeProfile: (settings: ProfileSettings, hideSuccess?: boolean) => void;
-  readProfile: (profileID: string, hideSuccess?: boolean) => ProfileSettings;
-  profileSettings: ProfileSettings;
-  setProfileSettings: React.Dispatch<React.SetStateAction<ProfileSettings>>;
-  loadProfiles: (hideSuccess?: boolean) => void;
-  addProfile: (newProfile: string, hideSuccess?: boolean) => void;
-  removeProfile: (id: string, hideSuccess?: boolean) => void;
+  setProfileList: React.Dispatch<
+    React.SetStateAction<{ id: string; name: string }[]>
+  >;
+
+  // Functions
+  saveActiveProfile: (showSuccess?: boolean) => void;
+  writeProfile: (settings: ProfileSettings, showSuccess?: boolean) => void;
+  loadProfiles: (showSuccess?: boolean) => void;
+  addProfile: (newProfile: string, showSuccess?: boolean) => void;
+  removeProfile: (id: string, showSuccess?: boolean) => void;
+
+  // Return Functions
+  sortProfileList: (
+    listToSort: { id: string; name: string }[]
+  ) => { id: string; name: string }[];
+  readProfile: (profileID: string, showSuccess?: boolean) => ProfileSettings;
   validateProfile: (newProfile: string) => boolean;
 }
 
@@ -31,40 +39,53 @@ const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const { appLog } = useLog();
-  const [profileFileList, setProfileFileList] = useState<string[]>();
+
   const [profileList, setProfileList] = useState([
     { id: "default", name: "Default" },
   ]);
-  const [activeProfileID, setActiveProfileID] = useState<string>("");
+
   const [activeProfile, setActiveProfile] =
     useState<ProfileSettings>(emptyProfileSettings);
-  const [profileSettings, setProfileSettings] =
-    useState<ProfileSettings>(emptyProfileSettings);
+
+  const sortProfileList = (listToSort: { id: string; name: string }[]) => {
+    let defaultProfile = listToSort.find((profile) => profile.id === "default");
+    let sortedList = listToSort
+      .filter((profile) => profile.id !== "default")
+      .sort((a, b) => a.id.localeCompare(b.id));
+
+    if (defaultProfile) {
+      sortedList.unshift(defaultProfile);
+    }
+    appLog(JSON.stringify(listToSort), "--- CURRENT ---");
+    appLog(JSON.stringify(sortedList), "--- SORTED ---");
+    return sortedList;
+  };
 
   const writeProfile = (profileToSave: ProfileSettings) => {
-    appLog(JSON.stringify(profileToSave), "Saving profile settings");
     const fileName = ProfileKey + profileToSave.id;
     writeLocalStorage(fileName, profileToSave);
   };
 
+  const saveActiveProfile = (showSuccess = false) => {
+    writeProfile(activeProfile);
+    showSuccess
+      ? postToast("positive", "Profile saved successfully", appLog)
+      : null;
+  };
+
   const readProfile = (profileID: string): ProfileSettings => {
     // Ensure File Name has ProfileKey
-    const fileName = profileID.includes(ProfileKey)
-      ? profileID
-      : ProfileKey + profileID;
+    const trimmedID = profileID.trim();
+    const fileName = trimmedID.startsWith(ProfileKey)
+      ? trimmedID
+      : `${ProfileKey}${trimmedID}`;
 
+    appLog(fileName, "--- READING PROFILE ---");
     // Read Profile Settings from Local Storage
     const storedSettings = readLocalStorage(fileName);
     if (storedSettings) {
-      // setProfileSettings(storedSettings);
-      appLog(
-        [profileSettings.id, profileSettings.name],
-        "Loaded profile settings"
-      );
       return storedSettings;
     } else {
-      appLog("No stored settings found", "Loaded Default Profile Settings");
-      // setProfileSettings(defaultProfileSettings);
       return emptyProfileSettings;
     }
   };
@@ -73,39 +94,19 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     try {
       // Get all profiles from local storage
       const storedProfiles = getLocalStorageProfiles();
-      if (storedProfiles) {
-        setProfileFileList(storedProfiles);
-        appLog(JSON.stringify(profileFileList), "Loaded profile files");
-      }
 
-      // Set Profile List
-      storedProfiles.forEach((profile) => {
-        let profileSettings = readProfile(profile);
-
-        setProfileList((prevState) => {
-          const updatedProfiles = [
-            ...prevState,
-            { id: profileSettings.id, name: profileSettings.name },
-          ];
-
-          return updatedProfiles;
+      if (storedProfiles && storedProfiles.length > 0) {
+        const formattedProfileList = storedProfiles.map((profile) => {
+          const profileInfo = readProfile(profile);
+          return { id: profileInfo.id, name: profileInfo.name };
         });
-        appLog(JSON.stringify(profileList), "Loaded Profile List");
-        appLog(
-          [profileSettings.id, profileSettings.name],
-          "Loaded profile settings"
-        );
-      });
-
-      // Set Active Profile to Default
-      setActiveProfileID("default");
-
-      // Load Default Profile Settings
-      readProfile("default");
+        setProfileList(sortProfileList(formattedProfileList));
+        setActiveProfile(readProfile("default"));
+      }
 
       showSuccess
         ? postToast("positive", "Profiles loaded successfully", appLog)
-        : appLog("Profiles loaded successfully");
+        : null;
     } catch (error) {
       error instanceof Error
         ? postToast("negative", error.message, appLog)
@@ -142,29 +143,29 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     if (newProfileName !== "" && validateProfile(newProfileName)) {
       // Format Profile Name for ID
       const newProfileID = formatFieldName(newProfileName);
-      appLog([newProfileID, newProfileName], "Adding Profile");
-
-      let newProfile: ProfileSettings = emptyProfileSettings;
-      newProfile.id = newProfileID;
-      newProfile.name = newProfileName;
+      const newProfile: ProfileSettings = {
+        ...emptyProfileSettings,
+        id: newProfileID,
+        name: newProfileName,
+      };
 
       try {
         // Update Profile List (State)
+
         setProfileList((prevState) => {
-          const updatedProfiles = [
+          const updatedList = [
             ...prevState,
-            { id: newProfile.id, name: newProfile.name },
+            { id: newProfileID, name: newProfileName },
           ];
-          return updatedProfiles;
+          return sortProfileList(updatedList);
         });
 
         // Write Profile to Local Storage
         writeProfile(newProfile);
 
-        appLog(JSON.stringify(profileList), "Updated Profile List");
         showSuccess
           ? postToast("positive", `Added profile: ${newProfile}`, appLog)
-          : appLog(`Added profile: ${newProfile.id}`);
+          : null;
       } catch (error) {
         error instanceof Error
           ? postToast("negative", error.message)
@@ -176,14 +177,18 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const removeProfile = (id: string, showSuccess = false) => {
     try {
       let fileName = ProfileKey + id;
+
+      // If removing active profile, set active profile to default
+      if (activeProfile.id == id) {
+        setActiveProfile(readProfile("default"));
+      }
+
+      setProfileList((prevState) => prevState.filter((item) => item.id !== id));
       deleteLocalStorage(fileName);
-      setProfileList((prevState) => {
-        const updatedProfiles = [...prevState.filter((item) => id !== item.id)];
-        return updatedProfiles;
-      });
+
       showSuccess
-        ? postToast("positive", `Removed profile: ${id}`)
-        : appLog(`Removed profile: ${id}`);
+        ? postToast("positive", `Removed profile: ${id}`, appLog)
+        : null;
     } catch (error) {
       error instanceof Error
         ? postToast("negative", error.message)
@@ -194,29 +199,20 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  useEffect(() => {
-    loadProfiles();
-  }, []);
-
-  useEffect(() => {
-    setActiveProfile(readProfile(activeProfileID));
-  }, [activeProfileID]);
-
   const value = {
-    activeProfileID,
-    setActiveProfileID,
+    saveActiveProfile,
     activeProfile,
     setActiveProfile,
     profileList,
+    setProfileList,
     writeProfile,
     readProfile,
-    profileSettings,
-    setProfileSettings,
     loadProfiles,
     addProfile,
     removeProfile,
     validateProfile,
     emptyProfileSettings,
+    sortProfileList,
   };
 
   return (

@@ -14,15 +14,11 @@ import {
   TooltipTrigger,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
-import { componentGap, componentWidth, postToast } from "../../modules";
 import { useProfile } from "../../contexts";
+import { componentGap, componentWidth, postToast } from "../../modules";
 
-interface ProfilesDialogProps {
-  profiles: Array<{ id: string; name: string }>;
-}
-
-export const ProfilesDialog: React.FC<ProfilesDialogProps> = ({ profiles }) => {
-  const { addProfile, removeProfile } = useProfile();
+export const ProfilesDialog = () => {
+  const { profileList, addProfile, removeProfile } = useProfile();
   const [newProfile, setNewProfile] = useState("");
 
   const handleAddProfile = () => {
@@ -88,7 +84,7 @@ export const ProfilesDialog: React.FC<ProfilesDialogProps> = ({ profiles }) => {
               </TooltipTrigger>
             </Flex>
             <TagGroup
-              items={profiles.filter((item) => item.id !== "default")}
+              items={profileList.filter((item) => item.id !== "default")}
               onRemove={(keys) => {
                 keys.forEach((key) => handleRemoveProfile(key.toString()));
               }}

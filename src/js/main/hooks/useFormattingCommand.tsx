@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ProfileSettings } from "../modules";
 import { UnitList } from "../modules/util";
-import { SignAgentProfileSettings } from "../hooks";
 
-export function useFormattingCommand(settings: SignAgentProfileSettings) {
+export function useFormattingCommand(settings: ProfileSettings) {
   const [formattingCommand, setFormattingCommand] = useState("");
 
   const createFormattingCommand = (): string => {

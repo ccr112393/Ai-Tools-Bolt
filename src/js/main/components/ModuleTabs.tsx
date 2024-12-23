@@ -1,12 +1,12 @@
 import { ActionGroup, Flex, Item, Text, View } from "@adobe/react-spectrum";
 import { Key, createElement, useState } from "react";
-import { DeveloperMenu, EnableDeveloperMode, ReloadButton } from "./index";
 import {
   ModuleType,
   RegistrationModule,
   RenameModule,
   SignAgentModule,
 } from "../modules";
+import { DeveloperMenu, EnableDeveloperMode, ReloadButton } from "./index";
 
 export const ModuleTabs = () => {
   const EnabledModules: ModuleType[] = [

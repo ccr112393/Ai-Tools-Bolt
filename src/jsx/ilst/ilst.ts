@@ -17,6 +17,10 @@ export const getDocumentHeight = (): number => {
   return currentDocument().height;
 };
 
+export const getSelectionCount = (): number => {
+  return currentDocument().selection.length;
+};
+
 export const convertToPoints = (value: number, unit: string): number => {
   var unitValue = UnitValue(`${value} ${unit}`);
   unitValue.convert("pt");
@@ -101,33 +105,6 @@ export function renamePathItems(search: string, replace: string): number {
   }
   return count;
 }
-
-// export function renameSelection(search: string, replace: string): number {
-//   var count = 0;
-//   var items = currentDocument().selection;
-//   for (let index = 0; index < items.length; index++) {
-//     if (items[index].name.indexOf(search) !== -1) {
-//       items[index].name = items[index].name.replace(search, replace);
-//       count++;
-//     }
-//   }
-//   return count;
-// }
-
-// export function renameSelectedLayers(search: string, replace: string): number {
-//   var count = 0;
-//   var items = currentDocument().selection;
-//   for (let index = 0; index < items.length; index++) {
-//     if (
-//       items[index].name.indexOf(search) !== -1 &&
-//       items[index].typename === "Layer"
-//     ) {
-//       items[index].name = items[index].name.replace(search, replace);
-//       count++;
-//     }
-//   }
-//   return count;
-// }
 
 export function renameSelectedPaths(
   search: string,

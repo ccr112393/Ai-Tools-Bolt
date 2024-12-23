@@ -1,14 +1,14 @@
-import { Flex, Item, Picker } from "@adobe/react-spectrum";
+import { ComboBox, Flex, Item } from "@adobe/react-spectrum";
+import { useProfile } from "../../contexts";
 import { componentGap, componentGapDouble } from "../../modules";
 import { ProfilesDialog } from "./ProfilesDialog";
-import { useProfile } from "../../contexts";
 
 export const ProfileBar = () => {
-  const { activeProfileID, setActiveProfileID, profileList, setActiveProfile } =
+  const { profileList, activeProfile, setActiveProfile, readProfile } =
     useProfile();
 
   const handleProfileChange = (profileID: string) => {
-    setActiveProfileID(profileID);
+    setActiveProfile(readProfile(profileID));
   };
 
   return (
@@ -18,14 +18,15 @@ export const ProfileBar = () => {
       marginBottom={componentGapDouble}
       gap={componentGap}
     >
-      <Picker
-        selectedKey={activeProfileID}
+      <ComboBox
+        selectedKey={activeProfile.id}
         onSelectionChange={(key) => handleProfileChange(key as string)}
-        items={profileList.filter((item) => item.name !== "")}
+        items={profileList}
+        flex
       >
         {(item) => <Item key={item.id}>{item.name}</Item>}
-      </Picker>
-      <ProfilesDialog profiles={profileList} />
+      </ComboBox>
+      <ProfilesDialog />
     </Flex>
   );
 };

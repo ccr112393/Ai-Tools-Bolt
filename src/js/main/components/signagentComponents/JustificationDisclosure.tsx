@@ -1,20 +1,20 @@
 import {
-  Disclosure,
-  DisclosureTitle,
-  StatusLight,
-  ContextualHelp,
-  Content,
-  Well,
-  DisclosurePanel,
-  Grid,
   Checkbox,
-  Picker,
+  Content,
+  ContextualHelp,
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
+  Grid,
   Item,
+  Picker,
+  StatusLight,
   Text,
+  Well,
 } from "@adobe/react-spectrum";
 
-import { componentGap, componentWidth } from "../../modules/util";
 import { useLog, useProfile } from "../../contexts";
+import { componentGap, componentWidth } from "../../modules/util";
 
 import { emptyProfileSettings, ProfileSettings } from "../../modules";
 

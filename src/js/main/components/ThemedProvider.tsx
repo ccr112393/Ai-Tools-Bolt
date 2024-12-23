@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { Provider, darkTheme, lightTheme } from "@adobe/react-spectrum";
+import React, { useEffect, useState } from "react";
 import { subscribeBackgroundColor } from "../../lib/utils/bolt";
 import { useLog } from "../contexts/LogContext";
 import { logCaughtError } from "../modules";

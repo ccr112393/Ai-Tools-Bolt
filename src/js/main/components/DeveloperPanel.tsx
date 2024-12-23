@@ -1,17 +1,21 @@
 import {
+  Accordion,
   ActionButton,
   Content,
   Dialog,
   DialogTrigger,
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
   Divider,
   Flex,
   Heading,
   Item,
+  ListBox,
   Menu,
   MenuTrigger,
   SubmenuTrigger,
   Text,
-  TextArea,
 } from "@adobe/react-spectrum";
 import Bug from "@spectrum-icons/workflow/Bug";
 import Code from "@spectrum-icons/workflow/Code";
@@ -19,12 +23,12 @@ import Delete from "@spectrum-icons/workflow/Delete";
 import FileJson from "@spectrum-icons/workflow/FileJson";
 import PushNotification from "@spectrum-icons/workflow/PushNotification";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
-import { useState } from "react";
 import { openLinkInBrowser } from "../../lib/utils/bolt";
 import { useLog } from "../contexts/LogContext";
 import {
   componentGap,
   getLocalStorageLength,
+  getLocalStorageList,
   iconMarginAdjust,
   menuIconMargin,
   menuTextMargin,
@@ -34,7 +38,6 @@ import {
 export const EnableDeveloperMode = true;
 
 export const DeveloperMenu = () => {
-  const [storageCount, setStorageCount] = useState(localStorage.length);
   const { internalLog, appLog } = useLog();
 
   function handleAction(action: string) {
@@ -78,15 +81,49 @@ export const DeveloperMenu = () => {
           {/* <Text>Log</Text> */}
         </ActionButton>
         <Dialog>
-          <Heading>Internal Log</Heading>
+          <Heading>Inspector</Heading>
           <Divider />
           <Content>
-            <pre>{internalLog}</pre>
+            <Accordion isQuiet>
+              <Disclosure>
+                <DisclosureTitle>Stored Files</DisclosureTitle>
+                <DisclosurePanel>
+                  <ListBox
+                    items={getLocalStorageList().map((filename) => ({
+                      id: filename,
+                      name: filename,
+                    }))}
+                  >
+                    {(item) => <Item key={item.id}>{item.name}</Item>}
+                  </ListBox>
+                </DisclosurePanel>
+              </Disclosure>
+              {/* <Disclosure>
+                <DisclosureTitle>Stored Profiles</DisclosureTitle>
+                <DisclosurePanel>
+                  <ListBox
+                    items={getLocalStorageProfiles().map((filename) => ({
+                      id: filename,
+                      name: filename,
+                    }))}
+                  >
+                    {(item) => <Item key={item.id}>{item.name}</Item>}
+                  </ListBox>
+                </DisclosurePanel>
+              </Disclosure> */}
+
+              <Disclosure>
+                <DisclosureTitle>Internal Log</DisclosureTitle>
+                <DisclosurePanel>
+                  <pre>{internalLog}</pre>
+                </DisclosurePanel>
+              </Disclosure>
+            </Accordion>
           </Content>
         </Dialog>
       </DialogTrigger>
-      <MenuTrigger>
-        <ActionButton onPress={() => setStorageCount(getLocalStorageLength())}>
+      <MenuTrigger align="end">
+        <ActionButton>
           <Code size="S" />
           {/* <Text>Developer</Text> */}
         </ActionButton>
@@ -102,7 +139,7 @@ export const DeveloperMenu = () => {
           <Item key="clearStorage">
             <Delete size="S" slot="icon" margin={menuIconMargin} />
             <Text marginStart={menuTextMargin}>
-              Clear Storage [{storageCount}]
+              Clear Storage [{getLocalStorageLength()}]
             </Text>
           </Item>
 

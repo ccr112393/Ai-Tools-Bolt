@@ -1,27 +1,27 @@
 import {
-  Disclosure,
-  DisclosureTitle,
-  StatusLight,
-  ContextualHelp,
-  Content,
-  Well,
-  DisclosurePanel,
-  Grid,
   Checkbox,
-  Picker,
-  Item,
+  Content,
+  ContextualHelp,
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
   Flex,
+  Grid,
+  Item,
+  Picker,
+  StatusLight,
   Text,
+  Well,
 } from "@adobe/react-spectrum";
 import { NumberFieldDefault, UnitPicker } from "..";
+import { useProfile } from "../../contexts";
 import {
   componentGap,
   componentWidth,
   componentWidth3Quarters,
   componentWidthHalf,
+  emptyProfileSettings,
 } from "../../modules";
-import { emptyProfileSettings } from "../../modules";
-import { useProfile } from "../../contexts";
 
 export const TextOptionsDisclosure = () => {
   const { activeProfile, setActiveProfile } = useProfile();

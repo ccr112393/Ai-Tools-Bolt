@@ -29,26 +29,20 @@ import {
   TextOptionsDisclosure,
 } from "../components";
 
-import { useFormattingCommand } from "../hooks/";
+import { useProfile } from "../contexts";
 import { useLog } from "../contexts/LogContext";
-import { ProfileProvider, useProfile } from "../contexts";
+import { useFormattingCommand } from "../hooks/";
 
 export function SignAgentComponent() {
   const { appLog } = useLog();
   const {
-    activeProfileID,
-    setActiveProfileID,
     activeProfile,
     setActiveProfile,
-    profileList,
-    writeProfile,
+    saveActiveProfile,
     readProfile,
-    profileSettings,
-    setProfileSettings,
     loadProfiles,
-    addProfile,
-    removeProfile,
-    validateProfile,
+    profileList,
+    sortProfileList,
   } = useProfile();
 
   const [colorList, setColorList] = useState([
@@ -56,7 +50,7 @@ export function SignAgentComponent() {
     { id: "textcolor", name: "Text Color" },
   ]);
 
-  const formattingCommand = useFormattingCommand(profileSettings);
+  const formattingCommand = useFormattingCommand(activeProfile);
 
   const loadColorList = (hideSuccess = false) => {
     const storedSettings = readLocalStorage("colorList", hideSuccess);
@@ -66,83 +60,94 @@ export function SignAgentComponent() {
     }
   };
 
+  const handleAction = (action: string) => {
+    switch (action) {
+      case "readLayer":
+        // TODO
+        break;
+
+      case "saveProfile":
+        saveActiveProfile(true);
+        break;
+
+      case "revertProfile":
+        setActiveProfile(readProfile(activeProfile.id));
+        postToast("positive", "Profile settings reverted");
+        break;
+
+      case "apply":
+        evalTS("getSelectionCount").then((count) => {
+          if (count > 0) {
+            evalTS("renameSelectedPaths", "", formattingCommand, true)
+              .catch((err) => {
+                appLog(err);
+                postToast("negative", err);
+              })
+              .then((result) => {
+                result
+                  ? postToast("positive", "Formatting command applied")
+                  : postToast("negative", "Unable to apply formatting command");
+              });
+          } else {
+            postToast("neutral", "No path items selected");
+          }
+        });
+
+        break;
+
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
+    loadProfiles();
     loadColorList(true); // Load color list
   }, []);
 
   return (
-    <ProfileProvider>
-      <Flex direction={"column"} alignSelf={"center"}>
-        <Heading level={2}>SignAgent™ Tools</Heading>
-        <ProfileBar />
-        <Accordion allowsMultipleExpanded>
-          <GettingStartedDisclosure />
-          <JustificationDisclosure />
-          <ColorDisclosure colorList={colorList} setColorList={setColorList} />
-          <TextOptionsDisclosure />
-        </Accordion>
+    <Flex direction={"column"} alignSelf={"center"}>
+      <Heading level={2}>SignAgent™ Tools</Heading>
+      <ProfileBar />
+      <Accordion allowsMultipleExpanded>
+        <GettingStartedDisclosure />
+        <JustificationDisclosure />
+        <ColorDisclosure colorList={colorList} setColorList={setColorList} />
+        <TextOptionsDisclosure />
+      </Accordion>
 
-        <Well marginTop={componentGap} isHidden={formattingCommand == ""}>
-          <Text>{formattingCommand}</Text>
-        </Well>
-        <Flex justifyContent={"space-between"} marginTop={"size-200"}>
-          <ActionGroup
-            overflowMode="collapse"
-            buttonLabelBehavior="hide"
-            onAction={(key: React.Key) => {
-              switch (key) {
-                case "readLayer":
-                  break;
-
-                case "saveProfile":
-                  writeProfile(activeProfile);
-                  break;
-
-                case "revertProfile":
-                  readProfile(activeProfileID);
-                  postToast("positive", "Profile settings reverted");
-                  break;
-
-                default:
-                  break;
-              }
-            }}
-          >
-            <Item key="readLayer">
-              <Import size="S" marginStart={iconMarginAdjust} />
-              <Text>Read Selected Layer</Text>
-            </Item>
-            <Item key="saveProfile">
-              <SaveAsFloppy size="S" marginStart={iconMarginAdjust} />
-              <Text>Save Profile Settings</Text>
-            </Item>
-            <Item key="revertProfile">
-              <Revert size="S" marginStart={iconMarginAdjust} />
-              <Text>Revert to last profile save</Text>
-            </Item>
-          </ActionGroup>
-          <Button
-            variant="accent"
-            onPress={() =>
-              evalTS("renameSelectedPaths", "", formattingCommand, true)
-                .catch((err) => {
-                  appLog(err);
-                  postToast("negative", err);
-                })
-                .then((result) => {
-                  result
-                    ? postToast("positive", "Formatting command applied")
-                    : postToast(
-                        "negative",
-                        "Unable to apply formatting command"
-                      );
-                })
-            }
-          >
-            Apply
-          </Button>
-        </Flex>
+      <Well marginTop={componentGap} isHidden={formattingCommand == ""}>
+        <Text>{formattingCommand}</Text>
+      </Well>
+      <Flex justifyContent={"space-between"} marginTop={"size-200"}>
+        <ActionGroup
+          overflowMode="collapse"
+          buttonLabelBehavior="hide"
+          onAction={(key) => {
+            handleAction(key as string);
+          }}
+        >
+          <Item key="readLayer">
+            <Import size="S" marginStart={iconMarginAdjust} />
+            <Text>Read Selected Layer</Text>
+          </Item>
+          <Item key="saveProfile">
+            <SaveAsFloppy size="S" marginStart={iconMarginAdjust} />
+            <Text>Save Profile Settings</Text>
+          </Item>
+          <Item key="revertProfile">
+            <Revert size="S" marginStart={iconMarginAdjust} />
+            <Text>Revert to last profile save</Text>
+          </Item>
+        </ActionGroup>
+        <Button
+          variant="accent"
+          isDisabled={formattingCommand.length <= 0}
+          onPress={() => handleAction("apply")}
+        >
+          Apply
+        </Button>
       </Flex>
-    </ProfileProvider>
+    </Flex>
   );
 }

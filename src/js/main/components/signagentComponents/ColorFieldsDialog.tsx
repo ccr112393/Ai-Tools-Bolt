@@ -16,6 +16,7 @@ import {
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 
+import { useLog } from "../../contexts/LogContext";
 import {
   componentGap,
   componentWidth,
@@ -24,7 +25,6 @@ import {
   writeLocalStorage,
 } from "../../modules/util";
 import { SignAgentColor, SignAgentColorList } from "../index";
-import { useLog } from "../../contexts/LogContext";
 
 export interface ColorFieldsDialogProps {
   colorList: SignAgentColor[];

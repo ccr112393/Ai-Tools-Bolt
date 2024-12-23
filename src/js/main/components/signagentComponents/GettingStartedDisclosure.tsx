@@ -1,12 +1,12 @@
 import {
-  Disclosure,
-  DisclosureTitle,
-  DisclosurePanel,
   Content,
-  Well,
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
+  Divider,
   StatusLight,
   Text,
-  Divider,
+  Well,
 } from "@adobe/react-spectrum";
 import { SignAgentDisclaimer } from "..";
 import { componentGap } from "../../modules/util";

@@ -7,7 +7,6 @@ import {
   Grid,
   Heading,
   Text,
-  View,
 } from "@adobe/react-spectrum";
 import Settings from "@spectrum-icons/workflow/Settings";
 import { Fragment } from "react/jsx-runtime";
