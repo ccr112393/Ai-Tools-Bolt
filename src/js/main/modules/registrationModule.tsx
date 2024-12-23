@@ -29,8 +29,10 @@ import {
   readLocalStorage,
   writeLocalStorage,
 } from "./util";
+import { useLog } from "../contexts/LogContext";
 
 export function RegistrationComponent() {
+  const { appLog } = useLog();
   const [unit, setUnit] = useState("inch");
   const [layerName, setLayerName] = useState("Registration");
   const [diameter, setDiameter] = useState(0.25);
@@ -245,11 +247,10 @@ export function RegistrationComponent() {
               marksDistanceValue
             )
               .catch((err) => {
-                console.log(err);
+                appLog(err);
                 postToast("negative", err);
               })
               .then((result) => {
-                console.log(result);
                 result
                   ? postToast("positive", "Registration Applied")
                   : postToast("negative", "Unable to apply registration");

@@ -1,24 +1,16 @@
 import { Flex, Item, Picker } from "@adobe/react-spectrum";
-import {
-  componentGap,
-  componentGapDouble,
-  SignAgentProfile,
-} from "../../modules";
+import { componentGap, componentGapDouble } from "../../modules";
 import { ProfilesDialog } from "./ProfilesDialog";
+import { useProfile } from "../../contexts";
 
-export interface ProfileBarProps {
-  profiles: SignAgentProfile[];
-  setProfiles: React.Dispatch<React.SetStateAction<SignAgentProfile[]>>;
-  activeProfile: string;
-  setActiveProfile: React.Dispatch<React.SetStateAction<string>>;
-}
+export const ProfileBar = () => {
+  const { activeProfileID, setActiveProfileID, profileList, setActiveProfile } =
+    useProfile();
 
-export const ProfileBar: React.FC<ProfileBarProps> = ({
-  profiles,
-  setProfiles,
-  activeProfile,
-  setActiveProfile,
-}) => {
+  const handleProfileChange = (profileID: string) => {
+    setActiveProfileID(profileID);
+  };
+
   return (
     <Flex
       direction="row"
@@ -27,13 +19,13 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({
       gap={componentGap}
     >
       <Picker
-        selectedKey={activeProfile}
-        onSelectionChange={(key) => setActiveProfile(key as string)}
-        items={profiles}
+        selectedKey={activeProfileID}
+        onSelectionChange={(key) => handleProfileChange(key as string)}
+        items={profileList.filter((item) => item.name !== "")}
       >
         {(item) => <Item key={item.id}>{item.name}</Item>}
       </Picker>
-      <ProfilesDialog profiles={profiles} setProfiles={setProfiles} />
+      <ProfilesDialog profiles={profileList} />
     </Flex>
   );
 };

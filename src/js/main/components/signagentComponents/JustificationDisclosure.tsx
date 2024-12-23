@@ -14,43 +14,38 @@ import {
 } from "@adobe/react-spectrum";
 
 import { componentGap, componentWidth } from "../../modules/util";
+import { useLog, useProfile } from "../../contexts";
 
-export interface JustificationDisclosureSettings {
-  hasHorizontalJustify: boolean;
-  hasVerticalJustify: boolean;
-  horizontalJustify: string;
-  verticalJustify: string;
-}
+import { emptyProfileSettings, ProfileSettings } from "../../modules";
 
-export interface JustificationDisclosureProps {
-  hasHorizontalJustify: boolean;
-  setHasHorizontalJustify: (value: boolean) => void;
-  hasVerticalJustify: boolean;
-  setHasVerticalJustify: (value: boolean) => void;
-  horizontalJustify: string;
-  setHorizontalJustify: (value: string) => void;
-  verticalJustify: string;
-  setVerticalJustify: (value: string) => void;
-}
+export const JustificationDisclosure = () => {
+  const { appLog } = useLog();
+  const { activeProfile, setActiveProfile } = useProfile();
+  const justification =
+    activeProfile.justification || emptyProfileSettings.justification;
 
-export const JustificationDisclosure: React.FC<
-  JustificationDisclosureProps
-> = ({
-  hasHorizontalJustify,
-  setHasHorizontalJustify,
-  hasVerticalJustify,
-  setHasVerticalJustify,
-  horizontalJustify,
-  setHorizontalJustify,
-  verticalJustify,
-  setVerticalJustify,
-}) => {
+  const updateSettings = (
+    key: keyof ProfileSettings["justification"],
+    value: any
+  ) => {
+    appLog(`Updating ${key} to ${value}`);
+    setActiveProfile((prevSettings) => ({
+      ...prevSettings,
+      justification: {
+        ...prevSettings.justification,
+        [key]: value,
+      },
+    }));
+  };
+
   return (
     <Disclosure id="justification">
       <DisclosureTitle>
         <Text flex>Justification</Text>
         <StatusLight
-          isDisabled={!hasHorizontalJustify && !hasVerticalJustify}
+          isDisabled={
+            !justification.hasHorizontal && !justification.hasVertical
+          }
           variant="info"
           marginTop={-7}
           marginBottom={-10}
@@ -72,15 +67,17 @@ export const JustificationDisclosure: React.FC<
           gap={"size-100"}
         >
           <Checkbox
-            isSelected={hasHorizontalJustify}
-            onChange={setHasHorizontalJustify}
+            isSelected={justification.hasHorizontal}
+            onChange={(isSelected) =>
+              updateSettings("hasHorizontal", isSelected)
+            }
           >
             Horizontal
           </Checkbox>
           <Picker
             width={componentWidth}
-            selectedKey={horizontalJustify}
-            onSelectionChange={(key) => setHorizontalJustify(key as string)}
+            selectedKey={justification.horizontal}
+            onSelectionChange={(key) => updateSettings("horizontal", key)}
           >
             <Item key="left">Left</Item>
             <Item key="center">Center</Item>
@@ -88,15 +85,15 @@ export const JustificationDisclosure: React.FC<
           </Picker>
 
           <Checkbox
-            isSelected={hasVerticalJustify}
-            onChange={setHasVerticalJustify}
+            isSelected={justification.hasVertical}
+            onChange={(isSelected) => updateSettings("hasVertical", isSelected)}
           >
             Vertical
           </Checkbox>
           <Picker
             width={componentWidth}
-            selectedKey={verticalJustify}
-            onSelectionChange={(key) => setVerticalJustify(key as string)}
+            selectedKey={justification.vertical}
+            onSelectionChange={(key) => updateSettings("vertical", key)}
           >
             <Item key="top">Top</Item>
             <Item key="middle">Middle</Item>

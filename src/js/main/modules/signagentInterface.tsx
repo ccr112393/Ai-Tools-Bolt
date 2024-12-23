@@ -1,11 +1,7 @@
 import { Icon } from "@adobe/react-spectrum";
-import {
-  ColorDisclosureSettings,
-  JustificationDisclosureSettings,
-  TextOptionsDisclosureSettings,
-} from "../components";
 import { ModuleType } from "./_moduleInterface";
 import { SignAgentComponent } from "./signagentModule";
+import { ProfileProvider } from "../contexts";
 
 export const SignAgentIcon = (
   <Icon>
@@ -17,36 +13,72 @@ export const SignAgentIcon = (
   </Icon>
 );
 
-export const SignAgentSettingsKey = "signagentSettings";
+export const SignAgentKey = "SAT";
+export const ProfileKey = SignAgentKey + "_profile_";
 
-export interface SignAgentSettings
-  extends JustificationDisclosureSettings,
-    ColorDisclosureSettings,
-    TextOptionsDisclosureSettings {}
-
-export interface SignAgentProfile {
+export interface ProfileSettings {
   id: string;
   name: string;
+  justification: {
+    hasHorizontal: boolean;
+    hasVertical: boolean;
+    horizontal: string;
+    vertical: string;
+  };
+  color: {
+    hasColor: boolean;
+    hasFillColor: boolean;
+    hasStrokeColor: boolean;
+    color: string;
+    fillColor: string;
+    strokeColor: string;
+  };
+  textOptions: {
+    hasTextCase: boolean;
+    textCase: string;
+    hasLeading: boolean;
+    leading: number;
+    leadingUnit: string;
+  };
 }
 
-export interface SignAgentProfileList {
-  profiles: SignAgentProfile[];
-}
+export const emptyProfileSettings: ProfileSettings = {
+  id: "default",
+  name: "Default",
+  justification: {
+    hasHorizontal: false,
+    hasVertical: false,
+    horizontal: "left",
+    vertical: "top",
+  },
+  color: {
+    hasColor: false,
+    hasFillColor: false,
+    hasStrokeColor: false,
+    color: "",
+    fillColor: "",
+    strokeColor: "",
+  },
+  textOptions: {
+    hasTextCase: false,
+    textCase: "uppercase",
+    hasLeading: false,
+    leading: 3,
+    leadingUnit: "point",
+  },
+};
 
-export interface SignAgentColor {
-  id: string;
-  name: string;
+export default function SignAgentWrapper() {
+  return (
+    <ProfileProvider>
+      <SignAgentComponent />
+    </ProfileProvider>
+  );
 }
-
-export interface SignAgentColorList {
-  colorList: SignAgentColor[];
-}
-
-export default SignAgentComponent;
 
 export const SignAgentModule: ModuleType = {
-  key: "sat",
+  key: SignAgentKey,
   name: "SignAgent™ Tools",
-  component: SignAgentComponent,
+  component: SignAgentWrapper,
   icon: SignAgentIcon,
 };

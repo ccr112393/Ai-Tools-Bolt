@@ -1,14 +1,19 @@
 import { ActionGroup, Flex, Item, Text, View } from "@adobe/react-spectrum";
 import { Key, createElement, useState } from "react";
-import { ModuleType } from "../modules/_moduleInterface";
-import { RegistrationModule } from "../modules/registrationInterface";
-import { RenameModule } from "../modules/renameInterface";
-import { SignAgentModule } from "../modules/signagentInterface";
 import { DeveloperMenu, EnableDeveloperMode, ReloadButton } from "./index";
-
-const modules = [RegistrationModule, RenameModule, SignAgentModule];
+import {
+  ModuleType,
+  RegistrationModule,
+  RenameModule,
+  SignAgentModule,
+} from "../modules";
 
 export const ModuleTabs = () => {
+  const EnabledModules: ModuleType[] = [
+    RegistrationModule,
+    RenameModule,
+    SignAgentModule,
+  ];
   const [selectedTab, setSelectedTab] = useState<string>("reg");
 
   const handleTabChange = (key: Key) => {
@@ -19,14 +24,14 @@ export const ModuleTabs = () => {
     <>
       <Flex direction={"row"} justifyContent={"space-between"}>
         <ActionGroup
-          items={modules}
+          items={EnabledModules}
           selectionMode="single"
           onAction={handleTabChange}
           defaultSelectedKeys={["reg"]}
           selectedKeys={[selectedTab]}
           buttonLabelBehavior="hide"
         >
-          {(item: ModuleType) => (
+          {(item) => (
             <Item key={item.key}>
               {item.icon}
               <Text>{item.name}</Text>
@@ -36,7 +41,7 @@ export const ModuleTabs = () => {
         {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
       </Flex>
       <View>
-        {modules.map((item: ModuleType) => (
+        {EnabledModules.map((item) => (
           <View key={item.key} isHidden={selectedTab !== item.key}>
             {createElement(item.component)}
           </View>

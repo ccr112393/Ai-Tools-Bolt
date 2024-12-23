@@ -19,47 +19,31 @@ import {
   componentWidth,
   componentWidth3Quarters,
   componentWidthHalf,
-} from "../../modules/util";
+} from "../../modules";
+import { emptyProfileSettings } from "../../modules";
+import { useProfile } from "../../contexts";
 
-export interface TextOptionsDisclosureSettings {
-  hasTextCase: boolean;
-  textCase: string;
-  hasLeading: boolean;
-  leading: number;
-  leadingUnit: string;
-}
+export const TextOptionsDisclosure = () => {
+  const { activeProfile, setActiveProfile } = useProfile();
+  const textOptions =
+    activeProfile.textOptions || emptyProfileSettings.textOptions;
 
-export interface TextOptionsDisclosureProps {
-  hasTextCase: boolean;
-  setHasTextCase: (value: boolean) => void;
-  textCase: string;
-  setTextCase: (value: string) => void;
-  hasLeading: boolean;
-  setHasLeading: (value: boolean) => void;
-  leading: number;
-  setLeading: (value: number) => void;
-  leadingUnit: string;
-  setLeadingUnit: (value: string) => void;
-}
+  const updateSettings = (key: string, value: any) => {
+    setActiveProfile((prevSettings) => ({
+      ...prevSettings,
+      textOptions: {
+        ...prevSettings.textOptions,
+        [key]: value,
+      },
+    }));
+  };
 
-export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
-  hasTextCase,
-  setHasTextCase,
-  textCase,
-  setTextCase,
-  hasLeading,
-  setHasLeading,
-  leading,
-  setLeading,
-  leadingUnit,
-  setLeadingUnit,
-}) => {
   return (
     <Disclosure id="textcase">
       <DisclosureTitle>
         <Text flex>Text Options</Text>
         <StatusLight
-          isDisabled={!hasTextCase}
+          isDisabled={!textOptions.hasTextCase && !textOptions.hasLeading}
           variant="info"
           marginTop={-7}
           marginBottom={-10}
@@ -79,13 +63,16 @@ export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
           maxWidth={"size-4600"}
           gap={"size-100"}
         >
-          <Checkbox isSelected={hasTextCase} onChange={setHasTextCase}>
+          <Checkbox
+            isSelected={textOptions.hasTextCase}
+            onChange={(isSelected) => updateSettings("hasTextCase", isSelected)}
+          >
             Text Case
           </Checkbox>
           <Picker
-            selectedKey={textCase}
+            selectedKey={textOptions.textCase}
             onSelectionChange={(key) => {
-              setTextCase(key as string);
+              updateSettings("textCase", key);
             }}
             width={componentWidth}
           >
@@ -93,21 +80,24 @@ export const TextOptionsDisclosure: React.FC<TextOptionsDisclosureProps> = ({
             <Item key={"lowercase"}>lowercase</Item>
             <Item key={"titlecase"}>Title Case</Item>
           </Picker>
-          <Checkbox isSelected={hasLeading} onChange={setHasLeading}>
+          <Checkbox
+            isSelected={textOptions.hasLeading}
+            onChange={(isSelected) => updateSettings("hasLeading", isSelected)}
+          >
             Leading
           </Checkbox>
           <Flex width={componentWidth}>
             <NumberFieldDefault
               width={componentWidthHalf}
               marginEnd={componentGap}
-              value={leading}
-              onChange={setLeading}
+              value={textOptions.leading}
+              onChange={(value) => updateSettings("leading", value)}
             />
             <UnitPicker
               abbreviate={true}
-              selectedKey={leadingUnit}
+              selectedKey={textOptions.leadingUnit}
               onSelectionChange={(key) => {
-                setLeadingUnit(key as string);
+                updateSettings("leadingUnit", key);
               }}
               width={componentWidthHalf}
               menuWidth={componentWidth3Quarters}

@@ -14,56 +14,46 @@ import {
 } from "@adobe/react-spectrum";
 import { ColorFieldsDialog } from "..";
 import { componentGap, componentWidth } from "../../modules/util";
-import { SignAgentColor } from "../../modules";
+import { useProfile } from "../../contexts";
 
-export interface ColorDisclosureSettings {
-  hasColor: boolean;
-  hasFillColor: boolean;
-  hasStrokeColor: boolean;
-  color: string;
-  fillColor: string;
-  strokeColor: string;
+export interface SignAgentColor {
+  id: string;
+  name: string;
+}
+
+export interface SignAgentColorList {
+  colorList: SignAgentColor[];
 }
 
 export interface ColorDisclosureProps {
-  hasColor: boolean;
-  setHasColor: (value: boolean) => void;
-  hasFillColor: boolean;
-  setHasFillColor: (value: boolean) => void;
-  hasStrokeColor: boolean;
-  setHasStrokeColor: (value: boolean) => void;
-  color: string;
-  setColor: (value: string) => void;
-  fillColor: string;
-  setFillColor: (value: string) => void;
-  strokeColor: string;
-  setStrokeColor: (value: string) => void;
   colorList: SignAgentColor[];
   setColorList: React.Dispatch<React.SetStateAction<SignAgentColor[]>>;
 }
 
 export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
-  hasColor,
-  setHasColor,
-  hasFillColor,
-  setHasFillColor,
-  hasStrokeColor,
-  setHasStrokeColor,
-  color,
-  setColor,
-  fillColor,
-  setFillColor,
-  strokeColor,
-  setStrokeColor,
   colorList,
   setColorList,
 }) => {
+  const { activeProfile, setActiveProfile } = useProfile();
+  const color = activeProfile.color;
+  const updateSettings = (key: string, value: any) => {
+    setActiveProfile((prevSettings) => ({
+      ...prevSettings,
+      color: {
+        ...prevSettings.color,
+        [key]: value,
+      },
+    }));
+  };
+
   return (
     <Disclosure id="color">
       <DisclosureTitle>
         <Text flex>Color</Text>
         <StatusLight
-          isDisabled={!hasColor && !hasFillColor && !hasStrokeColor}
+          isDisabled={
+            !color.hasColor && !color.hasFillColor && !color.hasStrokeColor
+          }
           variant="info"
           marginTop={-7}
           marginBottom={-10}
@@ -88,38 +78,51 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
           maxWidth={"size-4600"}
           gap={"size-100"}
         >
-          <Checkbox isSelected={hasColor} onChange={setHasColor}>
+          <Checkbox
+            isSelected={color.hasColor}
+            onChange={(isSelected) => updateSettings("hasColor", isSelected)}
+          >
             Color
           </Checkbox>
           <Picker
             width={componentWidth}
             items={colorList}
-            selectedKey={color}
-            onSelectionChange={(key) => setColor(key as string)}
+            selectedKey={color.color}
+            onSelectionChange={(key) => updateSettings("color", key)}
           >
             {(item) => <Item key={item.id}>{item.name}</Item>}
           </Picker>
 
-          <Checkbox isSelected={hasFillColor} onChange={setHasFillColor}>
+          <Checkbox
+            isSelected={color.hasFillColor}
+            onChange={(isSelected) =>
+              updateSettings("hasFillColor", isSelected)
+            }
+          >
             Fill Color
           </Checkbox>
           <Picker
             width={componentWidth}
             items={colorList}
-            selectedKey={fillColor}
-            onSelectionChange={(key) => setFillColor(key as string)}
+            selectedKey={color.fillColor}
+            onSelectionChange={(key) => updateSettings("fillColor", key)}
           >
             {(item) => <Item key={item.id}>{item.name}</Item>}
           </Picker>
 
-          <Checkbox isSelected={hasStrokeColor} onChange={setHasStrokeColor}>
+          <Checkbox
+            isSelected={color.hasStrokeColor}
+            onChange={(isSelected) =>
+              updateSettings("hasStrokeColor", isSelected)
+            }
+          >
             Stroke Color
           </Checkbox>
           <Picker
             width={componentWidth}
             items={colorList}
-            selectedKey={strokeColor}
-            onSelectionChange={(key) => setStrokeColor(key as string)}
+            selectedKey={color.strokeColor}
+            onSelectionChange={(key) => updateSettings("strokeColor", key)}
           >
             {(item) => <Item key={item.id}>{item.name}</Item>}
           </Picker>

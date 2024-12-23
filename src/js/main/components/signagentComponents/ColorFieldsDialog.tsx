@@ -1,31 +1,30 @@
 import {
-  DialogTrigger,
   ActionButton,
-  Dialog,
-  Heading,
-  Divider,
-  Content,
-  Flex,
-  TextField,
-  ContextualHelp,
-  Well,
-  TagGroup,
-  Item,
   Button,
-  TooltipTrigger,
+  Content,
+  Dialog,
+  DialogTrigger,
+  Divider,
+  Flex,
+  Heading,
+  Item,
+  TagGroup,
+  TextField,
   Tooltip,
-  Footer,
+  TooltipTrigger,
+  Well,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 
 import {
-  componentWidth,
   componentGap,
+  componentWidth,
   formatFieldName,
   postToast,
   writeLocalStorage,
 } from "../../modules/util";
-import { SignAgentColor, SignAgentColorList } from "../../modules";
+import { SignAgentColor, SignAgentColorList } from "../index";
+import { useLog } from "../../contexts/LogContext";
 
 export interface ColorFieldsDialogProps {
   colorList: SignAgentColor[];
@@ -36,6 +35,7 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
   colorList,
   setColorList,
 }) => {
+  const { appLog } = useLog();
   const [newColor, setNewColor] = useState("");
 
   const saveColorList = () => {
@@ -92,7 +92,11 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
                       ]);
                       setNewColor("");
                     } else {
-                      postToast("negative", "Field name cannot be empty");
+                      postToast(
+                        "negative",
+                        "Field name cannot be empty",
+                        appLog
+                      );
                     }
                   }}
                 >

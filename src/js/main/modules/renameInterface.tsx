@@ -14,10 +14,13 @@ export const RenameIcon = (
     </svg>
   </Icon>
 );
+
+export const RenameKey = "RNM";
+
 export default RenameComponent;
 
 export const RenameModule: ModuleType = {
-  key: "rnm",
+  key: RenameKey,
   name: "Rename",
   component: RenameComponent,
   icon: RenameIcon,
