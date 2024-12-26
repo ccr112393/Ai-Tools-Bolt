@@ -41,8 +41,6 @@ export function SignAgentComponent() {
     saveActiveProfile,
     readProfile,
     loadProfiles,
-    profileList,
-    sortProfileList,
   } = useProfile();
 
   const [colorList, setColorList] = useState([
@@ -52,8 +50,8 @@ export function SignAgentComponent() {
 
   const formattingCommand = useFormattingCommand(activeProfile);
 
-  const loadColorList = (hideSuccess = false) => {
-    const storedSettings = readLocalStorage("colorList", hideSuccess);
+  const loadColorList = (showSuccess = false) => {
+    const storedSettings = readLocalStorage("colorList", showSuccess);
     if (storedSettings) {
       const settings: SignAgentColorList = storedSettings;
       setColorList(settings.colorList);
@@ -102,7 +100,7 @@ export function SignAgentComponent() {
 
   useEffect(() => {
     loadProfiles();
-    loadColorList(true); // Load color list
+    loadColorList(); // Load color list
   }, []);
 
   return (

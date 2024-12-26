@@ -31,6 +31,7 @@ interface ProfileContextType {
   removeProfile: (id: string, showSuccess?: boolean) => void;
 
   // Return Functions
+  getProfileListNoDefault: () => ProfileListType[];
   sortProfileList: (listToSort: ProfileListType[]) => ProfileListType[];
   readProfile: (profileID: string, showSuccess?: boolean) => ProfileSettings;
   validateProfile: (newProfile: string) => boolean;
@@ -47,6 +48,10 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   const [activeProfile, setActiveProfile] =
     useState<ProfileSettings>(emptyProfileSettings);
+
+  const getProfileListNoDefault = (): ProfileListType[] => {
+    return profileList.filter((item) => item.id !== "default");
+  };
 
   const sortProfileList = (listToSort: ProfileListType[]) => {
     let defaultProfile = listToSort.find((profile) => profile.id === "default");
@@ -213,6 +218,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     removeProfile,
     validateProfile,
     emptyProfileSettings,
+    getProfileListNoDefault,
     sortProfileList,
   };
 

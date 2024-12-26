@@ -63,10 +63,10 @@ export function RegistrationComponent() {
     writeLocalStorage(RegistrationSettingsKey, settings);
   };
 
-  const loadSettings = (hideSuccess = false) => {
+  const loadSettings = (showSuccess = false) => {
     const storedSettings = readLocalStorage(
       RegistrationSettingsKey,
-      hideSuccess
+      showSuccess
     );
     if (storedSettings) {
       const settings: RegistrationSettings = storedSettings;

@@ -18,7 +18,7 @@ import { useProfile } from "../../contexts";
 import { componentGap, componentWidth, postToast } from "../../modules";
 
 export const ProfilesDialog = () => {
-  const { profileList, addProfile, removeProfile } = useProfile();
+  const { addProfile, removeProfile, getProfileListNoDefault } = useProfile();
   const [newProfile, setNewProfile] = useState("");
 
   const handleAddProfile = () => {
@@ -84,7 +84,7 @@ export const ProfilesDialog = () => {
               </TooltipTrigger>
             </Flex>
             <TagGroup
-              items={profileList.filter((item) => item.id !== "default")}
+              items={getProfileListNoDefault()}
               onRemove={(keys) => {
                 keys.forEach((key) => handleRemoveProfile(key.toString()));
               }}
