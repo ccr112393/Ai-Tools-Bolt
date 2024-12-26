@@ -9,16 +9,19 @@ import {
 } from "../modules";
 import { useLog } from "./LogContext";
 
-import { ProfileKey, ProfileSettings, emptyProfileSettings } from "../modules";
+import {
+  ProfileKey,
+  ProfileSettings,
+  ProfileListType,
+  emptyProfileSettings,
+} from "../modules";
 
 interface ProfileContextType {
   // States
   activeProfile: ProfileSettings;
   setActiveProfile: React.Dispatch<React.SetStateAction<ProfileSettings>>;
-  profileList: { id: string; name: string }[];
-  setProfileList: React.Dispatch<
-    React.SetStateAction<{ id: string; name: string }[]>
-  >;
+  profileList: ProfileListType[];
+  setProfileList: React.Dispatch<React.SetStateAction<ProfileListType[]>>;
 
   // Functions
   saveActiveProfile: (showSuccess?: boolean) => void;
@@ -28,9 +31,7 @@ interface ProfileContextType {
   removeProfile: (id: string, showSuccess?: boolean) => void;
 
   // Return Functions
-  sortProfileList: (
-    listToSort: { id: string; name: string }[]
-  ) => { id: string; name: string }[];
+  sortProfileList: (listToSort: ProfileListType[]) => ProfileListType[];
   readProfile: (profileID: string, showSuccess?: boolean) => ProfileSettings;
   validateProfile: (newProfile: string) => boolean;
 }
@@ -47,7 +48,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const [activeProfile, setActiveProfile] =
     useState<ProfileSettings>(emptyProfileSettings);
 
-  const sortProfileList = (listToSort: { id: string; name: string }[]) => {
+  const sortProfileList = (listToSort: ProfileListType[]) => {
     let defaultProfile = listToSort.find((profile) => profile.id === "default");
     let sortedList = listToSort
       .filter((profile) => profile.id !== "default")

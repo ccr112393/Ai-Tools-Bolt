@@ -16,6 +16,11 @@ export const SignAgentIcon = (
 export const SignAgentKey = "SAT";
 export const ProfileKey = SignAgentKey + "_profile_";
 
+export interface ProfileListType {
+  id: string;
+  name: string;
+}
+
 export interface ProfileSettings {
   id: string;
   name: string;
