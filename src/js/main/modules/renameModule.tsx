@@ -11,7 +11,7 @@ import {
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 import { evalTS } from "../../lib/utils/bolt";
-import { postToast } from "./util";
+import { useLog } from "../contexts";
 
 async function handleApply(
   selection: string,
@@ -51,6 +51,7 @@ async function handleApply(
 }
 
 export function RenameComponent() {
+  const { postToast } = useLog();
   const [textFind, setTextFind] = useState("");
   const [textReplace, setTextReplace] = useState("");
   const [selectedOption, setSelectedOption] = useState("layers");

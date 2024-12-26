@@ -21,7 +21,6 @@ import {
   componentGap,
   componentWidth,
   formatFieldName,
-  postToast,
   writeLocalStorage,
 } from "../../modules/util";
 import { SignAgentColor, SignAgentColorList } from "../index";
@@ -35,14 +34,14 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
   colorList,
   setColorList,
 }) => {
-  const { appLog } = useLog();
+  const { appLog, postToast } = useLog();
   const [newColor, setNewColor] = useState("");
 
   const saveColorList = () => {
     const settings: SignAgentColorList = {
       colorList,
     };
-    writeLocalStorage("colorList", settings);
+    writeLocalStorage("colorList", settings, postToast);
   };
 
   return (
@@ -92,11 +91,7 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
                       ]);
                       setNewColor("");
                     } else {
-                      postToast(
-                        "negative",
-                        "Field name cannot be empty",
-                        appLog
-                      );
+                      postToast("negative", "Field name cannot be empty");
                     }
                   }}
                 >

@@ -25,14 +25,13 @@ import {
 import {
   componentWidth,
   iconMarginAdjust,
-  postToast,
   readLocalStorage,
   writeLocalStorage,
 } from "./util";
 import { useLog } from "../contexts/LogContext";
 
 export function RegistrationComponent() {
-  const { appLog } = useLog();
+  const { appLog, postToast } = useLog();
   const [unit, setUnit] = useState("inch");
   const [layerName, setLayerName] = useState("Registration");
   const [diameter, setDiameter] = useState(0.25);
@@ -66,6 +65,7 @@ export function RegistrationComponent() {
   const loadSettings = (showSuccess = false) => {
     const storedSettings = readLocalStorage(
       RegistrationSettingsKey,
+      postToast,
       showSuccess
     );
     if (storedSettings) {

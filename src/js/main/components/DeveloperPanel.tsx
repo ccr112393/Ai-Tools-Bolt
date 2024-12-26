@@ -32,13 +32,12 @@ import {
   iconMarginAdjust,
   menuIconMargin,
   menuTextMargin,
-  postToast,
 } from "../modules";
 
 export const EnableDeveloperMode = true;
 
 export const DeveloperMenu = () => {
-  const { internalLog, appLog } = useLog();
+  const { internalLog, appLog, postToast } = useLog();
 
   function handleAction(action: string) {
     switch (action) {
@@ -49,16 +48,16 @@ export const DeveloperMenu = () => {
         openLinkInBrowser("http://localhost:8860/");
         break;
       case "toastPositive":
-        postToast("positive", "Positive Toast!", appLog);
+        postToast("positive", "Positive Toast!");
         break;
       case "toastNegative":
-        postToast("negative", "Negative Toast!", appLog);
+        postToast("negative", "Negative Toast!");
         break;
       case "toastInfo":
-        postToast("info", "Information Toast!", appLog);
+        postToast("info", "Information Toast!");
         break;
       case "toastNeutral":
-        postToast("neutral", "Neutral Toast!", appLog);
+        postToast("neutral", "Neutral Toast!");
         break;
       case "clearStorage":
         postToast("info", `Clearing local storage...[${localStorage.length}]`);
@@ -98,20 +97,6 @@ export const DeveloperMenu = () => {
                   </ListBox>
                 </DisclosurePanel>
               </Disclosure>
-              {/* <Disclosure>
-                <DisclosureTitle>Stored Profiles</DisclosureTitle>
-                <DisclosurePanel>
-                  <ListBox
-                    items={getLocalStorageProfiles().map((filename) => ({
-                      id: filename,
-                      name: filename,
-                    }))}
-                  >
-                    {(item) => <Item key={item.id}>{item.name}</Item>}
-                  </ListBox>
-                </DisclosurePanel>
-              </Disclosure> */}
-
               <Disclosure>
                 <DisclosureTitle>Internal Log</DisclosureTitle>
                 <DisclosurePanel>
@@ -129,7 +114,7 @@ export const DeveloperMenu = () => {
         </ActionButton>
         <Menu onAction={(key) => handleAction(key.toString())}>
           <Item key="reload">
-            <RotateCCWBold size="M" slot="icon" margin={menuIconMargin} />
+            <RotateCCWBold size="S" slot="icon" margin={menuIconMargin} />
             <Text marginStart={menuTextMargin}>Reload</Text>
           </Item>
           <Item key="openRemoteDebug">

@@ -11,12 +11,7 @@ import {
 import Import from "@spectrum-icons/workflow/Import";
 import SaveAsFloppy from "@spectrum-icons/workflow/SaveAsFloppy";
 import { useEffect, useState } from "react";
-import {
-  componentGap,
-  iconMarginAdjust,
-  postToast,
-  readLocalStorage,
-} from "./util";
+import { componentGap, iconMarginAdjust, readLocalStorage } from "./util";
 
 import Revert from "@spectrum-icons/workflow/Revert";
 import { evalTS } from "../../lib/utils/bolt";
@@ -32,9 +27,10 @@ import {
 import { useProfile } from "../contexts";
 import { useLog } from "../contexts/LogContext";
 import { useFormattingCommand } from "../hooks/";
+import { ProfileSettings, emptyProfileSettings } from "./signagentInterface";
 
 export function SignAgentComponent() {
-  const { appLog } = useLog();
+  const { appLog, postToast } = useLog();
   const {
     activeProfile,
     setActiveProfile,
@@ -51,17 +47,66 @@ export function SignAgentComponent() {
   const formattingCommand = useFormattingCommand(activeProfile);
 
   const loadColorList = (showSuccess = false) => {
-    const storedSettings = readLocalStorage("colorList", showSuccess);
+    const storedSettings = readLocalStorage(
+      "colorList",
+      postToast,
+      showSuccess
+    );
     if (storedSettings) {
       const settings: SignAgentColorList = storedSettings;
       setColorList(settings.colorList);
     }
   };
 
+  const handleReadLayer = async () => {
+    let layerName = "";
+    let newSettings: ProfileSettings = emptyProfileSettings;
+    await evalTS("getCurrentPathItemName").then(
+      (result) => (layerName = result)
+    );
+    postToast("info", `Reading Layer: ${layerName}`);
+    const cmds = layerName
+      .replaceAll(" ", "")
+      .replaceAll("{", "")
+      .replaceAll("}", "")
+      .split(",");
+
+    appLog(cmds, "Read Formatting Command");
+
+    try {
+      cmds.forEach((cmd) => {
+        switch (cmd) {
+          case "left":
+          case "right":
+          case "center":
+            newSettings.justification = {
+              ...newSettings.justification,
+              hasHorizontal: true,
+              horizontal: cmd,
+            };
+            break;
+
+          case "top":
+          case "bottom":
+          case "middle":
+            newSettings.justification = {
+              ...newSettings.justification,
+              hasVertical: true,
+              vertical: cmd,
+            };
+            break;
+
+          default:
+            break;
+        }
+      });
+    } catch (error) {}
+  };
+
   const handleAction = (action: string) => {
     switch (action) {
       case "readLayer":
-        // TODO
+        handleReadLayer();
         break;
 
       case "saveProfile":

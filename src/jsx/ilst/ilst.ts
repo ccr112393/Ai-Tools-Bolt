@@ -9,6 +9,14 @@ export const getCurrentLayer = (): Layer => {
   return app.activeDocument.activeLayer as Layer;
 };
 
+export const getCurrentLayerName = (): string => {
+  return app.activeDocument.activeLayer.name;
+};
+
+export const getCurrentPathItemName = (): string => {
+  return app.activeDocument.selection[0].name;
+};
+
 export const getDocumentWidth = (): number => {
   return currentDocument().width;
 };

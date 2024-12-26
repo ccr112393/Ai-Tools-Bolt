@@ -3,7 +3,6 @@ import {
   deleteLocalStorage,
   formatFieldName,
   getLocalStorageProfiles,
-  postToast,
   readLocalStorage,
   writeLocalStorage,
 } from "../modules";
@@ -40,7 +39,7 @@ interface ProfileContextType {
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const { appLog } = useLog();
+  const { appLog, postToast } = useLog();
 
   const [profileList, setProfileList] = useState([
     { id: "default", name: "Default" },
@@ -75,7 +74,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const saveActiveProfile = (showSuccess = false) => {
     writeProfile(activeProfile);
     showSuccess
-      ? postToast("positive", "Profile saved successfully", appLog)
+      ? postToast("positive", "Profile saved successfully")
       : null;
   };
 
@@ -111,12 +110,12 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       }
 
       showSuccess
-        ? postToast("positive", "Profiles loaded successfully", appLog)
+        ? postToast("positive", "Profiles loaded successfully")
         : null;
     } catch (error) {
       error instanceof Error
-        ? postToast("negative", error.message, appLog)
-        : postToast("negative", "Something went wrong trying to load", appLog);
+        ? postToast("negative", error.message)
+        : postToast("negative", "Something went wrong trying to load");
     }
   };
 
@@ -170,7 +169,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
         writeProfile(newProfile);
 
         showSuccess
-          ? postToast("positive", `Added profile: ${newProfile}`, appLog)
+          ? postToast("positive", `Added profile: ${newProfile}`)
           : null;
       } catch (error) {
         error instanceof Error
@@ -193,7 +192,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       deleteLocalStorage(fileName);
 
       showSuccess
-        ? postToast("positive", `Removed profile: ${id}`, appLog)
+        ? postToast("positive", `Removed profile: ${id}`)
         : null;
     } catch (error) {
       error instanceof Error
