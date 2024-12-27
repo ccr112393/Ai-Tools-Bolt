@@ -26,7 +26,7 @@ import {
 
 import { useProfile } from "../contexts";
 import { useLog } from "../contexts/LogContext";
-import { useFormattingCommand } from "../hooks/";
+import { useFormattingCommand, readFormattingCommand } from "../hooks/";
 import { ProfileSettings, emptyProfileSettings } from "./signagentInterface";
 
 export function SignAgentComponent() {
@@ -58,55 +58,12 @@ export function SignAgentComponent() {
     }
   };
 
-  const handleReadLayer = async () => {
-    let layerName = "";
-    let newSettings: ProfileSettings = emptyProfileSettings;
-    await evalTS("getCurrentPathItemName").then(
-      (result) => (layerName = result)
-    );
-    postToast("info", `Reading Layer: ${layerName}`);
-    const cmds = layerName
-      .replaceAll(" ", "")
-      .replaceAll("{", "")
-      .replaceAll("}", "")
-      .split(",");
-
-    appLog(cmds, "Read Formatting Command");
-
-    try {
-      cmds.forEach((cmd) => {
-        switch (cmd) {
-          case "left":
-          case "right":
-          case "center":
-            newSettings.justification = {
-              ...newSettings.justification,
-              hasHorizontal: true,
-              horizontal: cmd,
-            };
-            break;
-
-          case "top":
-          case "bottom":
-          case "middle":
-            newSettings.justification = {
-              ...newSettings.justification,
-              hasVertical: true,
-              vertical: cmd,
-            };
-            break;
-
-          default:
-            break;
-        }
-      });
-    } catch (error) {}
-  };
-
   const handleAction = (action: string) => {
     switch (action) {
       case "readLayer":
-        handleReadLayer();
+        readFormattingCommand().then((newSettings) => {
+          setActiveProfile(newSettings);
+        });
         break;
 
       case "saveProfile":

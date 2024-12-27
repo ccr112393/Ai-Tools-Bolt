@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { ProfileSettings } from "../modules";
+import { emptyProfileSettings, ProfileSettings } from "../modules";
 import { UnitList } from "../modules/util";
+import { evalTS } from "../../lib/utils/bolt";
 
 export function useFormattingCommand(settings: ProfileSettings) {
   const [formattingCommand, setFormattingCommand] = useState("");
@@ -41,4 +42,87 @@ export function useFormattingCommand(settings: ProfileSettings) {
   }, [settings]);
 
   return formattingCommand;
+}
+
+export async function readFormattingCommand(): Promise<ProfileSettings> {
+  let layerName = "";
+  let newSettings: ProfileSettings = emptyProfileSettings;
+  await evalTS("getCurrentPathItemName").then((result) => (layerName = result));
+  console.log("info", `Reading Layer: ${layerName}`);
+  const cmds = layerName
+    .replaceAll(" ", "")
+    .replaceAll("{", "")
+    .replaceAll("}", "")
+    .split(",");
+
+  cmds.forEach((cmd) => {
+    switch (true) {
+      case cmd == "left":
+      case cmd == "right":
+      case cmd == "center":
+        newSettings.justification = {
+          ...newSettings.justification,
+          hasHorizontal: true,
+          horizontal: cmd,
+        };
+        break;
+
+      case cmd == "top":
+      case cmd == "bottom":
+      case cmd == "middle":
+        newSettings.justification = {
+          ...newSettings.justification,
+          hasVertical: true,
+          vertical: cmd,
+        };
+        break;
+
+      case cmd.startsWith("color:"):
+        newSettings.color = {
+          ...newSettings.color,
+          hasColor: true,
+          color: cmd.replace("color:", ""),
+        };
+        break;
+
+      case cmd.startsWith("fill_color:"):
+        newSettings.color = {
+          ...newSettings.color,
+          hasFillColor: true,
+          fillColor: cmd.replace("fill_color:", ""),
+        };
+        break;
+
+      case cmd.startsWith("stroke_color:"):
+        newSettings.color = {
+          ...newSettings.color,
+          hasStrokeColor: true,
+          strokeColor: cmd.replace("stroke_color:", ""),
+        };
+        break;
+
+      case cmd == "uppercase":
+      case cmd == "lowercase":
+      case cmd == "titlecase":
+        newSettings.textOptions = {
+          ...newSettings.textOptions,
+          hasTextCase: true,
+          textCase: cmd,
+        };
+        break;
+
+      case cmd.startsWith("leading:"):
+        newSettings.textOptions = {
+          ...newSettings.textOptions,
+          hasLeading: true,
+          leading: parseFloat(cmd.match(/\d+(\.\d+)?/)?.[0] ?? "0"),
+          leadingUnit: cmd.match(/[a-z]+$/i)?.[0] ?? "",
+        };
+        break;
+
+      default:
+        break;
+    }
+  });
+  return newSettings;
 }
