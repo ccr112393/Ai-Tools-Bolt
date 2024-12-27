@@ -1,20 +1,21 @@
 import { ActionGroup, Flex, Item, Text, View } from "@adobe/react-spectrum";
-import { Key, createElement, useState } from "react";
+import { Key, useMemo, useState } from "react";
 import {
-  ModuleType,
-  RegistrationModule,
-  RenameModule,
-  SignAgentModule,
+  DeveloperMenu,
+  EnableDeveloperMode,
+  EnabledModules,
+  ReloadButton,
 } from "../modules";
-import { DeveloperMenu, EnableDeveloperMode, ReloadButton } from "./index";
 
 export const ModuleTabs = () => {
-  const EnabledModules: ModuleType[] = [
-    RegistrationModule,
-    RenameModule,
-    SignAgentModule,
-  ];
   const [selectedTab, setSelectedTab] = useState<string>("reg");
+  const memoizedModules = useMemo(() => {
+    return EnabledModules.map((item) => (
+      <View key={item.key} isHidden={selectedTab !== item.key}>
+        <item.component />
+      </View>
+    ));
+  }, [selectedTab]);
 
   const handleTabChange = (key: Key) => {
     setSelectedTab(key.toString());
@@ -40,13 +41,14 @@ export const ModuleTabs = () => {
         </ActionGroup>
         {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
       </Flex>
-      <View>
+      {memoizedModules}
+      {/* <View>
         {EnabledModules.map((item) => (
           <View key={item.key} isHidden={selectedTab !== item.key}>
-            {createElement(item.component)}
+            <item.component />
           </View>
         ))}
-      </View>
+      </View> */}
     </>
   );
 };

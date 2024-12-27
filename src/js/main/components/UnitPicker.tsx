@@ -1,6 +1,6 @@
 import { Item, Picker, SpectrumPickerProps } from "@adobe/react-spectrum";
 import React from "react";
-import { UnitItem, UnitList } from "../modules/util";
+import { UnitItem, UnitList } from "../utils/Units";
 
 interface UnitPickerProps
   extends Omit<SpectrumPickerProps<UnitItem>, "children"> {

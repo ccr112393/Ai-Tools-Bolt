@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { enableSpectrum, initBolt } from "../lib/utils/bolt";
 
 import Main from "./main";
-import { LogProvider } from "./contexts";
 
 initBolt();
 
@@ -21,8 +20,6 @@ document.addEventListener("contextmenu", (e) => {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <LogProvider>
-      <Main />
-    </LogProvider>
+    <Main />
   </React.StrictMode>
 );
