@@ -15,7 +15,7 @@ import {
 } from "@adobe/react-spectrum";
 import { NumberFieldDefault, UnitPicker } from "../../../components";
 
-import { emptyProfileSettings, useProfile } from "../..";
+import { newProfileSettings, useProfile } from "../";
 import {
   componentGap,
   componentWidth,
@@ -26,7 +26,7 @@ import {
 export const TextOptionsDisclosure = () => {
   const { activeProfile, setActiveProfile } = useProfile();
   const textOptions =
-    activeProfile.textOptions || emptyProfileSettings.textOptions;
+    activeProfile.textOptions || newProfileSettings.textOptions;
 
   const updateSettings = (key: string, value: any) => {
     setActiveProfile((prevSettings) => ({

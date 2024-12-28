@@ -1,7 +1,6 @@
 import { Icon } from "@adobe/react-spectrum";
 
-import { RegistrationComponent } from "./";
-import { ModuleType } from "..";
+import { ModuleType, RegistrationComponent } from "../";
 
 export interface RegistrationSettings {
   unit: string;

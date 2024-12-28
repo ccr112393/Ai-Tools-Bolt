@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { emptyProfileSettings, ProfileSettings } from "../..";
+import { newProfileSettings, getLogger, ProfileSettings } from "../..";
 import { UnitList } from "../../../utils/";
 import { evalTS } from "../../../../lib/utils/bolt";
 
@@ -52,10 +52,11 @@ export function useFormattingCommand(settings: ProfileSettings) {
 }
 
 export async function readFormattingCommand(): Promise<ProfileSettings> {
+  const logger = getLogger();
   let layerName = "";
-  let newSettings: ProfileSettings = emptyProfileSettings;
+  let newSettings: ProfileSettings = newProfileSettings;
   await evalTS("getCurrentPathItemName").then((result) => (layerName = result));
-  console.log("info", `Reading Layer: ${layerName}`);
+  logger.addLog(`Reading Layer: ${layerName}`);
   const cmds = layerName
     .replaceAll(" ", "")
     .replaceAll("{", "")
@@ -131,5 +132,6 @@ export async function readFormattingCommand(): Promise<ProfileSettings> {
         break;
     }
   });
+  logger.addLog("Read Layer Settings:" + newSettings);
   return newSettings;
 }

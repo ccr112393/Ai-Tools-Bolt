@@ -1,7 +1,6 @@
 import { ComboBox, Flex, Item } from "@adobe/react-spectrum";
-import { ProfilesDialog } from "./ProfilesDialog";
-import { componentGapDouble, componentGap } from "../../../utils";
-import { useProfile } from "../contexts";
+import { ProfilesDialog, useProfile } from "../";
+import { componentGap, componentGapDouble } from "../../../utils";
 
 export const ProfileBar = () => {
   const { profileList, activeProfile, setActiveProfile, readProfile } =

@@ -1,8 +1,6 @@
 import { Icon } from "@adobe/react-spectrum";
 
-import { ProfileProvider } from ".";
-import { ModuleType } from "..";
-import { SignAgentComponent } from "./SignAgentComponent";
+import { ModuleType, ProfileProvider, SignAgentComponent } from "../";
 
 export const SignAgentIcon = (
   <Icon>
@@ -15,64 +13,6 @@ export const SignAgentIcon = (
 );
 
 export const SignAgentKey = "SAT";
-export const ProfileKey = SignAgentKey + "_profile_";
-
-export interface ProfileListType {
-  id: string;
-  name: string;
-}
-
-export interface ProfileSettings {
-  id: string;
-  name: string;
-  justification: {
-    hasHorizontal: boolean;
-    hasVertical: boolean;
-    horizontal: string;
-    vertical: string;
-  };
-  color: {
-    hasColor: boolean;
-    hasFillColor: boolean;
-    hasStrokeColor: boolean;
-    color: string;
-    fillColor: string;
-    strokeColor: string;
-  };
-  textOptions: {
-    hasTextCase: boolean;
-    textCase: string;
-    hasLeading: boolean;
-    leading: number;
-    leadingUnit: string;
-  };
-}
-
-export const emptyProfileSettings: ProfileSettings = {
-  id: "default",
-  name: "Default",
-  justification: {
-    hasHorizontal: false,
-    hasVertical: false,
-    horizontal: "left",
-    vertical: "top",
-  },
-  color: {
-    hasColor: false,
-    hasFillColor: false,
-    hasStrokeColor: false,
-    color: "",
-    fillColor: "",
-    strokeColor: "",
-  },
-  textOptions: {
-    hasTextCase: false,
-    textCase: "uppercase",
-    hasLeading: false,
-    leading: 3,
-    leadingUnit: "point",
-  },
-};
 
 export default function SignAgentWrapper() {
   return (

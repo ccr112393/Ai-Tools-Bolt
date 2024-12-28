@@ -27,7 +27,7 @@ export function getLocalStorageList(): string[] {
       fileList.push(localStorage.key(i) || "");
     }
 
-    logMsg = `Loaded File List [${fileList.length}]` + fileList;
+    // logMsg = `Found ${fileList.length} files`;
   } catch (error) {
     error instanceof Error
       ? (logMsg = error.message)
@@ -37,13 +37,8 @@ export function getLocalStorageList(): string[] {
   return fileList;
 }
 
-export function getLocalStorageProfiles(
-  postToast?: (
-    style: "positive" | "negative" | "info" | "neutral",
-    message: string
-  ) => void,
-  showSuccess = false
-): string[] {
+export function getLocalStorageProfiles(): string[] {
+  const logger = getLogger();
   let fileList: string[] = [];
   let fileCount = getLocalStorageLength();
   try {
@@ -53,23 +48,12 @@ export function getLocalStorageProfiles(
         fileList.push(key);
       }
     }
-    if (showSuccess && postToast) {
-      postToast(
-        "positive",
-        "Loaded Profile List: " + fileList.length + fileList
-      );
-    }
+    // logger.addLog(`Found ${fileCount} Profiles`);
   } catch (error) {
-    if (postToast) {
-      error instanceof Error
-        ? postToast("negative", error.message)
-        : postToast(
-            "negative",
-            "Something went wrong trying to load stored profiles"
-          );
-    }
+    error instanceof Error
+      ? logger.addLog(error.message)
+      : logger.addLog("Something went wrong trying to load stored profiles");
   }
-
   return fileList;
 }
 

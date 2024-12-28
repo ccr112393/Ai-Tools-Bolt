@@ -14,13 +14,10 @@ import {
   TooltipTrigger,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
-import { useProfile } from "..";
+import { useProfile } from "../";
 import { componentGap, componentWidth, postToast } from "../../../utils";
 
-
 export const ProfilesDialog = () => {
-  
-
   const { addProfile, removeProfile, getProfileListNoDefault } = useProfile();
   const [newProfile, setNewProfile] = useState("");
 

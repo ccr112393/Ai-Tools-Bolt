@@ -3,39 +3,72 @@ import React, { useEffect, useState } from "react";
 import { subscribeBackgroundColor } from "../../lib/utils/bolt";
 import { getLogger } from "../modules";
 
+type ColorScheme = "dark" | "light";
+
+interface ThemeSetting {
+  theme: typeof darkTheme;
+  colorScheme: ColorScheme;
+  backgroundColor: string;
+}
+
+const backgroundColorHexCode = {
+  darkDark: "#1d1d1d",
+  darkLight: "#323232",
+  lightLight: "#fdfdfd",
+};
+
 export const ThemedProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const logger = getLogger();
-  const [appBackgroundColor, setAppBackgroundColor] = useState("#323232");
-  const [appTheme, setAppTheme] = useState(darkTheme);
-  const [colorScheme, setColorScheme] = useState<"dark" | "light">("dark");
+  const [themeSettings, setThemeSettings] = useState<ThemeSetting>({
+    theme: darkTheme,
+    colorScheme: "dark",
+    backgroundColor: backgroundColorHexCode.darkDark,
+  });
 
   useEffect(() => {
+    let newThemeSettings: ThemeSetting;
     try {
       subscribeBackgroundColor((color) => {
         const [r, g, b] = color.match(/\d+/g)?.map(Number) || [0, 0, 0];
-        logger.addLog("Subscribed Background Color: " + [r, g, b].toString());
         switch (true) {
           case r === 50 && g === 50 && b === 50:
-            setAppTheme(darkTheme);
-            setColorScheme("dark");
-            setAppBackgroundColor("#1d1d1d");
+            // Dark Dark
+            newThemeSettings = {
+              theme: darkTheme,
+              colorScheme: "dark",
+              backgroundColor: backgroundColorHexCode.darkDark,
+            };
             break;
           case r === 83 && g === 83 && b === 83:
-            setAppTheme(darkTheme);
-            setColorScheme("light");
-            setAppBackgroundColor("#323232");
+            // Dark Light
+            newThemeSettings = {
+              theme: darkTheme,
+              colorScheme: "light",
+              backgroundColor: backgroundColorHexCode.darkLight,
+            };
             break;
           case r === 184 && g === 184 && b === 184:
           case r === 240 && g === 240 && b === 240:
-            setAppTheme(lightTheme);
-            setColorScheme("light");
-            setAppBackgroundColor("#fdfdfd");
+            // Light Light
+            newThemeSettings = {
+              theme: lightTheme,
+              colorScheme: "light",
+              backgroundColor: backgroundColorHexCode.lightLight,
+            };
             break;
           default:
-            setAppTheme(darkTheme);
-            setColorScheme("dark");
+            // Dark Dark
+            newThemeSettings = {
+              theme: darkTheme,
+              colorScheme: "dark",
+              backgroundColor: backgroundColorHexCode.darkDark,
+            };
+        }
+
+        if (themeSettings != newThemeSettings) {
+          setThemeSettings(newThemeSettings);
         }
       });
     } catch (error) {
@@ -43,19 +76,23 @@ export const ThemedProvider: React.FC<{
         "Could not subscribe to background color. Are you sure you're running this in Illustrator";
       error instanceof Error
         ? logger.addLog(error.message)
-        : logger.addLog(msg)
+        : logger.addLog(msg);
     }
   }, []);
 
   return (
-    <Provider theme={appTheme} colorScheme={colorScheme} scale="medium">
+    <Provider
+      theme={themeSettings.theme}
+      colorScheme={themeSettings.colorScheme}
+      scale="medium"
+    >
       <style>{`
         html, body, #root{
           margin: 0;
           padding: 0;
           height: 100%;
           overflow: auto;
-          background-color:  ${appBackgroundColor};
+          background-color:  ${themeSettings.backgroundColor};
         }
       `}</style>
       {children}

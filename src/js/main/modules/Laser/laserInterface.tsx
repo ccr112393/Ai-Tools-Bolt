@@ -1,6 +1,5 @@
 import { Icon } from "@adobe/react-spectrum";
-import { ModuleType } from "../";
-import { LaserComponent } from "./";
+import { LaserComponent, ModuleType } from "../";
 
 export const LaserIcon = (
   <Icon>

@@ -9,7 +9,7 @@ import {
   Well,
 } from "@adobe/react-spectrum";
 import { componentGap } from "../../../utils";
-import { SignAgentDisclaimer } from "./";
+import { SignAgentDisclaimer } from "../components";
 
 export const GettingStartedDisclosure = () => {
   return (

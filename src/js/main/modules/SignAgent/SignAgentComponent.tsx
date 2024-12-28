@@ -16,6 +16,7 @@ import Revert from "@spectrum-icons/workflow/Revert";
 
 import {
   ColorDisclosure,
+  newProfileSettings,
   GettingStartedDisclosure,
   JustificationDisclosure,
   ProfileBar,
@@ -24,8 +25,9 @@ import {
   TextOptionsDisclosure,
   useFormattingCommand,
   useProfile,
-} from "../SignAgent";
+} from "../";
 
+import { getLogger } from "../";
 import { evalTS } from "../../../lib/utils/bolt";
 import {
   componentGap,
@@ -33,17 +35,11 @@ import {
   postToast,
   readLocalStorage,
 } from "../../utils";
-import { getLogger } from "../Developer";
 
 export function SignAgentComponent() {
   const logger = getLogger();
-  const {
-    activeProfile,
-    setActiveProfile,
-    saveActiveProfile,
-    readProfile,
-    loadProfiles,
-  } = useProfile();
+  const { activeProfile, setActiveProfile, saveActiveProfile, loadProfiles } =
+    useProfile();
 
   const [colorList, setColorList] = useState([
     { id: "signcolor", name: "Sign Color" },
@@ -56,16 +52,27 @@ export function SignAgentComponent() {
     const storedSettings = readLocalStorage("colorList");
     if (storedSettings) {
       const settings: SignAgentColorList = storedSettings;
-      setColorList(settings.colorList);
+      if (colorList != settings.colorList) {
+        setColorList(settings.colorList);
+      }
+    }
+  };
+
+  const readLayerCommand = async () => {
+    const newSettings = await readFormattingCommand();
+    if (newSettings) {
+      logger.addLog("Read Layer:" + newSettings.id);
+      setActiveProfile(newSettings);
+    } else {
+      logger.addLog("Issue with reading layer");
     }
   };
 
   const handleAction = (action: string) => {
     switch (action) {
       case "readLayer":
-        readFormattingCommand().then((newSettings) => {
-          setActiveProfile(newSettings);
-        });
+        readLayerCommand();
+
         break;
 
       case "saveProfile":
@@ -73,8 +80,9 @@ export function SignAgentComponent() {
         break;
 
       case "revertProfile":
-        setActiveProfile(readProfile(activeProfile.id));
-        postToast("positive", "Profile settings reverted");
+        setActiveProfile(newProfileSettings);
+        // setActiveProfile(readProfile(activeProfile.id));
+        postToast("positive", "Cleared selections");
         break;
 
       case "apply":
@@ -103,6 +111,7 @@ export function SignAgentComponent() {
   };
 
   useEffect(() => {
+    logger.addLog("Hello from SignAgentComponent");
     loadProfiles();
     loadColorList(); // Load color list
   }, []);

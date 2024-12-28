@@ -1,19 +1,20 @@
-import { useState, useContext, createContext } from "react";
+import { createContext, useContext, useState } from "react";
 import {
-  writeLocalStorage,
-  readLocalStorage,
-  getLocalStorageProfiles,
-  deleteLocalStorage,
-  postToast,
-} from "../../../utils";
-import {
-  ProfileSettings,
-  ProfileListType,
-  emptyProfileSettings,
+  defaultProfileListEntry,
+  newProfileSettings,
+  formatFieldName,
   ProfileKey,
-} from "../SignAgentType";
-import { getLogger } from "../../Developer";
-import { formatFieldName } from "../hooks";
+  ProfileListType,
+  ProfileSettings,
+} from "../";
+import { getLogger } from "../../../modules";
+import {
+  deleteLocalStorage,
+  getLocalStorageProfiles,
+  postToast,
+  readLocalStorage,
+  writeLocalStorage,
+} from "../../../utils";
 
 interface ProfileContextType {
   // States
@@ -41,12 +42,10 @@ const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const logger = getLogger();
 
-  const [profileList, setProfileList] = useState([
-    { id: "default", name: "Default" },
-  ]);
+  const [profileList, setProfileList] = useState([defaultProfileListEntry]);
 
   const [activeProfile, setActiveProfile] =
-    useState<ProfileSettings>(emptyProfileSettings);
+    useState<ProfileSettings>(newProfileSettings);
 
   const getProfileListNoDefault = (): ProfileListType[] => {
     return profileList.filter((item) => item.id !== "default");
@@ -86,7 +85,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     if (storedSettings) {
       return storedSettings;
     } else {
-      return emptyProfileSettings;
+      return newProfileSettings;
     }
   };
 
@@ -96,12 +95,33 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       const storedProfiles = getLocalStorageProfiles();
 
       if (storedProfiles && storedProfiles.length > 0) {
-        const formattedProfileList = storedProfiles.map((profile) => {
+        let formattedProfileList = storedProfiles.map((profile) => {
           const profileInfo = readProfile(profile);
           return { id: profileInfo.id, name: profileInfo.name };
         });
-        setProfileList(sortProfileList(formattedProfileList));
-        setActiveProfile(readProfile("default"));
+
+        if (!formattedProfileList.includes(defaultProfileListEntry)) {
+          formattedProfileList.push(defaultProfileListEntry);
+          logger.addLog("Default not found in stored settings, added Default");
+        }
+
+        formattedProfileList = sortProfileList(formattedProfileList);
+
+        if (profileList != formattedProfileList) {
+          setProfileList(formattedProfileList);
+        }
+
+        if (
+          !profileList.includes({
+            id: activeProfile.id,
+            name: activeProfile.name,
+          })
+        ) {
+          logger.addLog(
+            `Active Profile (${activeProfile.id}) not found in profile list`
+          );
+          setActiveProfile(readProfile("default"));
+        }
       }
 
       showSuccess
@@ -144,7 +164,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       // Format Profile Name for ID
       const newProfileID = formatFieldName(newProfileName);
       const newProfile: ProfileSettings = {
-        ...emptyProfileSettings,
+        ...newProfileSettings,
         id: newProfileID,
         name: newProfileName,
       };
@@ -209,7 +229,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     addProfile,
     removeProfile,
     validateProfile,
-    emptyProfileSettings,
+    emptyProfileSettings: newProfileSettings,
     getProfileListNoDefault,
     sortProfileList,
   };

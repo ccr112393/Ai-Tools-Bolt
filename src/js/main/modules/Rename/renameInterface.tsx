@@ -1,6 +1,5 @@
 import { Icon } from "@adobe/react-spectrum";
-import { ModuleType } from "../";
-import { RenameComponent } from "./";
+import { ModuleType, RenameComponent } from "../";
 
 export const RenameIcon = (
   <Icon>

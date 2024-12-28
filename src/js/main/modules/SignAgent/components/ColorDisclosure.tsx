@@ -12,9 +12,8 @@ import {
   Text,
   Well,
 } from "@adobe/react-spectrum";
+import { ColorFieldsDialog, useProfile } from "../";
 import { componentGap, componentWidth } from "../../../utils";
-import { useProfile } from "../contexts";
-import { ColorFieldsDialog } from "./";
 
 export interface SignAgentColor {
   id: string;

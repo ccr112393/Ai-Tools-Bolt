@@ -13,15 +13,19 @@ import {
   Well,
 } from "@adobe/react-spectrum";
 
-
-import { emptyProfileSettings, getLogger, ProfileSettings, useProfile } from "../..";
+import {
+  newProfileSettings,
+  getLogger,
+  ProfileSettings,
+  useProfile,
+} from "../../../modules";
 import { componentGap, componentWidth } from "../../../utils";
 
 export const JustificationDisclosure = () => {
   const logger = getLogger();
   const { activeProfile, setActiveProfile } = useProfile();
   const justification =
-    activeProfile.justification || emptyProfileSettings.justification;
+    activeProfile.justification || newProfileSettings.justification;
 
   const updateSettings = (
     key: keyof ProfileSettings["justification"],

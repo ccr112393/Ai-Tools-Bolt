@@ -4,10 +4,13 @@ import {
   DeveloperMenu,
   EnableDeveloperMode,
   EnabledModules,
+  getLogger,
   ReloadButton,
 } from "../modules";
 
 export const ModuleTabs = () => {
+  const logger = getLogger();
+  logger.addLog("Hello from Main");
   const [selectedTab, setSelectedTab] = useState<string>("reg");
   const memoizedModules = useMemo(() => {
     return EnabledModules.map((item) => (

@@ -23,7 +23,7 @@ import Delete from "@spectrum-icons/workflow/Delete";
 import FileJson from "@spectrum-icons/workflow/FileJson";
 import PushNotification from "@spectrum-icons/workflow/PushNotification";
 import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
-import { getLogger } from "./Logger";
+import { getLogger } from "./";
 import { openLinkInBrowser } from "../../../lib/utils/bolt";
 import {
   componentGap,
@@ -34,11 +34,36 @@ import {
   menuTextMargin,
   postToast,
 } from "../../utils";
+import { useEffect, useState } from "react";
 
 export const EnableDeveloperMode = true;
 
 export const DeveloperMenu = () => {
+  const [isLoggingEnabled, setIsLoggingEnabled] = useState(false);
+  const [localStorageLength, setLocalStorageLength] = useState(0);
+  const [localStorageList, setLocalStorageList] = useState([""]);
+  const [logs, setLogs] = useState([""]);
   const logger = getLogger();
+
+  useEffect(() => {
+    const newLogs = logger.getLogs();
+    const newIsLoggingEnabled = logger.isEnabled();
+    const newLocalStorageLength = getLocalStorageLength();
+    const newLocalStorageList = getLocalStorageList();
+
+    if (logs != newLogs) {
+      setLogs(newLogs);
+    }
+    if (isLoggingEnabled != newIsLoggingEnabled) {
+      setIsLoggingEnabled(newIsLoggingEnabled);
+    }
+    if (localStorageLength != newLocalStorageLength) {
+      setLocalStorageLength(newLocalStorageLength);
+    }
+    if (localStorageList != newLocalStorageList) {
+      setLocalStorageList(newLocalStorageList);
+    }
+  }, []);
 
   function handleAction(action: string) {
     switch (action) {
@@ -48,26 +73,48 @@ export const DeveloperMenu = () => {
       case "openRemoteDebug":
         openLinkInBrowser("http://localhost:8860/");
         break;
+      case "openReactDebug":
+        openLinkInBrowser("http://localhost:3000/main/index.html");
+
+        break;
       case "toastPositive":
         postToast("positive", "Positive Toast!");
+        logger.addLog("Positive Toast Test!");
         break;
       case "toastNegative":
         postToast("negative", "Negative Toast!");
+        logger.addLog("Negative Toast Test!");
         break;
       case "toastInfo":
         postToast("info", "Information Toast!");
+        logger.addLog("Information Toast Test!");
         break;
       case "toastNeutral":
         postToast("neutral", "Neutral Toast!");
+        logger.addLog("Neutral Toast Test!");
         break;
       case "clearStorage":
-        postToast("info", `Clearing local storage...[${localStorage.length}]`);
+        postToast(
+          "info",
+          `Removed [${localStorage.length}] files from local storage`
+        );
 
         localStorage.clear();
         setTimeout(() => {
           window.location.reload();
         }, 250);
         break;
+
+      case "toggleLogging":
+        if (isLoggingEnabled) {
+          logger.disableLogging();
+          postToast("info", "Logging disabled");
+        } else {
+          logger.enableLogging();
+          postToast("positive", "Logging enabled");
+        }
+        break;
+
       default:
         break;
     }
@@ -89,7 +136,7 @@ export const DeveloperMenu = () => {
                 <DisclosureTitle>Stored Files</DisclosureTitle>
                 <DisclosurePanel>
                   <ListBox
-                    items={getLocalStorageList().map((filename) => ({
+                    items={localStorageList.map((filename) => ({
                       id: filename,
                       name: filename,
                     }))}
@@ -101,7 +148,7 @@ export const DeveloperMenu = () => {
               <Disclosure>
                 <DisclosureTitle>Internal Log</DisclosureTitle>
                 <DisclosurePanel>
-                  <pre>{logger.getLogs()}</pre>
+                  <pre>{logs}</pre>
                 </DisclosurePanel>
               </Disclosure>
             </Accordion>
@@ -122,13 +169,22 @@ export const DeveloperMenu = () => {
             <Bug size="S" slot="icon" margin={menuIconMargin} />
             <Text marginStart={menuTextMargin}>Remote Debug</Text>
           </Item>
+          <Item key="openReactDebug">
+            <Bug size="S" slot="icon" margin={menuIconMargin} />
+            <Text marginStart={menuTextMargin}>React Debug</Text>
+          </Item>
           <Item key="clearStorage">
             <Delete size="S" slot="icon" margin={menuIconMargin} />
             <Text marginStart={menuTextMargin}>
-              Clear Storage [{getLocalStorageLength()}]
+              Clear Storage [{localStorageLength}]
             </Text>
           </Item>
-
+          <Item key="toggleLogging">
+            <Code size="S" slot="icon" margin={menuIconMargin} />
+            <Text marginStart={menuTextMargin}>
+              {isLoggingEnabled ? "Disable Logging" : "Enable Logging"}
+            </Text>
+          </Item>
           <SubmenuTrigger>
             <Item>
               <PushNotification size="S" slot="icon" margin={menuIconMargin} />
