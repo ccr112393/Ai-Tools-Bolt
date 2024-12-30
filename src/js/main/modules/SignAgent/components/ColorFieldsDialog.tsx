@@ -16,13 +16,15 @@ import {
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 
-import { formatFieldName, SignAgentColor, SignAgentColorList } from "../";
+
 import {
   componentGap,
   componentWidth,
   postToast,
   writeLocalStorage,
 } from "../../../utils";
+import { formatFieldName } from "../hooks";
+import { SignAgentColor, SignAgentColorList } from "./ColorDisclosure";
 
 export interface ColorFieldsDialogProps {
   colorList: SignAgentColor[];

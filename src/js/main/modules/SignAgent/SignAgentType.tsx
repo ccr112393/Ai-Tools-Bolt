@@ -1,6 +1,7 @@
 import { Icon } from "@adobe/react-spectrum";
 
-import { ModuleType, ProfileProvider, SignAgentComponent } from "../";
+import { ModuleType, SignAgentComponent } from "../";
+import { ProfileProvider } from "./contexts";
 
 export const SignAgentIcon = (
   <Icon>

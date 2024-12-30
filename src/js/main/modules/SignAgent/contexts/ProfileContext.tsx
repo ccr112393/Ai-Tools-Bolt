@@ -2,7 +2,6 @@ import { createContext, useContext, useState } from "react";
 import {
   defaultProfileListEntry,
   newProfileSettings,
-  formatFieldName,
   ProfileKey,
   ProfileListType,
   ProfileSettings,
@@ -15,6 +14,7 @@ import {
   readLocalStorage,
   writeLocalStorage,
 } from "../../../utils";
+import { formatFieldName } from "../hooks";
 
 interface ProfileContextType {
   // States

@@ -1,5 +1,5 @@
 import { ActionGroup, Flex, Item, Text, View } from "@adobe/react-spectrum";
-import { Key, useMemo, useState } from "react";
+import { Key, useEffect, useMemo, useState } from "react";
 import {
   DeveloperMenu,
   EnableDeveloperMode,
@@ -11,7 +11,7 @@ import {
 export const ModuleTabs = () => {
   const logger = getLogger();
   logger.addLog("Hello from Main");
-  const [selectedTab, setSelectedTab] = useState<string>("reg");
+  const [selectedTab, setSelectedTab] = useState<string>(EnabledModules[0].key);
   const memoizedModules = useMemo(() => {
     return EnabledModules.map((item) => (
       <View key={item.key} isHidden={selectedTab !== item.key}>
@@ -23,6 +23,11 @@ export const ModuleTabs = () => {
   const handleTabChange = (key: Key) => {
     setSelectedTab(key.toString());
   };
+
+  useEffect(() => {
+    logger.addLog("Hello from ModuleTabs");
+    // setSelectedTab(EnabledModules[0].key);
+  }, []);
 
   return (
     <>
@@ -45,13 +50,6 @@ export const ModuleTabs = () => {
         {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
       </Flex>
       {memoizedModules}
-      {/* <View>
-        {EnabledModules.map((item) => (
-          <View key={item.key} isHidden={selectedTab !== item.key}>
-            <item.component />
-          </View>
-        ))}
-      </View> */}
     </>
   );
 };

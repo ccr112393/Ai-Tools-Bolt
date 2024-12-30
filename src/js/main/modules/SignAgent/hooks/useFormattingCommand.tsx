@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { newProfileSettings, getLogger, ProfileSettings } from "../..";
-import { UnitList } from "../../../utils/";
+import {
+  getUnitAbbreviation,
+  getUnitByAbbreviation,
+  UnitList,
+} from "../../../utils/";
 import { evalTS } from "../../../../lib/utils/bolt";
 
 export function formatFieldName(fieldName: string): string {
@@ -34,9 +38,9 @@ export function useFormattingCommand(settings: ProfileSettings) {
       cmd.push(settings.textOptions.textCase);
     }
     if (settings.textOptions.hasLeading) {
-      let leadingUnitAbbr = UnitList.find(
-        (unit) => unit.key == settings.textOptions.leadingUnit
-      )?.abbr;
+      let leadingUnitAbbr = getUnitAbbreviation(
+        settings.textOptions.leadingUnit
+      );
       cmd.push(
         `leading: ${settings.textOptions.leading.toString()} ${leadingUnitAbbr}`
       );
@@ -120,11 +124,14 @@ export async function readFormattingCommand(): Promise<ProfileSettings> {
         break;
 
       case cmd.startsWith("leading:"):
+        let foundLeadingUnit = getUnitByAbbreviation(
+          cmd.match(/[a-z]+$/i)?.[0] ?? ""
+        );
         newSettings.textOptions = {
           ...newSettings.textOptions,
           hasLeading: true,
           leading: parseFloat(cmd.match(/\d+(\.\d+)?/)?.[0] ?? "0"),
-          leadingUnit: cmd.match(/[a-z]+$/i)?.[0] ?? "",
+          leadingUnit: foundLeadingUnit.key,
         };
         break;
 

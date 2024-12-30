@@ -1,2 +1,2 @@
-export * from "./DeveloperPanel";
+export * from "./DeveloperMenu";
 export * from "./Logger";

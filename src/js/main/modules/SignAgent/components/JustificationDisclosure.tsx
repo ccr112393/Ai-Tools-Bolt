@@ -17,9 +17,9 @@ import {
   newProfileSettings,
   getLogger,
   ProfileSettings,
-  useProfile,
 } from "../../../modules";
 import { componentGap, componentWidth } from "../../../utils";
+import { useProfile } from "../contexts";
 
 export const JustificationDisclosure = () => {
   const logger = getLogger();

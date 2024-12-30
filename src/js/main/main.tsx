@@ -1,4 +1,4 @@
-import { Flex, View } from "@adobe/react-spectrum";
+import { Content, Flex, View } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
 import { ModuleTabs, ThemedProvider } from "./components";
 import { getLogger } from "./modules";

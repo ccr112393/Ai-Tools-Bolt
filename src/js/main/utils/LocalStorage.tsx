@@ -2,18 +2,6 @@ import { ProfileKey } from "../modules";
 import { getLogger } from "../modules/Developer";
 import { postToast } from "./ToastNotification";
 
-interface LocalStorageProps {
-  (key: string, options?: { showSuccess: true }): void;
-}
-
-interface WriteLocalStorageProps {
-  (key: string, value: any, options?: { showSuccess?: true }): void;
-}
-
-interface ReadLocalStorageProps {
-  (key: string, options?: { showSuccess?: true }): any | null;
-}
-
 export function getLocalStorageLength(): number {
   return localStorage.length || 0;
 }
@@ -57,17 +45,15 @@ export function getLocalStorageProfiles(): string[] {
   return fileList;
 }
 
-export const writeLocalStorage: WriteLocalStorageProps = (
-  key: string,
-  value: any,
-  { showSuccess }: { showSuccess?: true } = {}
-) => {
+export function writeLocalStorage(key: string, value: any): boolean {
   const logger = getLogger();
+  let success = false;
   let logMsg = "";
   try {
     localStorage.setItem(key, JSON.stringify(value));
     logMsg = `Saved ${key} successfully`;
-    showSuccess ? postToast("positive", logMsg) : null;
+    success = true;
+    // showSuccess ? postToast("positive", logMsg) : null;
   } catch (error) {
     error instanceof Error
       ? (logMsg = error.message)
@@ -75,12 +61,10 @@ export const writeLocalStorage: WriteLocalStorageProps = (
     postToast("negative", logMsg);
   }
   logger.addLog(logMsg);
-};
+  return success;
+}
 
-export const readLocalStorage: ReadLocalStorageProps = (
-  key: string,
-  { showSuccess }: { showSuccess?: true } = {}
-) => {
+export function readLocalStorage(key: string) {
   const logger = getLogger();
   let logMsg = "";
   let storedData;
@@ -88,10 +72,10 @@ export const readLocalStorage: ReadLocalStorageProps = (
     storedData = localStorage.getItem(key);
     if (storedData) {
       logMsg = `Loaded stored ${key} successfully`;
-      showSuccess ? postToast("positive", logMsg) : null;
+      // showSuccess ? postToast("positive", logMsg) : null;
     } else {
       logMsg = `Found stored ${key}, but no data`;
-      showSuccess ? postToast("info", logMsg) : null;
+      // showSuccess ? postToast("info", logMsg) : null;
     }
   } catch (error) {
     error instanceof Error
@@ -101,18 +85,15 @@ export const readLocalStorage: ReadLocalStorageProps = (
   }
   logger.addLog(logMsg);
   return storedData ? JSON.parse(storedData) : storedData;
-};
+}
 
-export const deleteLocalStorage: LocalStorageProps = (
-  key: string,
-  { showSuccess }: { showSuccess?: true } = {}
-) => {
+export function deleteLocalStorage(key: string) {
   const logger = getLogger();
   let logMsg = "";
   try {
     localStorage.removeItem(key);
     logMsg = `Deleted ${key} successfully`;
-    showSuccess ? postToast("positive", logMsg) : null;
+    // showSuccess ? postToast("positive", logMsg) : null;
   } catch (error) {
     error instanceof Error
       ? (logMsg = error.message)
@@ -120,4 +101,4 @@ export const deleteLocalStorage: LocalStorageProps = (
     postToast("negative", logMsg);
   }
   logger.addLog(logMsg);
-};
+}

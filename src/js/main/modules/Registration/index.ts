@@ -1,2 +1,2 @@
-export * from "./registrationInterface";
-export * from "./registrationModule";
+export * from "./RegistrationComponent";
+export * from "./RegistrationType";

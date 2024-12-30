@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  Picker,
   Content,
   ContextualHelp,
   Disclosure,
@@ -7,13 +8,13 @@ import {
   DisclosureTitle,
   Grid,
   Item,
-  Picker,
   StatusLight,
   Text,
   Well,
 } from "@adobe/react-spectrum";
-import { ColorFieldsDialog, useProfile } from "../";
 import { componentGap, componentWidth } from "../../../utils";
+import { useProfile } from "../contexts";
+import { ColorFieldsDialog } from "./ColorFieldsDialog";
 
 export interface SignAgentColor {
   id: string;
@@ -35,6 +36,7 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
 }) => {
   const { activeProfile, setActiveProfile } = useProfile();
   const color = activeProfile.color;
+
   const updateSettings = (key: string, value: any) => {
     setActiveProfile((prevSettings) => ({
       ...prevSettings,
@@ -87,6 +89,7 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
             width={componentWidth}
             items={colorList}
             selectedKey={color.color}
+            isInvalid={color.hasColor && color.color.length <= 0}
             onSelectionChange={(key) => updateSettings("color", key)}
           >
             {(item) => <Item key={item.id}>{item.name}</Item>}
@@ -104,6 +107,7 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
             width={componentWidth}
             items={colorList}
             selectedKey={color.fillColor}
+            isInvalid={color.hasFillColor && color.fillColor.length <= 0}
             onSelectionChange={(key) => updateSettings("fillColor", key)}
           >
             {(item) => <Item key={item.id}>{item.name}</Item>}
@@ -121,6 +125,7 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
             width={componentWidth}
             items={colorList}
             selectedKey={color.strokeColor}
+            isInvalid={color.hasStrokeColor && color.strokeColor.length <= 0}
             onSelectionChange={(key) => updateSettings("strokeColor", key)}
           >
             {(item) => <Item key={item.id}>{item.name}</Item>}

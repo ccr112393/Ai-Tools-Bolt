@@ -1,29 +1,36 @@
+import { EventEmitter } from "events";
+
 // logger.ts
 const LogKey = "ait_log";
-const LogEnabledKey = "ait_log_enabled";
+const LogEnableKey = "ait_log_enabled";
 class Logger {
   private logs: string[] = [];
   private sessionLogs: string[] = [];
-  private isLoggingEnabled: boolean = false;
+  private shouldStoreLogs: boolean = false;
 
   constructor() {
-    // Load existing logs from localStorage
-    const storedLogs = localStorage.getItem(LogKey);
-    if (storedLogs) {
-      this.logs = JSON.parse(storedLogs);
+    const loggingEnabled = localStorage.getItem(LogEnableKey);
+    this.shouldStoreLogs = loggingEnabled === "true";
+    if (loggingEnabled) {
+      const storedLogs = localStorage.getItem(LogKey);
+      if (storedLogs) {
+        this.logs = JSON.parse(storedLogs);
+      }
     }
-    const loggingEnabled = localStorage.getItem(LogEnabledKey);
-    this.isLoggingEnabled = loggingEnabled === "true";
   }
 
   addLog(message: string): void {
-    if (this.isLoggingEnabled) {
+    if (this.shouldStoreLogs) {
       this.logs.push(message + "\n");
       // Sync with localStorage
       localStorage.setItem(LogKey, JSON.stringify(this.logs));
     }
     this.sessionLogs.push(message + "\n");
     console.log(message);
+  }
+
+  deleteStoredLog(): void {
+    localStorage.removeItem(LogKey);
   }
 
   getLogs(): string[] {
@@ -34,18 +41,31 @@ class Logger {
     return this.sessionLogs;
   }
 
-  enableLogging(): void {
-    this.isLoggingEnabled = true;
-    localStorage.setItem(LogEnabledKey, "true");
+  setShouldStoreLogs(shouldStore: boolean): void {
+    this.shouldStoreLogs = shouldStore;
+
+    if (!shouldStore) {
+      this.deleteStoredLog();
+    } else {
+    }
+
+    localStorage.setItem(LogEnableKey, shouldStore ? "true" : "false");
   }
 
-  disableLogging(): void {
-    this.isLoggingEnabled = false;
-    localStorage.setItem(LogEnabledKey, "false");
+  isStored(): boolean {
+    return this.shouldStoreLogs;
   }
 
-  isEnabled(): boolean {
-    return this.isLoggingEnabled;
+  getLoggerStatus(): {
+    isStored: boolean;
+    sessionLogs: string[];
+    logs: string[];
+  } {
+    return {
+      isStored: this.isStored(),
+      sessionLogs: this.getSessionLogs(),
+      logs: this.getLogs(),
+    };
   }
 }
 

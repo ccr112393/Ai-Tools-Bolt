@@ -14,14 +14,14 @@ import {
   Well,
 } from "@adobe/react-spectrum";
 import { NumberFieldDefault, UnitPicker } from "../../../components";
-
-import { newProfileSettings, useProfile } from "../";
+import { newProfileSettings } from "../";
 import {
   componentGap,
   componentWidth,
   componentWidth3Quarters,
   componentWidthHalf,
 } from "../../../utils";
+import { useProfile } from "../contexts";
 
 export const TextOptionsDisclosure = () => {
   const { activeProfile, setActiveProfile } = useProfile();
@@ -91,6 +91,11 @@ export const TextOptionsDisclosure = () => {
               width={componentWidthHalf}
               marginEnd={componentGap}
               value={textOptions.leading}
+              validationState={
+                textOptions.hasLeading && Number.isNaN(textOptions.leading)
+                  ? "invalid"
+                  : undefined
+              }
               onChange={(value) => updateSettings("leading", value)}
             />
             <UnitPicker

@@ -14,8 +14,8 @@ import {
   TooltipTrigger,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
-import { useProfile } from "../";
 import { componentGap, componentWidth, postToast } from "../../../utils";
+import { useProfile } from "../contexts";
 
 export const ProfilesDialog = () => {
   const { addProfile, removeProfile, getProfileListNoDefault } = useProfile();

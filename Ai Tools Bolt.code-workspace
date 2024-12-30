@@ -5,6 +5,23 @@
     }
   ],
   "settings": {
-    "exportall.config.folderListener": []
+    "exportall.config.folderListener": [
+      "/src/js/main/modules/Registration",
+      "/src/js/main/modules/SignAgent",
+      "/src/js/main/modules/SignAgent/components",
+      "/src/js/main/modules/SignAgent/contexts",
+      "/src/js/main/modules/SignAgent/hooks",
+      "/src/js/main/modules",
+      "/src/js/main/modules/Developer/components"
+    ],
+    "CodeGPT.apiKey": "Perplexity",
+    "exportall.config.relExclusion": [
+      "/src/js/main/modules/Registration/components",
+      "/src/js/main/modules/Registration/contexts",
+      "/src/js/main/modules/SignAgent/components",
+      "/src/js/main/modules/SignAgent/contexts",
+      "/src/js/main/modules/SignAgent/hooks",
+      "/src/js/main/modules/Developer/components"
+    ]
   }
 }

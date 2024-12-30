@@ -14,20 +14,7 @@ import { useEffect, useState } from "react";
 
 import Revert from "@spectrum-icons/workflow/Revert";
 
-import {
-  ColorDisclosure,
-  newProfileSettings,
-  GettingStartedDisclosure,
-  JustificationDisclosure,
-  ProfileBar,
-  readFormattingCommand,
-  SignAgentColorList,
-  TextOptionsDisclosure,
-  useFormattingCommand,
-  useProfile,
-} from "../";
-
-import { getLogger } from "../";
+import { getLogger, newProfileSettings } from "../";
 import { evalTS } from "../../../lib/utils/bolt";
 import {
   componentGap,
@@ -35,6 +22,17 @@ import {
   postToast,
   readLocalStorage,
 } from "../../utils";
+import {
+  SignAgentColorList,
+  ProfileBar,
+  GettingStartedDisclosure,
+  JustificationDisclosure,
+  ColorDisclosure,
+  TextOptionsDisclosure,
+} from "./components";
+import { useProfile } from "./contexts";
+import { useFormattingCommand, readFormattingCommand } from "./hooks";
+import Erase from "@spectrum-icons/workflow/Erase";
 
 export function SignAgentComponent() {
   const logger = getLogger();
@@ -79,9 +77,13 @@ export function SignAgentComponent() {
         saveActiveProfile(true);
         break;
 
-      case "revertProfile":
-        setActiveProfile(newProfileSettings);
-        // setActiveProfile(readProfile(activeProfile.id));
+      case "clearSelection":
+        let clearedProfile = {
+          ...newProfileSettings,
+          id: activeProfile.id,
+          name: activeProfile.name,
+        };
+        setActiveProfile(clearedProfile);
         postToast("positive", "Cleared selections");
         break;
 
@@ -146,9 +148,9 @@ export function SignAgentComponent() {
             <SaveAsFloppy size="S" marginStart={iconMarginAdjust} />
             <Text>Save Profile Settings</Text>
           </Item>
-          <Item key="revertProfile">
-            <Revert size="S" marginStart={iconMarginAdjust} />
-            <Text>Revert to last profile save</Text>
+          <Item key="clearSelection">
+            <Erase size="S" marginStart={iconMarginAdjust} />
+            <Text>Clear all selections</Text>
           </Item>
         </ActionGroup>
         <Button

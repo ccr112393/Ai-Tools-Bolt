@@ -1,6 +1,5 @@
 import { Icon } from "@adobe/react-spectrum";
-
-import { ModuleType, RegistrationComponent } from "../";
+import { ModuleType, RegistrationComponent } from "../index";
 
 export interface RegistrationSettings {
   unit: string;
@@ -16,7 +15,7 @@ export interface RegistrationSettings {
   colorMode: string;
 }
 
-export const RegistrationSettingsKey = "registrationSettings";
+export const RegistrationKey = "REG";
 
 export const RegistrationIcon = (
   <Icon>
@@ -34,7 +33,7 @@ export const RegistrationIcon = (
 export default RegistrationComponent;
 
 export const RegistrationModule: ModuleType = {
-  key: "reg",
+  key: RegistrationKey,
   name: "Registration",
   component: RegistrationComponent,
   icon: RegistrationIcon,
