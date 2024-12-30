@@ -23,6 +23,10 @@ export function RegistrationDisclosure() {
       <TextField
         name="layerName"
         value={registrationSettings.layerName}
+        validationState={
+          registrationSettings.layerName.length <= 0 ? "invalid" : undefined
+        }
+        errorMessage="Missing layer name"
         onChange={(key) => updateSettings("layerName", key)}
         width={componentWidth}
       />
@@ -31,6 +35,14 @@ export function RegistrationDisclosure() {
       <NumberFieldDefault
         name="diameter"
         value={registrationSettings.diameter}
+        minValue={0}
+        validationState={
+          registrationSettings.diameter <= 0 ||
+          Number.isNaN(registrationSettings.diameter)
+            ? "invalid"
+            : undefined
+        }
+        errorMessage="Diameter should be greater than zero"
         onChange={(key) => updateSettings("diameter", key)}
         width={componentWidth}
       />

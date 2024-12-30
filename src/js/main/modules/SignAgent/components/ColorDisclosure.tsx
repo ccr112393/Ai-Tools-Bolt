@@ -67,7 +67,7 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
               defined within SignAgent.
             </Text>
             <Well marginTop={componentGap}>
-              strokecolor: copy_color, fillcolor: sign_color
+              stroke_color: copy_color, fill_color: sign_color
             </Well>
           </Content>
         </ContextualHelp>

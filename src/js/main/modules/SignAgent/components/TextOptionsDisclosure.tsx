@@ -91,12 +91,9 @@ export const TextOptionsDisclosure = () => {
               width={componentWidthHalf}
               marginEnd={componentGap}
               value={textOptions.leading}
-              validationState={
-                textOptions.hasLeading && Number.isNaN(textOptions.leading)
-                  ? "invalid"
-                  : undefined
+              onChange={(value) =>
+                updateSettings("leading", Number.isNaN(value) ? 0 : value)
               }
-              onChange={(value) => updateSettings("leading", value)}
             />
             <UnitPicker
               abbreviate={true}
