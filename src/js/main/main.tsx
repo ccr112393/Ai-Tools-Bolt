@@ -1,11 +1,11 @@
 import { Content, Flex, View } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
-import { ModuleTabs, ThemedProvider } from "./components";
-import { getLogger } from "./modules";
+import { ModuleTabs, ThemedProvider } from "../lib/components";
+import { getLogger } from "../lib/modules";
 
 const Main = () => {
   const logger = getLogger();
-  logger.addLog("Hello from Main");
+  console.log("Hello from Main");
   return (
     <ThemedProvider>
       <View

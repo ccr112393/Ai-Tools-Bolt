@@ -14,7 +14,11 @@ export const getCurrentLayerName = (): string => {
 };
 
 export const getCurrentPathItemName = (): string => {
-  return app.activeDocument.selection[0].name;
+  let name = "";
+  try {
+    name = app.activeDocument.selection[0].name;
+  } catch (error) {}
+  return name;
 };
 
 export const getDocumentWidth = (): number => {
