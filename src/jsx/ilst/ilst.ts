@@ -88,8 +88,10 @@ export function drawEllipse(
 ) {
   var ellipse = layer.pathItems.ellipse(y, x, diameter, diameter);
   fillColor && (ellipse.fillColor = fillColor);
-  strokeColor && (ellipse.strokeColor = strokeColor);
-  strokeWidth && (ellipse.strokeWidth = strokeWidth);
+  strokeColor
+    ? (ellipse.strokeColor = strokeColor)
+    : (ellipse.strokeColor = NoColor);
+  strokeWidth ? (ellipse.strokeWidth = strokeWidth) : (ellipse.strokeWidth = 0);
   return ellipse;
 }
 
