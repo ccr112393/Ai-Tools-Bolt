@@ -59,6 +59,10 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
             saveColorList();
             closeDialog();
           }}
+          UNSAFE_style={{
+            transform: "scale(0.9)",
+            transformOrigin: "center center",
+          }}
         >
           <Heading marginTop={componentGap}>Manage Color Fields</Heading>
           <Divider />

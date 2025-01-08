@@ -6,6 +6,7 @@ import {
   DisclosurePanel,
   DisclosureTitle,
   Grid,
+  Heading,
   Item,
   Picker,
   StatusLight,
@@ -40,7 +41,10 @@ export const JustificationDisclosure = () => {
   return (
     <Disclosure id="justification">
       <DisclosureTitle>
-        <Text flex>Justification</Text>
+        {/* <Text flex>Justification</Text> */}
+        <Heading level={5} margin={0} flex>
+          Justification
+        </Heading>
         <StatusLight
           isDisabled={
             !justification.hasHorizontal && !justification.hasVertical

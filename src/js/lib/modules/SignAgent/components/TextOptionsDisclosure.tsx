@@ -7,6 +7,7 @@ import {
   DisclosureTitle,
   Flex,
   Grid,
+  Heading,
   Item,
   Picker,
   StatusLight,
@@ -41,7 +42,9 @@ export const TextOptionsDisclosure = () => {
   return (
     <Disclosure id="textcase">
       <DisclosureTitle>
-        <Text flex>Text Options</Text>
+        <Heading level={5} margin={0} flex>
+          Text Options
+        </Heading>
         <StatusLight
           isDisabled={!textOptions.hasTextCase && !textOptions.hasLeading}
           variant={invalidSettings.includes("leading") ? "negative" : "info"}

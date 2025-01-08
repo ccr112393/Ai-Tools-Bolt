@@ -46,6 +46,10 @@ export const ProfilesDialog = () => {
           onDismiss={() => {
             closeDialog();
           }}
+          UNSAFE_style={{
+            transform: "scale(0.9)",
+            transformOrigin: "center center",
+          }}
         >
           <Heading>Manage Profiles</Heading>
           <Divider />

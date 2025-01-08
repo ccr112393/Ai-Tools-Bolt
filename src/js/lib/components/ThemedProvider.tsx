@@ -1,7 +1,6 @@
-import { Provider, darkTheme, lightTheme } from "@adobe/react-spectrum";
+import { Provider, View, darkTheme, lightTheme } from "@adobe/react-spectrum";
 import React, { useEffect, useState } from "react";
 import { subscribeBackgroundColor } from "../utils/bolt";
-import { getLogger } from "../modules";
 
 type ColorScheme = "dark" | "light";
 
@@ -20,7 +19,6 @@ const backgroundColorHexCode = {
 export const ThemedProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const logger = getLogger();
   const [themeSettings, setThemeSettings] = useState<ThemeSetting>({
     theme: darkTheme,
     colorScheme: "dark",
@@ -83,6 +81,9 @@ export const ThemedProvider: React.FC<{
       theme={themeSettings.theme}
       colorScheme={themeSettings.colorScheme}
       scale="medium"
+      height="100vh"
+      width="100vw"
+      margin={0}
     >
       <style>{`
         html, body, #root{
@@ -93,7 +94,12 @@ export const ThemedProvider: React.FC<{
           background-color:  ${themeSettings.backgroundColor};
         }
       `}</style>
-      {children}
+      <View
+        padding={"calc(single-line-height / 2"}
+        paddingTop={"calc(single-line-height / 2.5"}
+      >
+        {children}
+      </View>
     </Provider>
   );
 };

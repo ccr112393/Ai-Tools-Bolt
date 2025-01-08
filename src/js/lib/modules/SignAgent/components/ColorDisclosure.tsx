@@ -11,6 +11,7 @@ import {
   StatusLight,
   Text,
   Well,
+  Heading,
 } from "@adobe/react-spectrum";
 import { componentGap, componentWidth } from "../../../utils";
 import { useProfile } from "../contexts";
@@ -52,7 +53,9 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
   return (
     <Disclosure id="color">
       <DisclosureTitle>
-        <Text flex>Color</Text>
+        <Heading level={5} margin={0} flex>
+          Color
+        </Heading>
         <StatusLight
           isDisabled={
             !color.hasColor && !color.hasFillColor && !color.hasStrokeColor

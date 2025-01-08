@@ -16,12 +16,16 @@ export const GettingStartedDisclosure = () => {
   return (
     <Disclosure id="gettingStarted">
       <DisclosureTitle>
-        <Text flex>Getting Started</Text>
+        <Heading level={5} margin={0} flex>
+          Getting Started
+        </Heading>
         <SignAgentDisclaimer />
       </DisclosureTitle>
       <DisclosurePanel>
         <Content>
-          <Heading level={4}>Introduction</Heading>
+          <Heading level={4} marginTop={0}>
+            Introduction
+          </Heading>
           <Text>
             Use this tool to rename the selected bounding box(es) with the
             selected command(s). A command preview will be shown below all
