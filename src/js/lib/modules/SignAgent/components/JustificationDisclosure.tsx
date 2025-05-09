@@ -53,7 +53,7 @@ export const JustificationDisclosure = () => {
           marginTop={-7}
           marginBottom={-10}
         />
-        <ContextualHelp variant="help">
+        <ContextualHelp variant="help" placement="bottom end">
           {/* <Heading>Justification</Heading> */}
           <Content marginTop={0}>
             <Text>Add formatting commands for justification.</Text>

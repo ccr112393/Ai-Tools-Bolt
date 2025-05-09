@@ -9,7 +9,7 @@ import { openLinkInBrowser } from "../../../utils/bolt";
 
 export const SignAgentDisclaimer = () => {
   return (
-    <ContextualHelp variant="info">
+    <ContextualHelp variant="info" placement="bottom end">
       <Heading>Disclaimer</Heading>
       <Content>
         <Text>

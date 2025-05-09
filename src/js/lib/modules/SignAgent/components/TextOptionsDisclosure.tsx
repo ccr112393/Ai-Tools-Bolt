@@ -51,7 +51,7 @@ export const TextOptionsDisclosure = () => {
           marginTop={-7}
           marginBottom={-10}
         />
-        <ContextualHelp variant="help">
+        <ContextualHelp variant="help" placement="bottom end">
           {/* <Heading>Text Options</Heading> */}
           <Content marginTop={0}>
             <Text>Add formatting commands for text.</Text>

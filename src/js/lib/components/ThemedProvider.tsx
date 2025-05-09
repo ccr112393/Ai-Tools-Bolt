@@ -81,8 +81,6 @@ export const ThemedProvider: React.FC<{
       theme={themeSettings.theme}
       colorScheme={themeSettings.colorScheme}
       scale="medium"
-      height="100vh"
-      width="100vw"
       margin={0}
     >
       <style>{`
@@ -93,6 +91,7 @@ export const ThemedProvider: React.FC<{
           overflow: auto;
           background-color:  ${themeSettings.backgroundColor};
         }
+
       `}</style>
       <View
         padding={"calc(single-line-height / 2"}

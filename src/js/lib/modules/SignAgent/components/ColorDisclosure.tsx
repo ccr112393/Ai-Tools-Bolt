@@ -70,7 +70,7 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
           marginTop={-7}
           marginBottom={-10}
         />
-        <ContextualHelp variant="help">
+        <ContextualHelp variant="help" placement="bottom end">
           {/* <Heading>Color</Heading> */}
           <Content marginTop={0}>
             <Text>

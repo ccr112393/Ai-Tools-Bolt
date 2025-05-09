@@ -15,7 +15,6 @@ import {
   Well,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
-
 import {
   componentGap,
   componentWidth,
@@ -44,84 +43,84 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
   };
 
   return (
-    <DialogTrigger isDismissable>
-      <ActionButton
-        gridColumn={"field"}
-        width={componentWidth}
-        alignSelf={"end"}
-      >
-        Manage Colors
-      </ActionButton>
-      {(closeDialog) => (
-        <Dialog
-          size="S"
-          onDismiss={() => {
-            saveColorList();
-            closeDialog();
-          }}
-          UNSAFE_style={{
-            transform: "scale(0.9)",
-            transformOrigin: "center center",
-          }}
+    <>
+      <DialogTrigger isDismissable>
+        <ActionButton
+          gridColumn={"field"}
+          width={componentWidth}
+          alignSelf={"end"}
         >
-          <Heading marginTop={componentGap}>Manage Color Fields</Heading>
-          <Divider />
-          <Content>
-            <Flex
-              direction={"row"}
-              alignItems={"end"}
-              justifyContent={"center"}
-              marginBottom={componentGap}
+          Manage Colors
+        </ActionButton>
+        {(closeDialog) => (
+          <div>
+            <Dialog
+              size="S"
+              onDismiss={() => {
+                saveColorList();
+                closeDialog();
+              }}
             >
-              <TextField
-                value={newColor}
-                onChange={setNewColor}
-                marginEnd={componentGap}
-                flex
-                label="Field Name"
-              />
-              <TooltipTrigger>
-                <Button
-                  variant="secondary"
-                  onPress={() => {
-                    if (newColor !== "") {
-                      setColorList((prevItems) => [
-                        ...prevItems,
-                        {
-                          id: formatFieldName(newColor),
-                          name: newColor,
-                        },
-                      ]);
-                      setNewColor("");
-                    } else {
-                      postToast("negative", "Field name cannot be empty");
-                    }
-                  }}
+              <Heading marginTop={componentGap}>Manage Color Fields</Heading>
+              <Divider />
+              <Content>
+                <Flex
+                  direction={"row"}
+                  alignItems={"end"}
+                  justifyContent={"center"}
+                  marginBottom={componentGap}
                 >
-                  Add
-                </Button>
-                <Tooltip>
-                  Enter the name of the color <i>field</i>, not the color. Field
-                  names are formatted automatically:
-                  <Well>Sign Color {"→"} sign_color</Well>
-                </Tooltip>
-              </TooltipTrigger>
-            </Flex>
-            <TagGroup
-              marginTop={componentGap}
-              marginBottom={componentGap}
-              items={colorList}
-              onRemove={(keys) =>
-                setColorList((prevItems) =>
-                  prevItems.filter((item) => !keys.has(item.id))
-                )
-              }
-            >
-              {(item) => <Item key={item.id}>{item.name}</Item>}
-            </TagGroup>
-          </Content>
-        </Dialog>
-      )}
-    </DialogTrigger>
+                  <TextField
+                    value={newColor}
+                    onChange={setNewColor}
+                    marginEnd={componentGap}
+                    flex
+                    label="Field Name"
+                  />
+                  <TooltipTrigger>
+                    <Button
+                      variant="secondary"
+                      onPress={() => {
+                        if (newColor !== "") {
+                          setColorList((prevItems) => [
+                            ...prevItems,
+                            {
+                              id: formatFieldName(newColor),
+                              name: newColor,
+                            },
+                          ]);
+                          setNewColor("");
+                        } else {
+                          postToast("negative", "Field name cannot be empty");
+                        }
+                      }}
+                    >
+                      Add
+                    </Button>
+                    <Tooltip>
+                      Enter the name of the color <i>field</i>, not the color.
+                      Field names are formatted automatically:
+                      <Well>Sign Color {"→"} sign_color</Well>
+                    </Tooltip>
+                  </TooltipTrigger>
+                </Flex>
+                <TagGroup
+                  marginTop={componentGap}
+                  marginBottom={componentGap}
+                  items={colorList}
+                  onRemove={(keys) =>
+                    setColorList((prevItems) =>
+                      prevItems.filter((item) => !keys.has(item.id))
+                    )
+                  }
+                >
+                  {(item) => <Item key={item.id}>{item.name}</Item>}
+                </TagGroup>
+              </Content>
+            </Dialog>
+          </div>
+        )}
+      </DialogTrigger>
+    </>
   );
 };
