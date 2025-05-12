@@ -42,7 +42,11 @@ const config: CEP_Config = {
     province: "NC",
     org: "crdev",
     password: "ColorCharlotte2020",
-    tsa: "http://timestamp.digicert.com/",
+    tsa: [
+      "http://timestamp.digicert.com/", // Windows Only
+      "http://timestamp.apple.com/ts01", // MacOS Only
+    ],
+    allowSkipTSA: false,
     sourceMap: false,
     jsxBin: "off",
   },

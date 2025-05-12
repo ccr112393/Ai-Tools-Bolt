@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { newProfileSettings, ProfileSettings } from "../..";
-import {
-  getUnitAbbreviation,
-  getUnitByAbbreviation,
-} from "../../../utils";
+import { getUnitAbbreviation, getUnitByAbbreviation } from "../../../utils";
 
 export function formatFieldName(fieldName: string): string {
   return fieldName
     .toLowerCase()
     .replace(/\s+/g, "_")
-    .replace(/[^a-zA-Z0-9]/g, "");
+    .replace(/[^a-zA-Z0-9_]/g, "");
 }
 
 export function useFormattingCommand(settings: ProfileSettings) {
