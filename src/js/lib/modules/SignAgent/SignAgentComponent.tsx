@@ -31,6 +31,7 @@ import {
 } from "./components";
 import { useProfile } from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
+import LiveEditor from "../../utils/SignAgentEditor";
 
 export function SignAgentComponent() {
   const logger = getLogger();
@@ -176,6 +177,7 @@ export function SignAgentComponent() {
           Apply
         </Button>
       </Flex>
+      <LiveEditor />
     </Flex>
   );
 }

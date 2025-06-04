@@ -1,0 +1,9 @@
+- [ ] Color Fields with spaces are renamed without an underscore
+  - i.e.: "Sign Color" -> "sign_color"
+- [ ] Add Arrows to Horizontal/Vertical
+- [ ] Add Custom Code Box
+  - [ ] Basic Syntax Highlighting, like brackets, paranthesis, units, known commands?
+  - [ ] Autocomplete known commands?
+  - [ ] Multiline by command, Ensure Proper Formatting to Single line for AI
+- [ ] When reading a command, anything that is unidentified, should be set to custom code box
+- [ ] Check registration mark alignment
