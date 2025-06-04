@@ -16,19 +16,6 @@ const backgroundColorHexCode = {
   lightLight: "#fdfdfd",
 };
 
-const codeKeywordHexColors = {
-  dark: {
-    keyword: "#54a3f6",
-    unit: "#d19a66",
-    number: "#12a26c",
-  },
-  light: {
-    keyword: "#0054b6",
-    unit: "#d19a66",
-    number: "#b5cea8",
-  },
-};
-
 export const ThemedProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
@@ -103,22 +90,7 @@ export const ThemedProvider: React.FC<{
           height: 100%;
           overflow: auto;
           background-color:  ${themeSettings.backgroundColor};
-          .token.keyword { color: ${
-            themeSettings.colorScheme === "light"
-              ? codeKeywordHexColors.light.keyword
-              : codeKeywordHexColors.dark.keyword
-          };}
-          .token.unit { color: ${
-            themeSettings.colorScheme === "light"
-              ? codeKeywordHexColors.light.unit
-              : codeKeywordHexColors.dark.unit
-          }; }
-          .token.number { color: ${
-            themeSettings.colorScheme === "light"
-              ? codeKeywordHexColors.light.number
-              : codeKeywordHexColors.dark.number
-          }; }
-        }
+          
 
       `}</style>
       <View

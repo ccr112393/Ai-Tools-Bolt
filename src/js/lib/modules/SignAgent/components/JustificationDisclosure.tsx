@@ -17,6 +17,9 @@ import {
 import { getLogger, newProfileSettings, ProfileSettings } from "../..";
 import { componentGap, componentWidth } from "../../../utils";
 import { useProfile } from "../contexts";
+import AlignLeft from "@spectrum-icons/workflow/AlignLeft";
+import AlignCenter from "@spectrum-icons/workflow/AlignCenter";
+import AlignRight from "@spectrum-icons/workflow/AlignRight";
 
 export const JustificationDisclosure = () => {
   const logger = getLogger();
@@ -82,9 +85,18 @@ export const JustificationDisclosure = () => {
             selectedKey={justification.horizontal}
             onSelectionChange={(key) => updateSettings("horizontal", key)}
           >
-            <Item key="left">Left</Item>
-            <Item key="center">Center</Item>
-            <Item key="right">Right</Item>
+            <Item key="left" textValue="Left">
+              <AlignLeft size="S" />
+              <Text>Left</Text>
+            </Item>
+            <Item key="center" textValue="Center">
+              <AlignCenter size="S" />
+              <Text>Center</Text>
+            </Item>
+            <Item key="right" textValue="Right">
+              <AlignRight size="S" />
+              <Text>Right</Text>
+            </Item>
           </Picker>
 
           <Checkbox

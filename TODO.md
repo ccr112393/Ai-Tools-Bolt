@@ -1,9 +1,9 @@
-- [ ] Color Fields with spaces are renamed without an underscore
+- [x] Color Fields with spaces are renamed without an underscore
   - i.e.: "Sign Color" -> "sign_color"
 - [ ] Add Arrows to Horizontal/Vertical
 - [ ] Add Custom Code Box
-  - [ ] Basic Syntax Highlighting, like brackets, paranthesis, units, known commands?
-  - [ ] Autocomplete known commands?
+  - [x] Basic Syntax Highlighting, like brackets, paranthesis, units, known commands?
   - [ ] Multiline by command, Ensure Proper Formatting to Single line for AI
 - [ ] When reading a command, anything that is unidentified, should be set to custom code box
-- [ ] Check registration mark alignment
+- [x] Check registration mark alignment
+- [ ] Renaming doesn't work with nested layers

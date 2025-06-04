@@ -2,14 +2,64 @@ import { useState } from "react";
 import Editor from "react-simple-code-editor";
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
+import { lightTheme, Text, useProvider } from "@adobe/react-spectrum";
 
-const PrismStyles = () => (
-  <style>
-    {`
-      
-    `}
-  </style>
-);
+const codeKeywordHexColors = {
+  dark: {
+    keyword: "#54a3f6",
+    unit: "#e46f00",
+    number: "#12a26c",
+    punctuation: "#b2b2b2",
+  },
+  light: {
+    keyword: "#0054b6",
+    unit: "#cb5d00",
+    number: "#007a4d",
+    punctuation: "#6d6d6d",
+  },
+};
+
+function PrismStyle() {
+  const { theme } = useProvider();
+
+  return (
+    <>
+      <Text>Testing2</Text>
+      <style>
+        {`
+        #root .token.keyword {
+          color: ${
+            theme === lightTheme
+              ? codeKeywordHexColors.light.keyword
+              : codeKeywordHexColors.dark.keyword
+          } !important;
+        }
+        #root .token.unit {
+          color: ${
+            theme === lightTheme
+              ? codeKeywordHexColors.light.unit
+              : codeKeywordHexColors.dark.unit
+          } !important;
+        }
+        #root .token.number {
+          color: ${
+            theme === lightTheme
+              ? codeKeywordHexColors.light.number
+              : codeKeywordHexColors.dark.number
+          } !important;
+        }
+        #root .token.punctuation {
+          color: ${
+            theme === lightTheme
+              ? codeKeywordHexColors.light.punctuation
+              : codeKeywordHexColors.dark.punctuation
+          } !important;
+        }
+      `}
+      </style>
+    </>
+  );
+}
 
 const keywords = [
   "left",
@@ -76,12 +126,15 @@ const units = [
   "px",
   "pt",
 ];
+
 const keywordPattern = new RegExp(`\\b(${keywords.join("|")})\\b`, "g");
 const unitPattern = new RegExp(`\\b(${units.join("|")})\\b`, "g");
 const numberPattern = /\b\d+(\.\d+)?\b/g;
+const punctuationPattern = /[,:]/g;
 
 // Register your custom language (optional, for more advanced highlighting)
 Prism.languages.signagent = {
+  punctuation: punctuationPattern,
   keyword: keywordPattern,
   unit: unitPattern,
   number: numberPattern,
@@ -99,7 +152,7 @@ export default function LiveEditor() {
 
   return (
     <>
-      <PrismStyles />
+      <PrismStyle />
       <Editor
         value={code}
         onValueChange={setCode}

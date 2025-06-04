@@ -31,7 +31,7 @@ import {
 } from "./components";
 import { useProfile } from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
-import LiveEditor from "../../utils/SignAgentEditor";
+import LiveEditor from "./components/SignAgentEditor";
 
 export function SignAgentComponent() {
   const logger = getLogger();
@@ -44,8 +44,8 @@ export function SignAgentComponent() {
   } = useProfile();
 
   const [colorList, setColorList] = useState([
-    { id: "signcolor", name: "Sign Color" },
-    { id: "textcolor", name: "Text Color" },
+    { id: "sign_color", name: "Sign Color" },
+    { id: "text_color", name: "Text Color" },
   ]);
 
   const formattingCommand = useFormattingCommand(activeProfile);
