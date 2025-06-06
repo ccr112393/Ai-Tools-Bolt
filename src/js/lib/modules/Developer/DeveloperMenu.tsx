@@ -24,8 +24,9 @@ import {
   openLinkInBrowser,
   postToast,
 } from "../../utils";
+import { Inspector } from "./components";
 
-export const EnableDeveloperMode = false;
+export const EnableDeveloperMode = true;
 
 export const DeveloperMenu = () => {
   const logger = getLogger();
@@ -89,7 +90,7 @@ export const DeveloperMenu = () => {
 
   return (
     <Flex direction="row" gap={componentGap}>
-      {/* <Inspector /> */}
+      <Inspector />
       <MenuTrigger align="end">
         <ActionButton>
           <Code size="S" />

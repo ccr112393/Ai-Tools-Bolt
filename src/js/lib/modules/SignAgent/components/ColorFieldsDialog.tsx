@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   Item,
+  ListBox,
   TagGroup,
   TextField,
   Tooltip,
@@ -23,6 +24,7 @@ import {
 } from "../../../utils";
 import { formatFieldName } from "../hooks";
 import { SignAgentColor, SignAgentColorList } from "./ColorDisclosure";
+import type { Selection } from "@adobe/react-spectrum";
 
 export interface ColorFieldsDialogProps {
   colorList: SignAgentColor[];
@@ -41,6 +43,10 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
     };
     writeLocalStorage("colorList", settings);
   };
+
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set<string>()
+  );
 
   return (
     <>
@@ -104,18 +110,13 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
                     </Tooltip>
                   </TooltipTrigger>
                 </Flex>
-                <TagGroup
-                  marginTop={componentGap}
-                  marginBottom={componentGap}
+                <ListBox
+                  selectionMode="multiple"
                   items={colorList}
-                  onRemove={(keys) =>
-                    setColorList((prevItems) =>
-                      prevItems.filter((item) => !keys.has(item.id))
-                    )
-                  }
+                  onSelectionChange={(selected) => setSelectedKeys(selected)}
                 >
-                  {(item) => <Item key={item.id}>{item.name}</Item>}
-                </TagGroup>
+                  {(items) => <Item key={items.id}>{items.name}</Item>}
+                </ListBox>
               </Content>
             </Dialog>
           </div>

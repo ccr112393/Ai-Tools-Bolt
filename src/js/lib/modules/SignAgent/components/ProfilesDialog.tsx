@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   Item,
+  ListBox,
   TagGroup,
   TextField,
   Tooltip,
@@ -16,6 +17,7 @@ import {
 import { useState } from "react";
 import { componentGap, componentWidth, postToast } from "../../../utils";
 import { useProfile } from "../contexts";
+import type { Selection } from "@adobe/react-spectrum";
 
 export const ProfilesDialog = () => {
   const { addProfile, removeProfile, getProfileListNoDefault } = useProfile();
@@ -26,6 +28,10 @@ export const ProfilesDialog = () => {
     addProfile(newProfile);
     setNewProfile("");
   };
+
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set<string>()
+  );
 
   const handleRemoveProfile = (key: string) => {
     removeProfile(key);
@@ -83,14 +89,13 @@ export const ProfilesDialog = () => {
                 </Tooltip>
               </TooltipTrigger>
             </Flex>
-            <TagGroup
+            <ListBox
+              selectionMode="multiple"
               items={getProfileListNoDefault()}
-              onRemove={(keys) => {
-                keys.forEach((key) => handleRemoveProfile(key.toString()));
-              }}
+              onSelectionChange={(selected) => setSelectedKeys(selected)}
             >
-              {(item) => <Item key={item.id}>{item.name}</Item>}
-            </TagGroup>
+              {(items) => <Item key={items.id}>{items.name}</Item>}
+            </ListBox>
           </Content>
         </Dialog>
       )}

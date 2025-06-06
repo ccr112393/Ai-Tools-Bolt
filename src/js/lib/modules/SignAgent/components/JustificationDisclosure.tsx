@@ -15,7 +15,7 @@ import {
 } from "@adobe/react-spectrum";
 
 import { getLogger, newProfileSettings, ProfileSettings } from "../..";
-import { componentGap, componentWidth } from "../../../utils";
+import { componentGap, componentWidth, iconMarginAdjust } from "../../../utils";
 import { useProfile } from "../contexts";
 import AlignLeft from "@spectrum-icons/workflow/AlignLeft";
 import AlignCenter from "@spectrum-icons/workflow/AlignCenter";
@@ -86,15 +86,12 @@ export const JustificationDisclosure = () => {
             onSelectionChange={(key) => updateSettings("horizontal", key)}
           >
             <Item key="left" textValue="Left">
-              <AlignLeft size="S" />
               <Text>Left</Text>
             </Item>
             <Item key="center" textValue="Center">
-              <AlignCenter size="S" />
               <Text>Center</Text>
             </Item>
             <Item key="right" textValue="Right">
-              <AlignRight size="S" />
               <Text>Right</Text>
             </Item>
           </Picker>
