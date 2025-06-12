@@ -162,8 +162,9 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     if (newProfileName !== "" && validateProfile(newProfileName)) {
       // Format Profile Name for ID
       const newProfileID = formatFieldName(newProfileName);
+      const currentSettings = activeProfile;
       const newProfile: ProfileSettings = {
-        ...newProfileSettings(),
+        ...currentSettings,
         id: newProfileID,
         name: newProfileName,
       };
@@ -236,7 +237,8 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       invalidSelections.push("leading");
     }
 
-    console.log("Invalid Selections:", invalidSelections);
+    invalidSelections.length > 0 &&
+      console.log("Invalid Selections:", invalidSelections);
     return invalidSelections;
   };
 

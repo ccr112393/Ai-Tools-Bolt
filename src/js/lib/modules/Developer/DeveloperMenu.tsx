@@ -115,10 +115,10 @@ export const DeveloperMenu = () => {
               Clear Storage [{getLocalStorageList().length}]
             </Text>
           </Item>
-          <Item key="exportSettings">
+          {/* <Item key="exportSettings">
             <Export size="S" slot="icon" margin={menuIconMargin} />
             <Text marginStart={menuTextMargin}>Export Settings</Text>
-          </Item>
+          </Item> */}
           <SubmenuTrigger>
             <Item>
               <PushNotification size="S" slot="icon" margin={menuIconMargin} />

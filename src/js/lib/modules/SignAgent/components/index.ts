@@ -5,4 +5,6 @@ export * from "./JustificationDisclosure";
 export * from "./ProfileBar";
 export * from "./ProfilesDialog";
 export * from "./SignAgentDisclaimer";
+export * from "./Editor";
+export * from "./EditorDisclosure";
 export * from "./TextOptionsDisclosure";

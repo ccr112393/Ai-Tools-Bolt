@@ -1,7 +1,9 @@
 import {
+  ActionBar,
+  ActionBarContainer,
   ActionButton,
-  Button,
   Content,
+  ContextualHelp,
   Dialog,
   DialogTrigger,
   Divider,
@@ -9,32 +11,47 @@ import {
   Heading,
   Item,
   ListBox,
-  TagGroup,
+  Text,
   TextField,
-  Tooltip,
-  TooltipTrigger,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
-import { componentGap, componentWidth, postToast } from "../../../utils";
+import {
+  componentGap,
+  componentWidth,
+  iconMarginAdjust,
+  postToast,
+} from "../../../utils";
 import { useProfile } from "../contexts";
 import type { Selection } from "@adobe/react-spectrum";
+import Add from "@spectrum-icons/workflow/Add";
+import Delete from "@spectrum-icons/workflow/Delete";
+import { clear } from "console";
 
 export const ProfilesDialog = () => {
   const { addProfile, removeProfile, getProfileListNoDefault } = useProfile();
   const [newProfile, setNewProfile] = useState("");
 
-  const handleAddProfile = () => {
-    postToast("positive", `Adding profile: ${newProfile}`);
-    addProfile(newProfile);
-    setNewProfile("");
-  };
-
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
     new Set<string>()
   );
 
-  const handleRemoveProfile = (key: string) => {
-    removeProfile(key);
+  const clearSelectedKeys = () => {
+    setSelectedKeys(new Set());
+  };
+
+  const handleAddProfile = () => {
+    addProfile(newProfile);
+    setNewProfile("");
+  };
+
+  const removeSelectedProfiles = (selected: Selection) => {
+    const selectedArray = Array.from(selected);
+    selectedArray.forEach((key) => {
+      removeProfile(key.toString());
+    });
+    setTimeout(() => {
+      clearSelectedKeys();
+    }, 100);
   };
 
   return (
@@ -74,28 +91,48 @@ export const ProfilesDialog = () => {
                     handleAddProfile();
                   }
                 }}
+                contextualHelp={
+                  <ContextualHelp>
+                    <Heading>Adding Profiles</Heading>
+                    <Content>
+                      Enter a name for the new profile and press Enter or click
+                      Add to create a new profile with the current settings.
+                    </Content>
+                  </ContextualHelp>
+                }
               />
-              <TooltipTrigger>
-                <Button
-                  variant="secondary"
-                  onPress={() => {
-                    handleAddProfile();
-                  }}
-                >
-                  Add
-                </Button>
-                <Tooltip>
-                  Create a new profile with the current selections.
-                </Tooltip>
-              </TooltipTrigger>
+              <ActionButton
+                aria-label="Add"
+                onPress={() => {
+                  handleAddProfile();
+                }}
+              >
+                <Add />
+              </ActionButton>
             </Flex>
-            <ListBox
-              selectionMode="multiple"
-              items={getProfileListNoDefault()}
-              onSelectionChange={(selected) => setSelectedKeys(selected)}
-            >
-              {(items) => <Item key={items.id}>{items.name}</Item>}
-            </ListBox>
+            <ActionBarContainer>
+              <ListBox
+                selectionMode="multiple"
+                items={getProfileListNoDefault()}
+                onSelectionChange={(selected) => setSelectedKeys(selected)}
+              >
+                {(items) => <Item key={items.id}>{items.name}</Item>}
+              </ListBox>
+              <ActionBar
+                selectedItemCount={
+                  selectedKeys === "all" ? "all" : selectedKeys.size
+                }
+                onClearSelection={() => clearSelectedKeys()}
+                onAction={(action) => {
+                  action === "delete" && removeSelectedProfiles(selectedKeys);
+                }}
+              >
+                <Item key="delete">
+                  <Delete marginStart={iconMarginAdjust} />
+                  <Text>Delete</Text>
+                </Item>
+              </ActionBar>
+            </ActionBarContainer>
           </Content>
         </Dialog>
       )}

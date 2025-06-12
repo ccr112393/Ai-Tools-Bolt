@@ -15,11 +15,8 @@ import {
 } from "@adobe/react-spectrum";
 
 import { getLogger, newProfileSettings, ProfileSettings } from "../..";
-import { componentGap, componentWidth, iconMarginAdjust } from "../../../utils";
+import { componentGap, componentWidth } from "../../../utils";
 import { useProfile } from "../contexts";
-import AlignLeft from "@spectrum-icons/workflow/AlignLeft";
-import AlignCenter from "@spectrum-icons/workflow/AlignCenter";
-import AlignRight from "@spectrum-icons/workflow/AlignRight";
 
 export const JustificationDisclosure = () => {
   const logger = getLogger();

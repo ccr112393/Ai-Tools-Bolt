@@ -23,6 +23,7 @@ import {
 import { evalTS } from "../../utils/bolt";
 import {
   ColorDisclosure,
+  EditorDisclosure,
   GettingStartedDisclosure,
   JustificationDisclosure,
   ProfileBar,
@@ -31,7 +32,6 @@ import {
 } from "./components";
 import { useProfile } from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
-import LiveEditor from "./components/SignAgentEditor";
 
 export function SignAgentComponent() {
   const logger = getLogger();
@@ -141,6 +141,7 @@ export function SignAgentComponent() {
         <JustificationDisclosure />
         <ColorDisclosure colorList={colorList} setColorList={setColorList} />
         <TextOptionsDisclosure />
+        <EditorDisclosure />
       </Accordion>
 
       <Well marginTop={componentGap} isHidden={formattingCommand == ""}>
@@ -177,7 +178,6 @@ export function SignAgentComponent() {
           Apply
         </Button>
       </Flex>
-      <LiveEditor />
     </Flex>
   );
 }
