@@ -4,6 +4,11 @@ import Prism from "prismjs";
 import "prismjs/themes/prism.css";
 import { lightTheme, Text, useProvider } from "@adobe/react-spectrum";
 
+interface LiveEditorProps {
+  code: string;
+  setCode: (code: string) => void;
+}
+
 const codeKeywordHexColors = {
   dark: {
     keyword: "#54a3f6",
@@ -24,7 +29,6 @@ function PrismStyle() {
 
   return (
     <>
-      <Text>Testing2</Text>
       <style>
         {`
         #root .token.keyword {
@@ -145,11 +149,7 @@ function highlight(code: string) {
   return Prism.highlight(code, Prism.languages.signagent, "signagent");
 }
 
-export default function LiveEditor() {
-  const [code, setCode] = useState(
-    "top, left, fill_color: red, align_top: 0.375 inches"
-  );
-
+export default function LiveEditor({ code, setCode }: LiveEditorProps) {
   return (
     <>
       <PrismStyle />

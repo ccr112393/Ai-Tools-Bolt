@@ -5,7 +5,7 @@ import { ModuleTabs, ThemedProvider } from "../lib/components";
 const Main = () => {
   return (
     <ThemedProvider>
-      <Flex direction={"column"} maxWidth={"static-size-5000"} margin={"auto"}>
+      <Flex direction={"column"} maxWidth={"static-size-6000"} margin={"auto"}>
         <ModuleTabs />
         <ToastContainer />
       </Flex>

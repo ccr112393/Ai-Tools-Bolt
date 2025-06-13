@@ -1,28 +1,34 @@
 import {
+  ActionBar,
+  ActionBarContainer,
   ActionButton,
-  Button,
   Content,
+  ContextualHelp,
   Dialog,
   DialogTrigger,
   Divider,
   Flex,
   Heading,
   Item,
-  TagGroup,
+  ListBox,
   TextField,
-  Tooltip,
-  TooltipTrigger,
+  Text,
   Well,
 } from "@adobe/react-spectrum";
 import { useState } from "react";
 import {
   componentGap,
   componentWidth,
+  iconMarginAdjust,
   postToast,
   writeLocalStorage,
 } from "../../../utils";
 import { formatFieldName } from "../hooks";
 import { SignAgentColor, SignAgentColorList } from "./ColorDisclosure";
+import type { Selection } from "@adobe/react-spectrum";
+import Add from "@spectrum-icons/workflow/Add";
+import Delete from "@spectrum-icons/workflow/Delete";
+import { clear } from "console";
 
 export interface ColorFieldsDialogProps {
   colorList: SignAgentColor[];
@@ -40,6 +46,49 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
       colorList,
     };
     writeLocalStorage("colorList", settings);
+  };
+
+  const removeSelectedColors = (selected: Selection) => {
+    const selectedArray = Array.from(selected);
+    const newColorList = colorList.filter(
+      (color) => !selectedArray.includes(color.id)
+    );
+    setColorList(newColorList);
+    saveColorList();
+
+    setTimeout(() => {
+      clearSelectedKeys();
+    }, 100);
+  };
+
+  const addColor = () => {
+    if (newColor !== "") {
+      const existingColor = colorList.find(
+        (color) => color.id === formatFieldName(newColor)
+      );
+      if (existingColor) {
+        postToast("negative", `Field name "${newColor}" already exists`);
+      } else {
+        setColorList((prevItems) => [
+          ...prevItems,
+          {
+            id: formatFieldName(newColor),
+            name: newColor,
+          },
+        ]);
+        setNewColor("");
+      }
+    } else {
+      postToast("negative", "Field name cannot be empty");
+    }
+  };
+
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set<string>()
+  );
+
+  const clearSelectedKeys = () => {
+    setSelectedKeys(new Set());
   };
 
   return (
@@ -76,46 +125,56 @@ export const ColorFieldsDialog: React.FC<ColorFieldsDialogProps> = ({
                     marginEnd={componentGap}
                     flex
                     label="Field Name"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        addColor();
+                      }
+                    }}
+                    contextualHelp={
+                      <ContextualHelp>
+                        <Heading>Adding Fields</Heading>
+                        <Content>
+                          Enter the name of the color <i>field</i>, not the
+                          color. Field names are formatted automatically:
+                          <Well>Sign Color {"→"} sign_color</Well>
+                        </Content>
+                      </ContextualHelp>
+                    }
                   />
-                  <TooltipTrigger>
-                    <Button
-                      variant="secondary"
-                      onPress={() => {
-                        if (newColor !== "") {
-                          setColorList((prevItems) => [
-                            ...prevItems,
-                            {
-                              id: formatFieldName(newColor),
-                              name: newColor,
-                            },
-                          ]);
-                          setNewColor("");
-                        } else {
-                          postToast("negative", "Field name cannot be empty");
-                        }
-                      }}
-                    >
-                      Add
-                    </Button>
-                    <Tooltip>
-                      Enter the name of the color <i>field</i>, not the color.
-                      Field names are formatted automatically:
-                      <Well>Sign Color {"→"} sign_color</Well>
-                    </Tooltip>
-                  </TooltipTrigger>
+
+                  <ActionButton
+                    aria-label="Add"
+                    onPress={() => {
+                      addColor();
+                    }}
+                  >
+                    <Add />
+                  </ActionButton>
                 </Flex>
-                <TagGroup
-                  marginTop={componentGap}
-                  marginBottom={componentGap}
-                  items={colorList}
-                  onRemove={(keys) =>
-                    setColorList((prevItems) =>
-                      prevItems.filter((item) => !keys.has(item.id))
-                    )
-                  }
-                >
-                  {(item) => <Item key={item.id}>{item.name}</Item>}
-                </TagGroup>
+                <ActionBarContainer>
+                  <ListBox
+                    selectionMode="multiple"
+                    items={colorList}
+                    onSelectionChange={(selected) => setSelectedKeys(selected)}
+                    // height={"size-3000"}
+                  >
+                    {(items) => <Item key={items.id}>{items.name}</Item>}
+                  </ListBox>
+                  <ActionBar
+                    selectedItemCount={
+                      selectedKeys === "all" ? "all" : selectedKeys.size
+                    }
+                    onClearSelection={() => clearSelectedKeys()}
+                    onAction={(action) => {
+                      action === "delete" && removeSelectedColors(selectedKeys);
+                    }}
+                  >
+                    <Item key="delete">
+                      <Delete marginStart={iconMarginAdjust} />
+                      <Text>Delete</Text>
+                    </Item>
+                  </ActionBar>
+                </ActionBarContainer>
               </Content>
             </Dialog>
           </div>

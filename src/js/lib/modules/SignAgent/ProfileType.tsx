@@ -29,6 +29,7 @@ export interface ProfileSettings {
     leading: number;
     leadingUnit: string;
   };
+  customCode?: string; // Optional custom code field
 }
 
 export const defaultProfileListEntry: ProfileListType = {
