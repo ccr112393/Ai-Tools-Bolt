@@ -19,14 +19,8 @@ export function AboutComponent() {
   return (
     <Flex direction={"column"}>
       <Heading level={2}>Ai Tools</Heading>
-      <LabeledValue label="Version" value="2.0.0" labelPosition="side" />
+      <LabeledValue label="Version" value="3.0.0" labelPosition="side" />
       <LabeledValue label="Modules" value={modules} labelPosition="side" />
-      {/* <LabeledValue
-        label="Author"
-        value="Charles Robinson"
-        labelPosition="side"
-      />
-      <LabeledValue label="Links" value="" /> */}
       <br />
       <Content>
         <Heading level={3}>Need Help?</Heading>
@@ -41,6 +35,39 @@ export function AboutComponent() {
           .
         </Text>
       </Content>
+      <br />
+      <LabeledValue
+        label="Author"
+        value="Charles Robinson"
+        labelPosition="side"
+      />
+      <LabeledValue
+        label="Links"
+        labelPosition="side"
+        value={
+          <>
+            <Link
+              isQuiet
+              onPress={(e) =>
+                openLinkInBrowser(
+                  "https://www.linkedin.com/in/charles-robinson-104304ba/"
+                )
+              }
+            >
+              LinkedIn
+            </Link>
+            ,{" "}
+            <Link
+              isQuiet
+              onPress={(e) =>
+                openLinkInBrowser("https://github.com/ccr112393/Ai-Tools-Bolt")
+              }
+            >
+              Github
+            </Link>
+          </>
+        }
+      />
     </Flex>
   );
 }

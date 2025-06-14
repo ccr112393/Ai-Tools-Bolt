@@ -2,7 +2,7 @@ import { CEP_Config } from "vite-cep-plugin";
 // import { version } from "./package.json";
 
 const config: CEP_Config = {
-  version: "2.0.0",
+  version: "3.0.0",
   id: "com.crob.aitools",
   displayName: "Ai Tools",
   symlink: "local",
