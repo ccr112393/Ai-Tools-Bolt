@@ -141,18 +141,18 @@ export const ReloadButton = () => {
   function handleAction(action: string) {
     switch (action) {
       case "reload":
-        window.location.reload();
+        postToast("info", `Reloading...`, true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 10);
         break;
       case "clearStorage":
-        postToast(
-          "info",
-          `Removed [${localStorage.length}] files from local storage`
-        );
+        postToast("negative", `Resetting...`, true);
 
         localStorage.clear();
         setTimeout(() => {
           window.location.reload();
-        }, 100);
+        }, 10);
         break;
 
       default:
@@ -172,7 +172,10 @@ export const ReloadButton = () => {
         <RotateCCWBold size="S" />
       </ActionButton>
       <Tooltip>
-        Reload Ai Tools. Hold shift to clear settings and reset Ai Tools.
+        Reload Ai Tools.
+        <br />
+        <br />
+        Hold <i>Shift</i> to clear settings and reset Ai Tools.
       </Tooltip>
     </TooltipTrigger>
   );

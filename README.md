@@ -1,8 +1,8 @@
-# Ai Tools Bolt
+# Ai Tools
 
 An Adobe Illustrator Extension built with Bolt CEP.
 
-**Ai Tools Bolt** is an extension built to simplify common tasks within Adobe Illustrator.
+**Ai Tools** is an extension built to simplify common tasks within Adobe Illustrator.
 
 Features:
 

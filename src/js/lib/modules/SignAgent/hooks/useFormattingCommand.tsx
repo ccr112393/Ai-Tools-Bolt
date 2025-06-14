@@ -98,7 +98,11 @@ export async function readFormattingCommand(
           newSettings.color = {
             ...newSettings.color,
             hasColor: true,
-            color: cmd.replace("color:", ""),
+            color: cmd
+              .replace("color:", "")
+              .replace("{", "")
+              .replace("}", "")
+              .trim(),
           };
           isCustom = false;
           break;
@@ -107,7 +111,11 @@ export async function readFormattingCommand(
           newSettings.color = {
             ...newSettings.color,
             hasFillColor: true,
-            fillColor: cmd.replace("fill_color:", ""),
+            fillColor: cmd
+              .replace("fill_color:", "")
+              .replace("{", "")
+              .replace("}", "")
+              .trim(),
           };
           isCustom = false;
           break;
@@ -116,7 +124,11 @@ export async function readFormattingCommand(
           newSettings.color = {
             ...newSettings.color,
             hasStrokeColor: true,
-            strokeColor: cmd.replace("stroke_color:", ""),
+            strokeColor: cmd
+              .replace("stroke_color:", "")
+              .replace("{", "")
+              .replace("}", "")
+              .trim(),
           };
           isCustom = false;
           break;

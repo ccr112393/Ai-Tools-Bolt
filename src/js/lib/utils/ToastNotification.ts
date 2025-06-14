@@ -5,20 +5,27 @@ const toastTimeoutExtended: number = 2500;
 
 export function postToast(
   variant: "positive" | "negative" | "info" | "neutral",
-  message: string
+  message: string,
+  persistant: boolean = false
 ) {
   switch (variant) {
     case "positive":
-      ToastQueue.positive(message, { timeout: toastTimeout });
+      ToastQueue.positive(
+        message,
+        !persistant ? { timeout: toastTimeout } : {}
+      );
       break;
     case "negative":
-      ToastQueue.negative(message, { timeout: toastTimeoutExtended });
+      ToastQueue.negative(
+        message,
+        !persistant ? { timeout: toastTimeoutExtended } : {}
+      );
       break;
     case "info":
-      ToastQueue.info(message, { timeout: toastTimeout });
+      ToastQueue.info(message, !persistant ? { timeout: toastTimeout } : {});
       break;
     default:
-      ToastQueue.neutral(message, { timeout: toastTimeout });
+      ToastQueue.neutral(message, !persistant ? { timeout: toastTimeout } : {});
       break;
   }
 }
