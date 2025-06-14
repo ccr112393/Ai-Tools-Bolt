@@ -26,7 +26,7 @@ import {
 } from "../../utils";
 import { Inspector } from "./components";
 
-export const EnableDeveloperMode = true;
+export const EnableDeveloperMode = false;
 
 export const DeveloperMenu = () => {
   const logger = getLogger();
@@ -68,7 +68,7 @@ export const DeveloperMenu = () => {
         localStorage.clear();
         setTimeout(() => {
           window.location.reload();
-        }, 250);
+        }, 100);
         break;
 
       case "exportSettings":
@@ -138,16 +138,42 @@ export const DeveloperMenu = () => {
 };
 
 export const ReloadButton = () => {
+  function handleAction(action: string) {
+    switch (action) {
+      case "reload":
+        window.location.reload();
+        break;
+      case "clearStorage":
+        postToast(
+          "info",
+          `Removed [${localStorage.length}] files from local storage`
+        );
+
+        localStorage.clear();
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   return (
     <TooltipTrigger>
       <ActionButton
         key="reload"
         isQuiet
-        onPress={() => window.location.reload()}
+        onPress={(e) =>
+          e.shiftKey ? handleAction("clearStorage") : handleAction("reload")
+        }
       >
         <RotateCCWBold size="S" />
       </ActionButton>
-      <Tooltip>Reload</Tooltip>
+      <Tooltip>
+        Reload Ai Tools. Hold shift to clear settings and reset Ai Tools.
+      </Tooltip>
     </TooltipTrigger>
   );
 };
