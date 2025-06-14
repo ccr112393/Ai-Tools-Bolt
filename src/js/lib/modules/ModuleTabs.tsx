@@ -1,11 +1,24 @@
-import { ActionGroup, Flex, Item, Text, View } from "@adobe/react-spectrum";
+import {
+  ActionButton,
+  ActionGroup,
+  Flex,
+  Icon,
+  Item,
+  Text,
+  Tooltip,
+  TooltipTrigger,
+  View,
+} from "@adobe/react-spectrum";
 import { Key, useMemo, useState } from "react";
 import {
   DeveloperMenu,
   EnableDeveloperMode,
   EnabledModules,
   ReloadButton,
-} from "../modules";
+} from ".";
+import { AboutComponent, AboutModule } from "./About";
+import HelpOutline from "@spectrum-icons/workflow/HelpOutline";
+import { componentGap } from "../utils";
 
 export const ModuleTabs = () => {
   console.log("Hello from Main");
@@ -26,7 +39,9 @@ export const ModuleTabs = () => {
     <>
       <Flex direction={"row"} justifyContent={"space-between"}>
         <ActionGroup
-          items={EnabledModules}
+          items={EnabledModules.filter(
+            (item) => item.key !== "abt" && item.key !== "dev"
+          )}
           selectionMode="single"
           onAction={handleTabChange}
           defaultSelectedKeys={["reg"]}
@@ -40,7 +55,16 @@ export const ModuleTabs = () => {
             </Item>
           )}
         </ActionGroup>
-        {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
+
+        <Flex direction={"row"} alignItems={"end"} gap={componentGap}>
+          {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
+          <TooltipTrigger>
+            <ActionButton isQuiet onPress={() => handleTabChange("abt")}>
+              {AboutModule.icon ? <Icon>{AboutModule.icon}</Icon> : <></>}
+            </ActionButton>
+            <Tooltip>About</Tooltip>
+          </TooltipTrigger>
+        </Flex>
       </Flex>
       {memoizedModules}
     </>

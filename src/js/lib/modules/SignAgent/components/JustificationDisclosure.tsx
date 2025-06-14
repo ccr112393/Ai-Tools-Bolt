@@ -17,6 +17,14 @@ import {
 import { getLogger, newProfileSettings, ProfileSettings } from "../..";
 import { componentGap, componentWidth } from "../../../utils";
 import { useProfile } from "../contexts";
+import {
+  JustifyBottomIcon,
+  JustifyCenterIcon,
+  JustifyLeftIcon,
+  JustifyMiddleIcon,
+  JustifyRightIcon,
+  JustifyTopIcon,
+} from "./Icons";
 
 export const JustificationDisclosure = () => {
   const logger = getLogger();
@@ -83,12 +91,15 @@ export const JustificationDisclosure = () => {
             onSelectionChange={(key) => updateSettings("horizontal", key)}
           >
             <Item key="left" textValue="Left">
+              <JustifyLeftIcon />
               <Text>Left</Text>
             </Item>
             <Item key="center" textValue="Center">
+              <JustifyCenterIcon />
               <Text>Center</Text>
             </Item>
             <Item key="right" textValue="Right">
+              <JustifyRightIcon />
               <Text>Right</Text>
             </Item>
           </Picker>
@@ -104,9 +115,18 @@ export const JustificationDisclosure = () => {
             selectedKey={justification.vertical}
             onSelectionChange={(key) => updateSettings("vertical", key)}
           >
-            <Item key="top">Top</Item>
-            <Item key="middle">Middle</Item>
-            <Item key="bottom">Bottom</Item>
+            <Item key="top">
+              <JustifyTopIcon />
+              <Text>Top</Text>
+            </Item>
+            <Item key="middle">
+              <JustifyMiddleIcon />
+              <Text>Middle</Text>
+            </Item>
+            <Item key="bottom">
+              <JustifyBottomIcon />
+              <Text>Bottom</Text>
+            </Item>
           </Picker>
         </Grid>
       </DisclosurePanel>
