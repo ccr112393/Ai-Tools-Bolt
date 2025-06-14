@@ -7,7 +7,6 @@ An Adobe Illustrator Extension built with Bolt CEP.
 Features:
 
 - Registration Marks
-- Laser File Setup
 - Layer/Object Renaming
 - SignAgent™️ Tools
 
