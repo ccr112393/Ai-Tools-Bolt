@@ -12,7 +12,7 @@
   resolved "https://registry.yarnpkg.com/@adobe/react-spectrum-workflow/-/react-spectrum-workflow-2.3.5.tgz#3f5adc5fe2bae25416805b7d92c1ff5bd1e061f0"
   integrity sha512-b53VIPwPWKb/T5gzE3qs+QlGP5gVrw/LnWV3xMksDU+CRl3rzOKUwxIGiZO8ICyYh1WiyqY4myGlPU/nAynBUg==
 
-"@adobe/react-spectrum@^3.42.1":
+"@adobe/react-spectrum@^3.38.1":
   version "3.42.2"
   resolved "https://registry.yarnpkg.com/@adobe/react-spectrum/-/react-spectrum-3.42.2.tgz#38a4b760ea252f2b8bc6b2ebedef316046d695fa"
   integrity sha512-6iLmVyEyBQhQuT5ZtT8q8Cpz1ZegZTod4DnhAu5J0ZjbSbQn+53NWGGTmHORJ7Qdmtd7h1wUeybMsuS8A7LYcg==

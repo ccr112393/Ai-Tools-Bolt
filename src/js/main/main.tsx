@@ -1,6 +1,6 @@
 import { darkTheme, Flex, Provider, View } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
-import { ModuleTabs, ThemedProvider } from "../lib/components";
+import { ModuleTabs } from "../lib/components";
 
 const Main = () => {
   return (
@@ -12,7 +12,7 @@ const Main = () => {
           margin={"auto"}
         >
           <ModuleTabs />
-          <ToastContainer />
+          {/* <ToastContainer /> */}
         </Flex>
       </View>
     </Provider>

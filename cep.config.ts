@@ -3,7 +3,7 @@ import { CEP_Config } from "vite-cep-plugin";
 
 const config: CEP_Config = {
   version: "3.0.0",
-  id: "com.crob.aitools-bolt",
+  id: "com.aitools-bolt.cep",
   displayName: "Ai Tools v3",
   symlink: "local",
   port: 3000,

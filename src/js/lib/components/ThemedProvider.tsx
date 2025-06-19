@@ -83,7 +83,7 @@ export const ThemedProvider: React.FC<{
       scale="medium"
       margin={0}
     >
-      <style>{`
+      {/* <style>{`
         html, body, #root{
           margin: 0;
           padding: 0;
@@ -92,7 +92,7 @@ export const ThemedProvider: React.FC<{
           background-color:  ${themeSettings.backgroundColor};
           
 
-      `}</style>
+      `}</style> */}
       <View
         padding={"calc(single-line-height / 2"}
         paddingTop={"calc(single-line-height / 2.5"}
