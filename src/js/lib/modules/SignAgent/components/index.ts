@@ -1,5 +1,7 @@
 export * from "./ColorDisclosure";
 export * from "./ColorFieldsDialog";
+export * from "./Editor";
+export * from "./EditorDisclosure";
 export * from "./GettingStartedDisclosure";
 export * from "./JustificationDisclosure";
 export * from "./ProfileBar";

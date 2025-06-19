@@ -40,6 +40,9 @@ export function useFormattingCommand(settings: ProfileSettings) {
         `leading: ${settings.textOptions.leading.toString()} ${leadingUnitAbbr}`
       );
     }
+    if (settings.customCode) {
+      cmd.push(settings.customCode);
+    }
     return cmd.join(", ");
   };
 
@@ -51,6 +54,126 @@ export function useFormattingCommand(settings: ProfileSettings) {
 }
 
 export async function readFormattingCommand(
+  pathItemName: string
+): Promise<ProfileSettings> {
+  let newSettings: ProfileSettings = newProfileSettings();
+  try {
+    // Split on commas, but don't split inside curly braces or quotes if possible
+    // For simplicity, assume custom code is only at the end or in one token
+    // In a real app, you might need a more advanced parser for nested structures
+
+    // For now, split on commas and trim each part
+    let cmds = pathItemName.split(",").map((s) => s.trim());
+
+    for (let cmd of cmds) {
+      // For standard commands, remove spaces and brackets if needed
+      // (Note: you might not need this if you only want to clean for comparison)
+      let cleanedCmd = cmd.replace(/\s+/g, "").replace(/[{}]/g, "");
+      let isCustom = true;
+
+      switch (true) {
+        case cleanedCmd === "left":
+        case cleanedCmd === "right":
+        case cleanedCmd === "center":
+          newSettings.justification = {
+            ...newSettings.justification,
+            hasHorizontal: true,
+            horizontal: cleanedCmd,
+          };
+          isCustom = false;
+          break;
+
+        case cmd == "top":
+        case cmd == "bottom":
+        case cmd == "middle":
+          newSettings.justification = {
+            ...newSettings.justification,
+            hasVertical: true,
+            vertical: cmd,
+          };
+          isCustom = false;
+          break;
+
+        case cmd.startsWith("color:"):
+          newSettings.color = {
+            ...newSettings.color,
+            hasColor: true,
+            color: cmd
+              .replace("color:", "")
+              .replace("{", "")
+              .replace("}", "")
+              .trim(),
+          };
+          isCustom = false;
+          break;
+
+        case cmd.startsWith("fill_color:"):
+          newSettings.color = {
+            ...newSettings.color,
+            hasFillColor: true,
+            fillColor: cmd
+              .replace("fill_color:", "")
+              .replace("{", "")
+              .replace("}", "")
+              .trim(),
+          };
+          isCustom = false;
+          break;
+
+        case cmd.startsWith("stroke_color:"):
+          newSettings.color = {
+            ...newSettings.color,
+            hasStrokeColor: true,
+            strokeColor: cmd
+              .replace("stroke_color:", "")
+              .replace("{", "")
+              .replace("}", "")
+              .trim(),
+          };
+          isCustom = false;
+          break;
+
+        case cmd == "uppercase":
+        case cmd == "lowercase":
+        case cmd == "titlecase":
+          newSettings.textOptions = {
+            ...newSettings.textOptions,
+            hasTextCase: true,
+            textCase: cmd,
+          };
+          isCustom = false;
+          break;
+
+        case cmd.startsWith("leading:"):
+          let foundLeadingUnit = getUnitByAbbreviation(
+            cmd.match(/[a-z]+$/i)?.[0] ?? ""
+          );
+          newSettings.textOptions = {
+            ...newSettings.textOptions,
+            hasLeading: true,
+            leading: parseFloat(cmd.match(/\d+(\.\d+)?/)?.[0] ?? "0"),
+            leadingUnit: foundLeadingUnit.key,
+          };
+          isCustom = false;
+          break;
+
+        default:
+          // For custom code, use the original cmd (with spaces and brackets)
+          if (isCustom) {
+            newSettings.customCode = newSettings.customCode
+              ? newSettings.customCode + "," + cmd
+              : cmd;
+          }
+          break;
+      }
+    }
+  } catch (error) {
+    error instanceof Error ? console.log(error.message) : console.log(error);
+  }
+  return newSettings;
+}
+
+export async function readFormattingCommandOld(
   pathItemName: string
 ): Promise<ProfileSettings> {
   let cmds = [""];
@@ -132,6 +255,10 @@ export async function readFormattingCommand(
           break;
 
         default:
+          // If it doesn't match any known command, treat it as custom code
+          newSettings.customCode == undefined
+            ? (newSettings.customCode = cmd)
+            : (newSettings.customCode += `${cmd}_`);
           break;
       }
     });

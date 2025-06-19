@@ -28,6 +28,7 @@ import {
   ProfileBar,
   SignAgentColorList,
   TextOptionsDisclosure,
+  EditorDisclosure,
 } from "./components";
 import { useProfile } from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
@@ -140,6 +141,7 @@ export function SignAgentComponent() {
         <JustificationDisclosure />
         <ColorDisclosure colorList={colorList} setColorList={setColorList} />
         <TextOptionsDisclosure />
+        <EditorDisclosure />
       </Accordion>
 
       <Well marginTop={componentGap} isHidden={formattingCommand == ""}>

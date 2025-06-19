@@ -99,11 +99,23 @@ export function renameLayers(search: string, replace: string): number {
   var count = 0;
   var layers = currentDocument().layers;
   for (let index = 0; index < layers.length; index++) {
-    const layer = layers[index];
-    if (layer.name.indexOf(search) !== -1) {
-      layer.name = layer.name.replace(search, replace);
-      count++;
-    }
+    count += renameLayersRecursive(layers[index], search, replace);
+  }
+  return count;
+}
+
+function renameLayersRecursive(
+  layer: Layer,
+  search: string,
+  replace: string
+): number {
+  var count = 0;
+  if (layer.name.indexOf(search) !== -1) {
+    layer.name = layer.name.replace(search, replace);
+    count++;
+  }
+  for (let index = 0; index < layer.layers.length; index++) {
+    count += renameLayersRecursive(layer.layers[index], search, replace);
   }
   return count;
 }
