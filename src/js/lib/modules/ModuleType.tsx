@@ -11,9 +11,9 @@ export interface ModuleType {
 }
 
 export const EnabledModules: ModuleType[] = [
-  RegistrationModule,
+  // RegistrationModule,
   RenameModule,
-  SignAgentModule,
+  // SignAgentModule,
   AboutModule,
 ];
 

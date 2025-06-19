@@ -18,7 +18,10 @@ document.addEventListener("contextmenu", (e) => {
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
     <Main />
-  </React.StrictMode>
+    <button onClick={() => alert("Testing")}>Testing</button>
+  </>
+  // </React.StrictMode>
 );

@@ -3,8 +3,8 @@ import { CEP_Config } from "vite-cep-plugin";
 
 const config: CEP_Config = {
   version: "3.0.0",
-  id: "com.crob.aitools",
-  displayName: "Ai Tools",
+  id: "com.crob.aitools-bolt",
+  displayName: "Ai Tools v3",
   symlink: "local",
   port: 3000,
   servePort: 5000,
@@ -29,7 +29,7 @@ const config: CEP_Config = {
     {
       mainPath: "./main/index.html",
       name: "main",
-      panelDisplayName: "Ai Tools",
+      panelDisplayName: "Ai Tools v3",
       autoVisible: true,
     },
   ],
