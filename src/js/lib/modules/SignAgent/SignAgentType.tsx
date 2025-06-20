@@ -1,7 +1,8 @@
 import { Icon } from "@adobe/react-spectrum";
 
-import { ModuleType, SignAgentComponent } from "..";
+import { ModuleType } from "..";
 import { ProfileProvider } from "./contexts";
+import { SignAgentTabs } from "./SignAgentTabs";
 
 export const SignAgentIcon = (
   <Icon>
@@ -18,7 +19,7 @@ export const SignAgentKey = "SAT";
 export default function SignAgentWrapper() {
   return (
     <ProfileProvider>
-      <SignAgentComponent />
+      <SignAgentTabs />
     </ProfileProvider>
   );
 }

@@ -1,7 +1,10 @@
-import { ComboBox, Flex, Item } from "@adobe/react-spectrum";
-import { componentGap, componentGapDouble } from "../../../utils";
-import { useProfile } from "../contexts";
-import { ProfilesDialog } from "./ProfilesDialog";
+import { ActionButton, ComboBox, Flex, Item } from "@adobe/react-spectrum";
+import {
+  componentGap,
+  componentGapDouble,
+  componentWidth,
+} from "../../../utils";
+import { useProfile, useTabContext } from "../contexts";
 
 export const ProfileBar = () => {
   const { profileList, activeProfile, setActiveProfile, readProfile } =
@@ -9,6 +12,12 @@ export const ProfileBar = () => {
 
   const handleProfileChange = (profileID: string) => {
     setActiveProfile(readProfile(profileID));
+  };
+
+  const { setSelectedTab } = useTabContext();
+
+  const handleManageProfiles = () => {
+    setSelectedTab("profiles");
   };
 
   return (
@@ -26,7 +35,17 @@ export const ProfileBar = () => {
       >
         {(item) => <Item key={item.id}>{item.name}</Item>}
       </ComboBox>
-      <ProfilesDialog />
+      {/* <ProfilesDialog /> */}
+      <ActionButton
+        gridColumn={"field"}
+        width={componentWidth}
+        alignSelf={"end"}
+        onPress={() => {
+          handleManageProfiles();
+        }}
+      >
+        Manage Profiles
+      </ActionButton>
     </Flex>
   );
 };
