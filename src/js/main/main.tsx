@@ -1,6 +1,7 @@
 import { Flex, Heading } from "@adobe/react-spectrum";
 import { ToastContainer } from "@react-spectrum/toast";
-import { ModuleTabs, ThemedProvider } from "../lib/components";
+import { ThemedProvider } from "../lib/components";
+import { ModuleTabs } from "../lib/modules";
 
 const Main = () => {
   return (

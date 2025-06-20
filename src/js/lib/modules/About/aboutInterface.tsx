@@ -12,7 +12,7 @@ export const AboutIcon = (
 export default AboutComponent;
 
 export const AboutModule: ModuleType = {
-  key: "lsr",
+  key: "abt",
   name: "Settings/About",
   component: AboutComponent,
   icon: AboutIcon,

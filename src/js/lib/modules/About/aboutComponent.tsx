@@ -6,18 +6,14 @@ import {
   Text,
   Link,
   Grid,
-  ListView,
-  Item,
-  ListBox,
 } from "@adobe/react-spectrum";
-import { ModuleList } from "../ModuleType";
-import {
-  componentGap,
-  componentGapDouble,
-  openLinkInBrowser,
-} from "../../utils";
+// import { ModuleList } from "../ModuleType";
+import { componentGap, openLinkInBrowser } from "../../utils";
+import { EnabledModules } from "..";
 
 export function AboutComponent() {
+  const ModuleList: string[] = EnabledModules.map((module) => module.name);
+
   const modules = ModuleList.filter((item) => item !== "About");
 
   return (

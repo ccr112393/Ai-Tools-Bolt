@@ -16,5 +16,3 @@ export const EnabledModules: ModuleType[] = [
   SignAgentModule,
   AboutModule,
 ];
-
-export const ModuleList: string[] = EnabledModules.map((module) => module.name);

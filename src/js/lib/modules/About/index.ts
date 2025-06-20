@@ -1,2 +1,2 @@
-export * from "./aboutInterface";
 export * from "./aboutComponent";
+export * from "./aboutInterface";
