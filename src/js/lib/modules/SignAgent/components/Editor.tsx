@@ -2,7 +2,7 @@ import { useState } from "react";
 import Editor from "react-simple-code-editor";
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
-import { lightTheme, Text, useProvider } from "@adobe/react-spectrum";
+import { lightTheme, Text, TextArea, useProvider } from "@adobe/react-spectrum";
 
 interface LiveEditorProps {
   code: string;
@@ -160,8 +160,10 @@ export default function LiveEditor({ code, setCode }: LiveEditorProps) {
         padding={10}
         style={{
           minHeight: 100,
+          border: "1px solid",
         }}
       />
+      <TextArea></TextArea>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import type { Selection } from "@adobe/react-spectrum";
 import {
   ActionBar,
   ActionBarContainer,
@@ -8,23 +9,22 @@ import {
   Heading,
   Item,
   ListBox,
+  Text,
   TextField,
   Tooltip,
   TooltipTrigger,
   View,
-  Text,
 } from "@adobe/react-spectrum";
+import Add from "@spectrum-icons/workflow/Add";
+import ChevronLeft from "@spectrum-icons/workflow/ChevronLeft";
+import Delete from "@spectrum-icons/workflow/Delete";
+import { useState } from "react";
 import {
   componentGap,
   componentGapDouble,
   iconMarginAdjust,
 } from "../../../utils";
 import { useProfile, useTabContext } from "../contexts";
-import { useState } from "react";
-import Add from "@spectrum-icons/workflow/Add";
-import Delete from "@spectrum-icons/workflow/Delete";
-import type { Selection } from "@adobe/react-spectrum";
-import ChevronLeft from "@spectrum-icons/workflow/ChevronLeft";
 
 export const ProfileView = () => {
   const { addProfile, removeProfile, getProfileListNoDefault } = useProfile();

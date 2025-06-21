@@ -1,5 +1,18 @@
 {
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
-  "prettier.printWidth": 80
+  "prettier.printWidth": 80,
+  "exportall.config.folderListener": [
+    "/src/js/lib/modules",
+    "/src/js/lib/modules/About",
+    "/src/js/lib/modules/Registration",
+    "/src/js/lib/modules/Registration/components",
+    "/src/js/lib/modules/Registration/contexts",
+    "/src/js/lib/modules/Rename",
+    "/src/js/lib/modules/SignAgent",
+    "/src/js/lib/modules/SignAgent/components",
+    "/src/js/lib/modules/SignAgent/contexts",
+    "/src/js/lib/modules/SignAgent/hooks",
+    "/src/js/lib/utils"
+  ]
 }

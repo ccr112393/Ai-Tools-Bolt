@@ -1,9 +1,8 @@
 import { View } from "@adobe/react-spectrum";
-import { GettingStartedDisclosure } from "./components";
-import { ProfileView } from "./components/ProfileView";
-import { SignAgentComponent } from "./SignAgentComponent";
 import { useMemo, useState } from "react";
-import { TabContext } from "./contexts";
+import { ColorView, ProfileView } from "./components";
+import { ColorProvider, TabContext } from "./contexts";
+import { SignAgentComponent } from "./SignAgentComponent";
 
 export const SignAgentTabs = () => {
   const loadedTabs = [
@@ -18,9 +17,9 @@ export const SignAgentTabs = () => {
       component: ProfileView,
     },
     {
-      key: "colors",
-      name: "colors",
-      component: GettingStartedDisclosure,
+      key: "color",
+      name: "color",
+      component: ColorView,
     },
   ];
 
@@ -36,7 +35,7 @@ export const SignAgentTabs = () => {
 
   return (
     <TabContext.Provider value={{ selectedTab, setSelectedTab }}>
-      {memoizedTabs}
+      <ColorProvider>{memoizedTabs}</ColorProvider>
     </TabContext.Provider>
   );
 };

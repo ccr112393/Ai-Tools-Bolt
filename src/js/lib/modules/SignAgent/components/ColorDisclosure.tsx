@@ -1,44 +1,26 @@
 import {
+  ActionButton,
   Checkbox,
-  Picker,
   Content,
   ContextualHelp,
   Disclosure,
   DisclosurePanel,
   DisclosureTitle,
   Grid,
+  Heading,
   Item,
+  Picker,
   StatusLight,
   Text,
   Well,
-  Heading,
 } from "@adobe/react-spectrum";
 import { componentGap, componentWidth } from "../../../utils";
-import { useProfile } from "../contexts";
-import { ColorFieldsDialog } from "./ColorFieldsDialog";
-import { useState } from "react";
+import { useColorContext, useProfile, useTabContext } from "../contexts";
 
-export interface SignAgentColor {
-  id: string;
-  name: string;
-}
-
-export interface SignAgentColorList {
-  colorList: SignAgentColor[];
-}
-
-export interface ColorDisclosureProps {
-  colorList: SignAgentColor[];
-  setColorList: React.Dispatch<React.SetStateAction<SignAgentColor[]>>;
-}
-
-export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
-  colorList,
-  setColorList,
-}) => {
+export const ColorDisclosure = () => {
+  const { colorList } = useColorContext();
   const { activeProfile, setActiveProfile, invalidSettings } = useProfile();
   const color = activeProfile.color;
-  const [hasInvalid, setHasInvalid] = useState(false);
 
   const updateSettings = (key: string, value: any) => {
     setActiveProfile((prevSettings) => ({
@@ -49,6 +31,8 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
       },
     }));
   };
+
+  const { setSelectedTab } = useTabContext();
 
   return (
     <Disclosure id="color">
@@ -142,10 +126,16 @@ export const ColorDisclosure: React.FC<ColorDisclosureProps> = ({
             {(item) => <Item key={item.id}>{item.name}</Item>}
           </Picker>
 
-          <ColorFieldsDialog
-            colorList={colorList}
-            setColorList={setColorList}
-          />
+          <ActionButton
+            gridColumn={"field"}
+            width={componentWidth}
+            alignSelf={"end"}
+            onPress={() => {
+              setSelectedTab("color");
+            }}
+          >
+            Manage Colors
+          </ActionButton>
         </Grid>
       </DisclosurePanel>
     </Disclosure>

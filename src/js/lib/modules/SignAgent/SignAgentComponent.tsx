@@ -10,10 +10,10 @@ import {
 } from "@adobe/react-spectrum";
 import Import from "@spectrum-icons/workflow/Import";
 import SaveAsFloppy from "@spectrum-icons/workflow/SaveAsFloppy";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Erase from "@spectrum-icons/workflow/Erase";
-import { getLogger, newProfileSettings } from "..";
+import { newProfileSettings } from "..";
 import {
   componentGap,
   iconMarginAdjust,
@@ -23,18 +23,16 @@ import {
 import { evalTS } from "../../utils/bolt";
 import {
   ColorDisclosure,
+  EditorDisclosure,
   GettingStartedDisclosure,
   JustificationDisclosure,
   ProfileBar,
-  SignAgentColorList,
   TextOptionsDisclosure,
-  EditorDisclosure,
 } from "./components";
-import { useProfile } from "./contexts";
+import { SignAgentColorList, useColorContext, useProfile } from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
 
 export function SignAgentComponent() {
-  const logger = getLogger();
   const {
     activeProfile,
     setActiveProfile,
@@ -43,10 +41,7 @@ export function SignAgentComponent() {
     invalidSettings,
   } = useProfile();
 
-  const [colorList, setColorList] = useState([
-    { id: "signcolor", name: "Sign Color" },
-    { id: "textcolor", name: "Text Color" },
-  ]);
+  const { colorList, setColorList } = useColorContext();
 
   const formattingCommand = useFormattingCommand(activeProfile);
 
@@ -139,7 +134,7 @@ export function SignAgentComponent() {
       <Accordion allowsMultipleExpanded>
         <GettingStartedDisclosure />
         <JustificationDisclosure />
-        <ColorDisclosure colorList={colorList} setColorList={setColorList} />
+        <ColorDisclosure />
         <TextOptionsDisclosure />
         <EditorDisclosure />
       </Accordion>

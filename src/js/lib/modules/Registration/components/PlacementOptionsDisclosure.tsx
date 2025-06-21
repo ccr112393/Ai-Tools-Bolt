@@ -7,10 +7,17 @@ import {
   Checkbox,
   Picker,
   Item,
+  Text,
 } from "@adobe/react-spectrum";
 import { NumberFieldDefault } from "../../../components";
 import { componentWidth } from "../../../utils";
 import { useRegistration } from "../contexts/RegistrationContext";
+import {
+  BottomLeftIcon,
+  BottomRightIcon,
+  TopLeftIcon,
+  TopRightIcon,
+} from "./Icons";
 
 export function PlacementOptionsDisclosure() {
   const { registrationSettings, updateSettings, invalidSettings } =
@@ -53,10 +60,22 @@ export function PlacementOptionsDisclosure() {
             gridColumn={"field"} // 2nd Column
             width={componentWidth}
           >
-            <Item key={"top-left"}>Top Left</Item>
-            <Item key={"top-right"}>Top Right</Item>
-            <Item key={"bottom-left"}>Bottom Left</Item>
-            <Item key={"bottom-right"}>Bottom Right</Item>
+            <Item key={"top-left"}>
+              {/* <TopLeftIcon /> */}
+              <Text>Top Left</Text>
+            </Item>
+            <Item key={"top-right"}>
+              {/* <TopRightIcon /> */}
+              <Text>Top Right</Text>
+            </Item>
+            <Item key={"bottom-left"}>
+              {/* <BottomLeftIcon /> */}
+              <Text>Bottom Left</Text>
+            </Item>
+            <Item key={"bottom-right"}>
+              {/* <BottomRightIcon /> */}
+              <Text>Bottom Right</Text>
+            </Item>
           </Picker>
           <Checkbox
             name="marksCenter"
