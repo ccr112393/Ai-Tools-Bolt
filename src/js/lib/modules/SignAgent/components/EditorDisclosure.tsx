@@ -12,6 +12,7 @@ import {
 import { useProfile } from "../contexts";
 import { componentGap } from "../../../utils";
 import LiveEditor from "./Editor";
+import CodeEditor from "./CodeEditor";
 
 export const EditorDisclosure = () => {
   const { activeProfile, setActiveProfile } = useProfile();
@@ -49,7 +50,8 @@ export const EditorDisclosure = () => {
         </ContextualHelp>
       </DisclosureTitle>
       <DisclosurePanel>
-        <LiveEditor code={customCode} setCode={updateCustomCode} />
+        <CodeEditor code={customCode} setCode={updateCustomCode} />
+        {/* <LiveEditor code={customCode} setCode={updateCustomCode} /> */}
       </DisclosurePanel>
     </Disclosure>
   );

@@ -1,3 +1,13 @@
-* [class*="spectrum-Modal"] {
-  transform: 0.9;
+.code-editor {
+  background: var(--spectrum-global-color-gray-50) !important;
+  border: 1px solid var(--spectrum-alias-border-color) !important;
+  border-radius: var(--spectrum-alias-border-radius-regular) !important;
+  min-height: 120px !important;
+}
+.code-editor-textarea:focus-visible {
+  outline: none !important;
+  outline-offset: none !important;
+  border: 2px solid !important;
+  border-color: var(--spectrum-alias-focus-ring-color) !important;
+  border-radius: var(--spectrum-alias-border-radius-regular) !important;
 }

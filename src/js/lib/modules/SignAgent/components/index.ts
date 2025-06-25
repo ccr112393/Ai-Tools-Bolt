@@ -1,3 +1,6 @@
+export * from "./CodeEditor";
+export * from "./CodeEditorTheme";
+export * from "./CodeSignAgentLang";
 export * from "./ColorDisclosure";
 export * from "./ColorView";
 export * from "./Editor";
