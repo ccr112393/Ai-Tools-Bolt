@@ -13,6 +13,7 @@
     "/src/js/lib/modules/SignAgent/components",
     "/src/js/lib/modules/SignAgent/contexts",
     "/src/js/lib/modules/SignAgent/hooks",
-    "/src/js/lib/utils"
+    "/src/js/lib/utils",
+    "/src/js/lib/components"
   ]
 }

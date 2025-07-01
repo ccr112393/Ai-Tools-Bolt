@@ -154,7 +154,7 @@ export const ColorView = () => {
             }}
           >
             <Item key="delete">
-              <Delete marginStart={iconMarginAdjust} />
+              <Delete />
               <Text>Delete</Text>
             </Item>
           </ActionBar>

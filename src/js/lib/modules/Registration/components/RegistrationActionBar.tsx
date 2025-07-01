@@ -29,11 +29,11 @@ export function RegistrationActionBar() {
         }}
       >
         <Item key="save">
-          <SaveFloppy size="S" marginStart={iconMarginAdjust} />
+          <SaveFloppy size="S" />
           <Text>Save Settings</Text>
         </Item>
         <Item key="load">
-          <Import size="S" marginStart={iconMarginAdjust} />
+          <Import size="S" />
           <Text>Load Settings</Text>
         </Item>
       </ActionGroup>

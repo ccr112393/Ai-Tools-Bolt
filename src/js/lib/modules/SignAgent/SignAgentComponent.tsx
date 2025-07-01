@@ -151,15 +151,15 @@ export function SignAgentComponent() {
           }}
         >
           <Item key="readPathCommand">
-            <Import size="S" marginStart={iconMarginAdjust} />
+            <Import size="S" />
             <Text>Read formatting command from selected bounding box</Text>
           </Item>
           <Item key="saveProfile">
-            <SaveAsFloppy size="S" marginStart={iconMarginAdjust} />
+            <SaveAsFloppy size="S" />
             <Text>Save Profile Settings</Text>
           </Item>
           <Item key="clearSelection">
-            <Erase size="S" marginStart={iconMarginAdjust} />
+            <Erase size="S" />
             <Text>Clear all selections</Text>
           </Item>
         </ActionGroup>

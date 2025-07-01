@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import CodeMirror, { lineNumbers } from "@uiw/react-codemirror";
 import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
-import { signagentLanguage } from "./CodeSignAgentLang";
+import { autocompleteKeywords, signagentLanguage } from "./CodeSignAgentLang";
 import { spectrumHighlightStyle, spectrumTheme } from "./CodeEditorTheme";
 import { syntaxHighlighting } from "@codemirror/language";
+import { ThemedProvider } from "../../../components";
 
 interface CodeEditorProps {
   code?: string;
@@ -25,7 +26,7 @@ function keywordCompltetion(context: CompletionContext) {
   if (!word || (word.from === word.to && !context.explicit)) return null;
   return {
     from: word.from,
-    options: keywordSuggestions,
+    options: autocompleteKeywords(),
   };
 }
 
@@ -45,7 +46,7 @@ function CodeEditor({ code, setCode }: CodeEditorProps) {
         syntaxHighlighting(spectrumHighlightStyle),
         autocompletion({ override: [keywordCompltetion] }),
       ]}
-      theme="none"
+      theme={"dark"}
     />
   );
 }

@@ -1,4 +1,5 @@
 import { StreamLanguage, StringStream } from "@codemirror/language";
+import type { Completion } from "@codemirror/autocomplete";
 
 const keywords = [
   "left",
@@ -65,6 +66,12 @@ const units = [
   "px",
   "pt",
 ];
+
+export const autocompleteKeywords = (): Completion[] =>
+  keywords.map((term) => ({
+    label: term,
+    // type: "keyword",
+  }));
 
 export const signagentLanguage = StreamLanguage.define({
   token: (stream: StringStream) => {

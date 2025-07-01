@@ -13,7 +13,7 @@ export default AboutComponent;
 
 export const AboutModule: ModuleType = {
   key: "abt",
-  name: "Settings/About",
+  name: "About",
   component: AboutComponent,
   icon: AboutIcon,
 };
