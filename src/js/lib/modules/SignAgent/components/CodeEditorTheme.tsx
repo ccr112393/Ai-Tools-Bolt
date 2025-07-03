@@ -34,8 +34,20 @@ export const spectrumTheme = EditorView.theme({
 });
 
 export const spectrumHighlightStyle = HighlightStyle.define([
-  { tag: tags.keyword, color: "var(--spectrum-global-color-blue-500)" },
-  { tag: tags.unit, color: "var(--spectrum-global-color-orange-500)" },
-  { tag: tags.number, color: "var(--spectrum-global-color-green-500)" },
-  { tag: tags.punctuation, color: "var(--spectrum-global-color-gray-500)" },
+  {
+    tag: tags.keyword,
+    color: "var(--spectrum-global-color-blue-500) !important",
+  },
+  {
+    tag: tags.unit,
+    color: "var(--spectrum-global-color-orange-500) !important",
+  },
+  {
+    tag: tags.number,
+    color: "var(--spectrum-global-color-green-500) !important",
+  },
+  {
+    tag: tags.punctuation,
+    color: "var(--spectrum-global-color-gray-500) !important",
+  },
 ]);
