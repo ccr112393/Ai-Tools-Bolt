@@ -11,7 +11,6 @@ import {
 } from "@adobe/react-spectrum";
 import { useProfile } from "../contexts";
 import { componentGap } from "../../../utils";
-import LiveEditor from "./Editor";
 import CodeEditor from "./CodeEditor";
 
 export const EditorDisclosure = () => {

@@ -1,25 +1,14 @@
-import React, { useState } from "react";
-import CodeMirror, { lineNumbers } from "@uiw/react-codemirror";
+import CodeMirror from "@uiw/react-codemirror";
 import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
 import { autocompleteKeywords, signagentLanguage } from "./CodeSignAgentLang";
 import { spectrumHighlightStyle, spectrumTheme } from "./CodeEditorTheme";
 import { syntaxHighlighting } from "@codemirror/language";
-import { ThemedProvider } from "../../../components";
+import { useTheme } from "../../../contexts";
 
 interface CodeEditorProps {
   code?: string;
   setCode?: (value: string) => void;
 }
-
-const keywordSuggestions = [
-  {
-    label: "altb",
-    apply: "align_top_to_bottom:",
-    detail: "Expands to: align_top_to_bottom:",
-  },
-  { label: "alr", apply: "align_right:", detail: "Expands to: align_right:" },
-  // Add more as needed
-];
 
 function keywordCompltetion(context: CompletionContext) {
   const word = context.matchBefore(/\w*/);
@@ -35,6 +24,8 @@ function CodeEditor({ code, setCode }: CodeEditorProps) {
     if (setCode) setCode(value);
   };
 
+  const themeSettings = useTheme();
+
   return (
     <CodeMirror
       value={code}
@@ -46,7 +37,7 @@ function CodeEditor({ code, setCode }: CodeEditorProps) {
         syntaxHighlighting(spectrumHighlightStyle),
         autocompletion({ override: [keywordCompltetion] }),
       ]}
-      theme={"dark"}
+      theme={themeSettings.colorScheme}
     />
   );
 }

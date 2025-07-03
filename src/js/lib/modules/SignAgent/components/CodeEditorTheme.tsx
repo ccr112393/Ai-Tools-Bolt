@@ -28,6 +28,9 @@ export const spectrumTheme = EditorView.theme({
   ".cm-activeLine": {
     background: "transparent !important;",
   },
+  ".cm-tooltip.cm-tooltip-autocomplete": {
+    font: "adobe-clean, Helvetica, Arial, sans-serif",
+  },
 });
 
 export const spectrumHighlightStyle = HighlightStyle.define([
