@@ -113,9 +113,12 @@ export function AiThemeProvider({ children }: { children: React.ReactNode }) {
         });
       });
     } catch (error) {
-      let msg =
-        "Could not subscribe to background color. Are you sure you're running this in Illustrator";
-      error instanceof Error ? console.log(error.message) : console.log(msg);
+      let msg = "Unable to subscribe to host background color.";
+      if (error instanceof Error) {
+        console.log(
+          error.message.search("undefined") > -1 ? msg : error.message
+        );
+      }
     }
   }, []);
 

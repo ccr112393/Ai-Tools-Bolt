@@ -16,5 +16,6 @@
     "/src/js/lib/utils",
     "/src/js/lib/components",
     "/src/js/lib/contexts"
-  ]
+  ],
+  "exportall.config.relExclusion": ["/src/js/lib/modules/Developer"]
 }

@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext, createContext, useMemo } from "react";
 import { writeLocalStorage, readLocalStorage, postToast } from "../../../utils";
-import { getLogger } from "../../Developer";
 import { RegistrationSettings, RegistrationKey } from "../RegistrationType";
 import { isEqual } from "lodash";
 
@@ -25,8 +24,6 @@ export function RegistrationProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const logger = getLogger();
-
   const [registrationSettings, setRegistrationSettings] =
     useState<RegistrationSettings>({
       unit: "inch",

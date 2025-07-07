@@ -1,5 +1,6 @@
 import {
   Accordion,
+  ActionButton,
   ActionGroup,
   Button,
   Flex,
@@ -14,23 +15,24 @@ import { useEffect } from "react";
 
 import Erase from "@spectrum-icons/workflow/Erase";
 import { newProfileSettings } from "..";
-import {
-  componentGap,
-  iconMarginAdjust,
-  postToast,
-  readLocalStorage,
-} from "../../utils";
+import { componentGap, postToast, readLocalStorage } from "../../utils";
 import { evalTS } from "../../utils/bolt";
 import {
   ColorDisclosure,
   EditorDisclosure,
-  GettingStartedDisclosure,
+  GettingStartedButton,
   JustificationDisclosure,
   ProfileBar,
   TextOptionsDisclosure,
 } from "./components";
-import { SignAgentColorList, useColorContext, useProfile } from "./contexts";
+import {
+  ColorListStorageKey,
+  SignAgentColorList,
+  useColorContext,
+  useProfile,
+} from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
+import Help from "@spectrum-icons/workflow/Help";
 
 export function SignAgentComponent() {
   const {
@@ -46,7 +48,7 @@ export function SignAgentComponent() {
   const formattingCommand = useFormattingCommand(activeProfile);
 
   const loadColorList = () => {
-    const storedSettings = readLocalStorage("colorList");
+    const storedSettings = readLocalStorage(ColorListStorageKey);
     if (storedSettings) {
       const settings: SignAgentColorList = storedSettings;
       if (colorList != settings.colorList) {
@@ -122,17 +124,18 @@ export function SignAgentComponent() {
   };
 
   useEffect(() => {
-    console.log("Hello from SignAgentComponent");
     loadProfiles();
     loadColorList(); // Load color list
   }, []);
 
   return (
     <Flex direction={"column"} alignSelf={"center"}>
-      <Heading level={2}>SignAgent™ Tools</Heading>
+      <Flex direction={"row"} alignItems={"center"} gap={componentGap}>
+        <Heading level={2}>SignAgent™ Tools</Heading>
+        <GettingStartedButton />
+      </Flex>
       <ProfileBar />
       <Accordion allowsMultipleExpanded>
-        <GettingStartedDisclosure />
         <JustificationDisclosure />
         <ColorDisclosure />
         <TextOptionsDisclosure />

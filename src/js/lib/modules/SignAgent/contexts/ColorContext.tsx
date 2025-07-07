@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+export const ColorStorageKey = "CLR";
+export const ColorListStorageKey = "CLR_LIST";
+
 export interface SignAgentColor {
   id: string;
   name: string;

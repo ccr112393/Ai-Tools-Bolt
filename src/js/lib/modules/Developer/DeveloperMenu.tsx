@@ -6,8 +6,6 @@ import {
   MenuTrigger,
   SubmenuTrigger,
   Text,
-  Tooltip,
-  TooltipTrigger,
 } from "@adobe/react-spectrum";
 import Bug from "@spectrum-icons/workflow/Bug";
 import Code from "@spectrum-icons/workflow/Code";
@@ -18,18 +16,15 @@ import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
 import {
   componentGap,
   getLocalStorageList,
-  getLogger,
   menuIconMargin,
   menuTextMargin,
   openLinkInBrowser,
   postToast,
 } from "../../utils";
 
-export const EnableDeveloperMode = false;
+const EnableDeveloperMode = false;
 
-export const DeveloperMenu = () => {
-  const logger = getLogger();
-
+const DeveloperMenu = () => {
   function handleAction(action: string) {
     switch (action) {
       case "reload":
@@ -89,7 +84,6 @@ export const DeveloperMenu = () => {
 
   return (
     <Flex direction="row" gap={componentGap}>
-      {/* <Inspector /> */}
       <MenuTrigger align="end">
         <ActionButton>
           <Code size="S" />
@@ -133,20 +127,5 @@ export const DeveloperMenu = () => {
         </Menu>
       </MenuTrigger>
     </Flex>
-  );
-};
-
-export const ReloadButton = () => {
-  return (
-    <TooltipTrigger>
-      <ActionButton
-        key="reload"
-        isQuiet
-        onPress={() => window.location.reload()}
-      >
-        <RotateCCWBold size="S" />
-      </ActionButton>
-      <Tooltip>Reload</Tooltip>
-    </TooltipTrigger>
   );
 };

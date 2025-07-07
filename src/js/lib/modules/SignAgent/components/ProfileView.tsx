@@ -14,6 +14,7 @@ import {
   Tooltip,
   TooltipTrigger,
   View,
+  Well,
 } from "@adobe/react-spectrum";
 import Add from "@spectrum-icons/workflow/Add";
 import ChevronLeft from "@spectrum-icons/workflow/ChevronLeft";
@@ -87,10 +88,14 @@ export const ProfileView = () => {
             }}
             contextualHelp={
               <ContextualHelp>
-                <Heading>Adding Profiles</Heading>
+                <Heading>Profiles</Heading>
                 <Content>
-                  Enter a name for the new profile and press Enter or click Add
-                  to create a new profile with the current settings.
+                  Profiles allow you to save commonly used configurations for
+                  easy reuse. For example, a common braille formmating command.
+                  <Well>
+                    left, top, leading: 28.5 pt, align_top_to_bottom: message
+                    0.375 inches
+                  </Well>
                 </Content>
               </ContextualHelp>
             }

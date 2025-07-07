@@ -1,5 +1,4 @@
 import { ProfileKey } from "../modules";
-import { getLogger } from "../modules/Developer";
 import { postToast } from "./ToastNotification";
 
 export function getLocalStorageLength(): number {
@@ -7,7 +6,6 @@ export function getLocalStorageLength(): number {
 }
 
 export function getLocalStorageList(): string[] {
-  const logger = getLogger();
   let logMsg = "";
   let fileList: string[] = [];
   try {
@@ -26,7 +24,6 @@ export function getLocalStorageList(): string[] {
 }
 
 export function getLocalStorageProfiles(): string[] {
-  const logger = getLogger();
   let fileList: string[] = [];
   let fileCount = getLocalStorageLength();
   try {
@@ -46,12 +43,11 @@ export function getLocalStorageProfiles(): string[] {
 }
 
 export function writeLocalStorage(key: string, value: any): boolean {
-  const logger = getLogger();
   let success = false;
   let logMsg = "";
   try {
     localStorage.setItem(key, JSON.stringify(value));
-    logMsg = `Saved ${key} successfully`;
+    logMsg = `${key} Saved successfully`;
     success = true;
     // showSuccess ? postToast("positive", logMsg) : null;
   } catch (error) {
@@ -65,16 +61,15 @@ export function writeLocalStorage(key: string, value: any): boolean {
 }
 
 export function readLocalStorage(key: string) {
-  const logger = getLogger();
   let logMsg = "";
   let storedData;
   try {
     storedData = localStorage.getItem(key);
     if (storedData) {
-      logMsg = `Loaded stored ${key} successfully`;
+      logMsg = `${key} Loaded successfully`;
       // showSuccess ? postToast("positive", logMsg) : null;
     } else {
-      logMsg = `Found stored ${key}, but no data`;
+      logMsg = `${key} Not found`;
       // showSuccess ? postToast("info", logMsg) : null;
     }
   } catch (error) {
@@ -88,11 +83,10 @@ export function readLocalStorage(key: string) {
 }
 
 export function deleteLocalStorage(key: string) {
-  const logger = getLogger();
   let logMsg = "";
   try {
     localStorage.removeItem(key);
-    logMsg = `Deleted ${key} successfully`;
+    logMsg = `${key} Deleted successfully`;
     // showSuccess ? postToast("positive", logMsg) : null;
   } catch (error) {
     error instanceof Error

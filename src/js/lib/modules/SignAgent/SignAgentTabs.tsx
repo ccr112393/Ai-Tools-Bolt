@@ -1,6 +1,6 @@
 import { View } from "@adobe/react-spectrum";
 import { useMemo, useState } from "react";
-import { ColorView, ProfileView } from "./components";
+import { ColorView, GettingStartedView, ProfileView } from "./components";
 import { ColorProvider, TabContext } from "./contexts";
 import { SignAgentComponent } from "./SignAgentComponent";
 
@@ -20,6 +20,11 @@ export const SignAgentTabs = () => {
       key: "color",
       name: "color",
       component: ColorView,
+    },
+    {
+      key: "getting-started",
+      name: "Getting Started",
+      component: GettingStartedView,
     },
   ];
 

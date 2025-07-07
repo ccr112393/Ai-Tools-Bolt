@@ -1,18 +1,12 @@
-import {
-  Content,
-  ContextualHelp,
-  Heading,
-  Link,
-  Text,
-} from "@adobe/react-spectrum";
+import { Content, Heading, Link } from "@adobe/react-spectrum";
 import { openLinkInBrowser } from "../../../utils/bolt";
 
 export const SignAgentDisclaimer = () => {
   return (
-    <ContextualHelp variant="info" placement="bottom end">
-      <Heading>Disclaimer</Heading>
-      <Content>
-        <Text>
+    <>
+      <span style={{ fontSize: "80%" }}>
+        <Heading level={4}>Disclaimer</Heading>
+        <Content>
           I am <i>not</i> affiliated with SignAgent™.
           <p>
             To learn more, visit their website at{" "}
@@ -24,8 +18,8 @@ export const SignAgentDisclaimer = () => {
             </Link>
             .
           </p>
-        </Text>
-      </Content>
-    </ContextualHelp>
+        </Content>
+      </span>
+    </>
   );
 };

@@ -10,14 +10,10 @@ import {
   View,
 } from "@adobe/react-spectrum";
 import { Key, useMemo, useState } from "react";
-import {
-  DeveloperMenu,
-  EnableDeveloperMode,
-  EnabledModules,
-  ReloadButton,
-} from ".";
+import { EnabledModules } from ".";
 import { AboutModule } from "./About";
 import { componentGap } from "../utils";
+import { ReloadButton } from "../components";
 
 export const ModuleTabs = () => {
   const [selectedTab, setSelectedTab] = useState<string>(EnabledModules[0].key);
@@ -55,7 +51,7 @@ export const ModuleTabs = () => {
         </ActionGroup>
 
         <Flex direction={"row"} alignItems={"end"} gap={componentGap}>
-          {EnableDeveloperMode ? <DeveloperMenu /> : <ReloadButton />}
+          <ReloadButton />
           <TooltipTrigger>
             <ActionButton isQuiet onPress={() => handleTabChange("abt")}>
               {AboutModule.icon ? <Icon>{AboutModule.icon}</Icon> : <></>}

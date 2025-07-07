@@ -26,6 +26,7 @@ import {
   writeLocalStorage,
 } from "../../../utils";
 import {
+  ColorListStorageKey,
   SignAgentColorList,
   useColorContext,
   useTabContext,
@@ -40,7 +41,7 @@ export const ColorView = () => {
     const settings: SignAgentColorList = {
       colorList,
     };
-    writeLocalStorage("colorList", settings);
+    writeLocalStorage(ColorListStorageKey, settings);
   };
 
   const removeSelectedColors = (selected: Selection) => {

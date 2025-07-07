@@ -14,7 +14,7 @@ import {
   Well,
 } from "@adobe/react-spectrum";
 
-import { getLogger, newProfileSettings, ProfileSettings } from "../..";
+import { newProfileSettings, ProfileSettings } from "../..";
 import { componentGap, componentWidth } from "../../../utils";
 import { useProfile } from "../contexts";
 import {
@@ -27,7 +27,6 @@ import {
 } from "./Icons";
 
 export const JustificationDisclosure = () => {
-  const logger = getLogger();
   const { activeProfile, setActiveProfile } = useProfile();
   const justification =
     activeProfile.justification || newProfileSettings().justification;

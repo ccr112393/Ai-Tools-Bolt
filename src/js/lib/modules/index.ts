@@ -1,5 +1,4 @@
 export * from "./About";
-export * from "./Developer";
 export * from "./Laser";
 export * from "./ModuleTabs";
 export * from "./ModuleType";

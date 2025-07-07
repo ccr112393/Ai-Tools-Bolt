@@ -58,6 +58,14 @@ export function AboutComponent() {
           >
             Github
           </Link>
+          <Link
+            isQuiet
+            onPress={(e) =>
+              openLinkInBrowser("https://buymeacoffee.com/aitools")
+            }
+          >
+            Buy me a Coffee
+          </Link>
         </Flex>
       </Grid>
 
@@ -66,7 +74,7 @@ export function AboutComponent() {
       <Content>
         <Heading level={3}>Need Help?</Heading>
         <Text>
-          If you have any issues, questions, or suggestions, please fill out{" "}
+          If you have any issues, questions, or suggestions, please use{" "}
           <Link
             isQuiet
             onPress={(e) => openLinkInBrowser("https://tally.so/r/w7gy7A")}
