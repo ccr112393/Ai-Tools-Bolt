@@ -31,7 +31,7 @@ export const GettingStartedView = () => {
   return (
     <View marginTop={componentGapDouble}>
       <Flex direction={"row"} gap={componentGap} alignItems={"center"}>
-        <ActionButton isQuiet onPress={() => setSelectedTab("getting-started")}>
+        <ActionButton isQuiet onPress={() => setSelectedTab("signagent")}>
           <ChevronLeft />
         </ActionButton>
         <Heading level={3}>Getting Started</Heading>
