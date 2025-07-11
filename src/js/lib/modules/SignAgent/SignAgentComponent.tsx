@@ -130,7 +130,12 @@ export function SignAgentComponent() {
 
   return (
     <Flex direction={"column"} alignSelf={"center"}>
-      <Flex direction={"row"} alignItems={"center"} gap={componentGap}>
+      <Flex
+        direction={"row"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        gap={componentGap}
+      >
         <Heading level={2}>SignAgent™ Tools</Heading>
         <GettingStartedButton />
       </Flex>
