@@ -18,65 +18,29 @@ import Add from "@spectrum-icons/workflow/Add";
 import ChevronLeft from "@spectrum-icons/workflow/ChevronLeft";
 import Delete from "@spectrum-icons/workflow/Delete";
 import { useState } from "react";
-import {
-  componentGap,
-  componentGapDouble,
-  iconMarginAdjust,
-  postToast,
-  writeLocalStorage,
-} from "../../../utils";
-import {
-  ColorListStorageKey,
-  SignAgentColorList,
-  useColorContext,
-  useTabContext,
-} from "../contexts";
-import { formatFieldName } from "../hooks";
+import { componentGap, componentGapDouble } from "../../../utils";
+import { useColorContext, useTabContext } from "../contexts";
+import { set } from "lodash";
 
 export const ColorView = () => {
-  const { colorList, setColorList } = useColorContext();
+  const { colorList, addColor, removeColor, saveColorList, loadColorList } =
+    useColorContext();
   const [newColor, setNewColor] = useState("");
-
-  const saveColorList = () => {
-    const settings: SignAgentColorList = {
-      colorList,
-    };
-    writeLocalStorage(ColorListStorageKey, settings);
-  };
 
   const removeSelectedColors = (selected: Selection) => {
     const selectedArray = Array.from(selected);
-    const newColorList = colorList.filter(
-      (color) => !selectedArray.includes(color.id)
-    );
-    setColorList(newColorList);
-    saveColorList();
+    selectedArray.forEach((id) => {
+      removeColor(id.toString());
+    });
 
     setTimeout(() => {
       clearSelectedKeys();
     }, 100);
   };
 
-  const addColor = () => {
-    if (newColor !== "") {
-      const existingColor = colorList.find(
-        (color) => color.id === formatFieldName(newColor)
-      );
-      if (existingColor) {
-        postToast("negative", `Field name "${newColor}" already exists`);
-      } else {
-        setColorList((prevItems) => [
-          ...prevItems,
-          {
-            id: formatFieldName(newColor),
-            name: newColor,
-          },
-        ]);
-        setNewColor("");
-      }
-    } else {
-      postToast("negative", "Field name cannot be empty");
-    }
+  const handleAddColor = () => {
+    addColor(newColor);
+    setNewColor("");
   };
 
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
@@ -89,10 +53,17 @@ export const ColorView = () => {
 
   const { setSelectedTab } = useTabContext();
 
+  const handleBack = () => {
+    setNewColor("");
+    saveColorList();
+    loadColorList();
+    setSelectedTab("signagent");
+  };
+
   return (
     <View marginTop={componentGapDouble}>
       <Flex direction={"row"} gap={componentGap} alignItems={"center"}>
-        <ActionButton isQuiet onPress={() => setSelectedTab("signagent")}>
+        <ActionButton isQuiet onPress={() => handleBack()}>
           <ChevronLeft />
         </ActionButton>
         <Heading level={3}>Manage Colors</Heading>
@@ -112,7 +83,7 @@ export const ColorView = () => {
             label="Field Name"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                addColor();
+                handleAddColor();
               }
             }}
             contextualHelp={
@@ -130,7 +101,7 @@ export const ColorView = () => {
           <ActionButton
             aria-label="Add"
             onPress={() => {
-              addColor();
+              handleAddColor();
             }}
           >
             <Add />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { newProfileSettings, ProfileSettings } from "../..";
+import { newProfileSettings, ProfileSettings, useColorContext } from "../..";
 import { getUnitAbbreviation, getUnitByAbbreviation } from "../../../utils";
+import { add } from "lodash";
 
 export function formatFieldName(fieldName: string): string {
   return fieldName
@@ -59,15 +60,12 @@ export async function readFormattingCommand(
   let newSettings: ProfileSettings = newProfileSettings();
   try {
     // Split on commas, but don't split inside curly braces or quotes if possible
-    // For simplicity, assume custom code is only at the end or in one token
-    // In a real app, you might need a more advanced parser for nested structures
 
     // For now, split on commas and trim each part
     let cmds = pathItemName.split(",").map((s) => s.trim());
 
     for (let cmd of cmds) {
       // For standard commands, remove spaces and brackets if needed
-      // (Note: you might not need this if you only want to clean for comparison)
       let cleanedCmd = cmd.replace(/\s+/g, "").replace(/[{}]/g, "");
       let isCustom = true;
 

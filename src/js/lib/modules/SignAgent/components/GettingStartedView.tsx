@@ -8,18 +8,28 @@ import {
   Divider,
   StatusLight,
   Well,
+  TooltipTrigger,
+  Tooltip,
+  Button,
 } from "@adobe/react-spectrum";
 import { componentGap, componentGapDouble } from "../../../utils";
 import ChevronLeft from "@spectrum-icons/workflow/ChevronLeft";
 import { SignAgentDisclaimer, useTabContext } from "../../SignAgent";
 import InfoOutline from "@spectrum-icons/workflow/InfoOutline";
+import Info from "@spectrum-icons/workflow/Info";
 
 export const GettingStartedButton = () => {
   const { setSelectedTab } = useTabContext();
   return (
-    <ActionButton isQuiet onPress={() => setSelectedTab("getting-started")}>
-      <InfoOutline />
-    </ActionButton>
+    <TooltipTrigger>
+      <Button
+        variant="secondary"
+        onPress={() => setSelectedTab("getting-started")}
+      >
+        <Info />
+      </Button>
+      <Tooltip>Getting Started</Tooltip>
+    </TooltipTrigger>
   );
 };
 

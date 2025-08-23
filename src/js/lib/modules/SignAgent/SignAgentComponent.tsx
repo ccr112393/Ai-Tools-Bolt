@@ -1,6 +1,5 @@
 import {
   Accordion,
-  ActionButton,
   ActionGroup,
   Button,
   Flex,
@@ -14,8 +13,8 @@ import SaveAsFloppy from "@spectrum-icons/workflow/SaveAsFloppy";
 import { useEffect } from "react";
 
 import Erase from "@spectrum-icons/workflow/Erase";
-import { newProfileSettings } from "..";
-import { componentGap, postToast, readLocalStorage } from "../../utils";
+import { newProfileSettings, ProfileSettings } from "..";
+import { componentGap, postToast } from "../../utils";
 import { evalTS } from "../../utils/bolt";
 import {
   ColorDisclosure,
@@ -25,14 +24,8 @@ import {
   ProfileBar,
   TextOptionsDisclosure,
 } from "./components";
-import {
-  ColorListStorageKey,
-  SignAgentColorList,
-  useColorContext,
-  useProfile,
-} from "./contexts";
+import { useColorContext, useProfile } from "./contexts";
 import { readFormattingCommand, useFormattingCommand } from "./hooks";
-import Help from "@spectrum-icons/workflow/Help";
 
 export function SignAgentComponent() {
   const {
@@ -43,18 +36,27 @@ export function SignAgentComponent() {
     invalidSettings,
   } = useProfile();
 
-  const { colorList, setColorList } = useColorContext();
+  const { loadColorList, colorList, addColor, saveColorList } =
+    useColorContext();
 
   const formattingCommand = useFormattingCommand(activeProfile);
 
-  const loadColorList = () => {
-    const storedSettings = readLocalStorage(ColorListStorageKey);
-    if (storedSettings) {
-      const settings: SignAgentColorList = storedSettings;
-      if (colorList != settings.colorList) {
-        setColorList(settings.colorList);
-      }
+  const addReadColors = (profile: ProfileSettings) => {
+    let colors: string[] = [];
+    if (profile.color.hasColor) {
+      colors.push(profile.color.color);
     }
+    if (profile.color.hasFillColor) {
+      colors.push(profile.color.fillColor);
+    }
+    if (profile.color.hasStrokeColor) {
+      colors.push(profile.color.strokeColor);
+    }
+    colors.forEach((clr) => {
+      if (!colorList.some((color) => color.id === clr)) {
+        addColor(clr);
+      }
+    });
   };
 
   const readPathCommand = async () => {
@@ -66,6 +68,7 @@ export function SignAgentComponent() {
     if (typeof pathItemName === "string" && pathItemName != "") {
       const newSettings = await readFormattingCommand(pathItemName);
       console.log("Read Layer:" + newSettings.id);
+      addReadColors(newSettings);
       setActiveProfile(newSettings);
     } else {
       postToast("info", "No path item selected");
@@ -87,7 +90,6 @@ export function SignAgentComponent() {
     switch (action) {
       case "readPathCommand":
         readPathCommand();
-
         break;
 
       case "saveProfile":
@@ -128,6 +130,10 @@ export function SignAgentComponent() {
     loadColorList(); // Load color list
   }, []);
 
+  // useEffect(() => {
+  //   saveColorList();
+  // }, [colorList]);
+
   return (
     <Flex direction={"column"} alignSelf={"center"}>
       <Flex
@@ -160,7 +166,10 @@ export function SignAgentComponent() {
         >
           <Item key="readPathCommand">
             <Import size="S" />
-            <Text>Read formatting command from selected bounding box</Text>
+            <Text>
+              Read formatting command from selected bounding box. Unknown colors
+              will be temporarily added.
+            </Text>
           </Item>
           <Item key="saveProfile">
             <SaveAsFloppy size="S" />

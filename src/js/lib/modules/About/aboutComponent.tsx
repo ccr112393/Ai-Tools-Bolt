@@ -6,15 +6,23 @@ import {
   Text,
   Link,
   Grid,
+  Button,
 } from "@adobe/react-spectrum";
 // import { ModuleList } from "../ModuleType";
-import { componentGap, openLinkInBrowser } from "../../utils";
+import { componentGap, openLinkInBrowser, postToast } from "../../utils";
 import { EnabledModules } from "..";
 
 export function AboutComponent() {
   const ModuleList: string[] = EnabledModules.map((module) => module.name);
 
   const modules = ModuleList.filter((item) => item !== "About");
+
+  const handleReset = () => {
+    postToast("negative", "Resetting Ai Tools...");
+    localStorage.clear();
+
+    window.location.reload();
+  };
 
   return (
     <Flex direction={"column"}>
@@ -74,16 +82,21 @@ export function AboutComponent() {
       <Content>
         <Heading level={3}>Need Help?</Heading>
         <Text>
-          If you have any issues, questions, or suggestions, please use{" "}
+          If you have any issues, questions, or suggestions, please{" "}
           <Link
             isQuiet
             onPress={(e) => openLinkInBrowser("https://tally.so/r/w7gy7A")}
           >
-            this form
+            contact me
           </Link>
           .
         </Text>
+        <br />
+        <br />
       </Content>
+      <Button variant="negative" onPress={(e) => handleReset()}>
+        Reset Ai Tools
+      </Button>
     </Flex>
   );
 }
