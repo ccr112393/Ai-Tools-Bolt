@@ -3,15 +3,15 @@ import { version } from "./package.json";
 
 const config: CEP_Config = {
   version,
-  id: "com.aitools-bolt.cep",
-  displayName: "Ai Tools Bolt",
+  id: "com.crob.aitools",
+  displayName: "Ai Tools",
   symlink: "local",
   port: 3000,
   servePort: 5000,
   startingDebugPort: 8860,
   extensionManifestVersion: 6.0,
   requiredRuntimeVersion: 9.0,
-  hosts: [{ name: "ILST", version: "[0.0,99.9]" }],
+  hosts: [{ name: "ILST", version: "23.0" }],
   type: "Panel",
   iconDarkNormal: "./assets/light-icon.png",
   iconNormal: "./assets/dark-icon.png",
@@ -29,7 +29,7 @@ const config: CEP_Config = {
     {
       mainPath: "./main/index.html",
       name: "main",
-      panelDisplayName: "Ai Tools Bolt",
+      panelDisplayName: "Ai Tools",
       autoVisible: true,
     },
   ],
