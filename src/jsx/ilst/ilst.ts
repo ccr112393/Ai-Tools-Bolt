@@ -61,6 +61,18 @@ export const createColorCMYK = (
   return color;
 };
 
+export const createColorRGB = (
+  red: number,
+  green: number,
+  blue: number
+): Color => {
+  var color = new RGBColor();
+  color.red = red;
+  color.green = green;
+  color.blue = blue;
+  return color;
+};
+
 export const createLayer = (name: string): Layer => {
   var layer = currentDocument().layers.add();
   layer.name = name;

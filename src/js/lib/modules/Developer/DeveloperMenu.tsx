@@ -1,5 +1,6 @@
 import {
   ActionButton,
+  Badge,
   Flex,
   Item,
   Menu,
@@ -22,9 +23,8 @@ import {
   postToast,
 } from "../../utils";
 
-const EnableDeveloperMode = false;
 
-const DeveloperMenu = () => {
+export const DeveloperMenu = () => {
   function handleAction(action: string) {
     switch (action) {
       case "reload":
@@ -85,37 +85,38 @@ const DeveloperMenu = () => {
   return (
     <Flex direction="row" gap={componentGap}>
       <MenuTrigger align="end">
-        <ActionButton>
-          <Code size="S" />
+        <ActionButton isQuiet>
+          {/* <Code size="S" /> */}
+          <Badge variant="yellow">DEV</Badge>
           {/* <Text>Developer</Text> */}
         </ActionButton>
         <Menu onAction={(key) => handleAction(key.toString())}>
           <Item key="reload">
-            <RotateCCWBold size="S" slot="icon" margin={menuIconMargin} />
-            <Text marginStart={menuTextMargin}>Reload</Text>
+            <RotateCCWBold size="S" slot="icon" />
+            <Text >Reload</Text>
           </Item>
           <Item key="openRemoteDebug">
-            <Bug size="S" slot="icon" margin={menuIconMargin} />
-            <Text marginStart={menuTextMargin}>Remote Debug</Text>
+            <Bug size="S" slot="icon" />
+            <Text >Remote Debug</Text>
           </Item>
           <Item key="openReactDebug">
-            <Bug size="S" slot="icon" margin={menuIconMargin} />
-            <Text marginStart={menuTextMargin}>React Debug</Text>
+            <Bug size="S" slot="icon" />
+            <Text >React Debug</Text>
           </Item>
           <Item key="clearStorage">
-            <Delete size="S" slot="icon" margin={menuIconMargin} />
-            <Text marginStart={menuTextMargin}>
+            <Delete size="S" slot="icon" />
+            <Text >
               Clear Storage [{getLocalStorageList().length}]
             </Text>
           </Item>
-          <Item key="exportSettings">
-            <Export size="S" slot="icon" margin={menuIconMargin} />
-            <Text marginStart={menuTextMargin}>Export Settings</Text>
-          </Item>
+          {/* <Item key="exportSettings">
+            <Export size="S" slot="icon"  />
+            <Text >Export Settings</Text>
+          </Item> */}
           <SubmenuTrigger>
             <Item>
-              <PushNotification size="S" slot="icon" margin={menuIconMargin} />
-              <Text marginStart={menuTextMargin}>Toasts</Text>
+              <PushNotification size="S" slot="icon" />
+              <Text >Toasts</Text>
             </Item>
             <Menu onAction={(key) => handleAction(key.toString())}>
               <Item key={"toastPositive"}>Positive</Item>

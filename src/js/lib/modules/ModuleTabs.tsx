@@ -14,6 +14,7 @@ import { EnabledModules } from ".";
 import { AboutModule } from "./About";
 import { componentGap } from "../utils";
 import { ReloadButton } from "../components";
+import { EnableDeveloperMode, DeveloperBadge } from "./Developer/DeveloperMode";
 
 export const ModuleTabs = () => {
   const [selectedTab, setSelectedTab] = useState<string>(EnabledModules[0].key);
@@ -50,7 +51,7 @@ export const ModuleTabs = () => {
           )}
         </ActionGroup>
 
-        <Flex direction={"row"} alignItems={"end"} gap={componentGap}>
+        <Flex direction={"row"} alignItems={"center"} gap={componentGap}>
           <ReloadButton />
           <TooltipTrigger>
             <ActionButton isQuiet onPress={() => handleTabChange("abt")}>
@@ -58,6 +59,7 @@ export const ModuleTabs = () => {
             </ActionButton>
             <Tooltip>About</Tooltip>
           </TooltipTrigger>
+          {EnableDeveloperMode && <DeveloperBadge />}
         </Flex>
       </Flex>
       {memoizedModules}
