@@ -334,3 +334,64 @@ export function addRegistration(
     return false;
   }
 }
+
+export function processLaserLayerProperties(
+  registrationLayerName: string,
+  registrationColor: Color,
+  laserLayerName: string,
+  laserColor: Color,
+  engraveLayerName: string,
+  engraveColor: Color
+): {
+  regFound: boolean;
+  lasFound: boolean;
+  engFound: boolean;
+} {
+  var regFound = false;
+  var lasFound = false;
+  var engFound = false;
+
+  // Set Document Color Mode
+  setDocumentColorSpaceRGB();
+
+  // Process Registration Layer
+  var regLayer = getLayerByName(registrationLayerName);
+  if (regLayer) {
+    var items = regLayer.pathItems;
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      item.filled = true;
+      item.fillColor = registrationColor;
+      item.stroked = false;
+    }
+    regFound = true;
+  }
+
+  // Process Laser Layer
+  var lasLayer = getLayerByName(laserLayerName);
+  if (lasLayer) {
+    var items = lasLayer.pathItems;
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      item.filled = false;
+      item.stroked = true;
+      item.strokeColor = laserColor;
+    }
+    engFound = true;
+  }
+
+  // Process Engrave Layer
+  var engLayer = getLayerByName(engraveLayerName);
+  if (engLayer) {
+    var items = engLayer.pathItems;
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      item.filled = false;
+      item.stroked = true;
+      item.strokeColor = engraveColor;
+    }
+    engFound = true;
+  }
+
+  return { regFound: regFound, lasFound: lasFound, engFound: engFound };
+}

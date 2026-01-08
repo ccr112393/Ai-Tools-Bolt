@@ -1,28 +1,19 @@
 import {
   Button,
   Color,
-  ColorEditor,
   ColorField,
   ColorPicker,
   ColorSlider,
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTitle,
   Flex,
-  Form,
-  getColorChannels,
   Grid,
   Heading,
   parseColor,
-  TextField,
   Text,
+  TextField
 } from "@adobe/react-spectrum";
-import { UnitField } from "../../components";
 import { useState } from "react";
-import { color } from "@uiw/react-codemirror";
+import { componentWidth125Percent, evalTS, postToast } from "../../utils";
 import "./CustomFieldLabel.css";
-import { componentWidth } from "../../utils";
-import { cep } from "vite-cep-plugin";
 
 
 
@@ -39,10 +30,10 @@ function RGBColorPicker({ label, colorValue, setColorValue }: RGBColorPickerProp
   return (
     <Flex direction={"column"} >
 
-      {/* {label && (
+      {label && (
         <label className="customFieldLabel">{label}</label>
-      )} */}
-      <ColorPicker value={colorValue} label={colorValue.toString().slice(5, -4)}>
+      )}
+      <ColorPicker value={colorValue} >
         <Flex direction={"column"} justifyContent={"space-between"} gap={"size-100"}>
           <ColorSlider key={"red"} channel={"red"} colorSpace={space} value={colorValue} onChange={setColorValue} />
           <ColorSlider key={"green"} channel={"green"} colorSpace={space} value={colorValue} onChange={setColorValue} />
@@ -66,8 +57,20 @@ async function handleApply(
   regColor: Color,
   lasColor: Color,
   engColor: Color,
-) {
+): Promise<string> {
+  let toast = "";
 
+  await evalTS("processLaserLayerProperties", regLayerName, regColor, lasLayerName, lasColor, engLayerName, engColor).then((result) => {
+    let processed = []
+    result.regFound ? processed.push("Registration") : null;
+    result.lasFound ? processed.push("Laser") : null;
+    result.engFound ? processed.push("Engrave") : null;
+    toast = `${processed.join(", ")}`
+    console.log("RESULT: ", result);
+    console.log("PROCESSED: ", processed);
+  });
+
+  return toast;
 }
 
 export function LaserComponent() {
@@ -79,6 +82,7 @@ export function LaserComponent() {
   const [registrationColor, setRegistrationColor] = useState(parseColor('rgb(0, 0, 0)'));
   const [laserColor, setLaserColor] = useState(parseColor('rgb(255, 0, 0)'));
   const [engraveColor, setEngraveColor] = useState(parseColor('rgb(0, 255, 0)'));
+
 
   return (
     <Flex direction={"column"} alignSelf={"center"}>
@@ -93,35 +97,41 @@ export function LaserComponent() {
       <Text marginBottom={"size-100"}>
         Quickly process laser cut files by converting the color space to RGB and setting registration fill, laser stroke, and engrave stroke colors.
       </Text>
+
       <Grid
-        areas={["label layer color"]}
-        alignItems={"center"}
+        areas={["layer color"]}
+        alignItems={"baseline"}
         justifyContent={"start"}
         maxWidth={"size-4600"}
         rowGap={"size-100"}
         columnGap={"size-200"}>
 
-        <Heading level={4} marginBottom={"size-0"}>Layer Type</Heading>
         <Heading level={4} marginBottom={"size-0"}>Layer Name</Heading>
         <Heading level={4} marginBottom={"size-0"}>Color</Heading>
 
-        <Text>Registration</Text>
-        <TextField value={registrationLayerName} onChange={setRegistrationLayerName} width={componentWidth}></TextField>
+        <TextField label="Registration" value={registrationLayerName} onChange={setRegistrationLayerName} width={componentWidth125Percent} />
         <RGBColorPicker label="Fill" colorValue={registrationColor} setColorValue={setRegistrationColor} />
 
-        <Text>Laser</Text>
-        <TextField value={laserLayerName} onChange={setLaserLayerName} width={componentWidth}></TextField>
+
+        <TextField label="Laser" value={laserLayerName} onChange={setLaserLayerName} width={componentWidth125Percent} />
         <RGBColorPicker label="Stroke" colorValue={laserColor} setColorValue={setLaserColor} />
 
-        <Text>Engrave</Text>
-        <TextField value={engraveLayerName} onChange={setEngraveLayerName} width={componentWidth}></TextField>
+        <TextField label="Engrave" value={engraveLayerName} onChange={setEngraveLayerName} width={componentWidth125Percent} />
         <RGBColorPicker label="Stroke" colorValue={engraveColor} setColorValue={setEngraveColor} />
-
       </Grid>
 
       <Flex justifyContent={"end"} marginTop={"size-200"}>
         <Button
-          variant="accent">Apply</Button>
+          variant="accent"
+          onPress={() => {
+            handleApply(registrationLayerName, laserLayerName, engraveLayerName, registrationColor, laserColor, engraveColor).then(
+              (result) => {
+                postToast(result.length > 0 ? 'positive' : 'negative', result.length > 0 ? `Processed: ${result}` : "Layers not found")
+              }
+            )
+
+          }}
+        >Apply</Button>
       </Flex>
 
     </Flex>

@@ -16,7 +16,7 @@ interface PreferencesPopoverProps {
   options: Array<[string, React.ReactElement]>;
 }
 
-export const PreferencesPopover: React.FC<PreferencesPopoverProps> = (
+const PreferencesPopover: React.FC<PreferencesPopoverProps> = (
   props
 ) => {
   return (
