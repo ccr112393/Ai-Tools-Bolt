@@ -335,14 +335,16 @@ export function addRegistration(
   }
 }
 
-export function processLaserLayerProperties(
-  registrationLayerName: string,
-  registrationColor: Color,
-  laserLayerName: string,
-  laserColor: Color,
-  engraveLayerName: string,
-  engraveColor: Color
-): {
+type LaserLayerProperties = {
+  regLayerName: string;
+  lasLayerName: string;
+  engLayerName: string;
+  regColor: { r: number; g: number; b: number };
+  lasColor: { r: number; g: number; b: number };
+  engColor: { r: number; g: number; b: number };
+};
+
+export function processLaserLayerProperties(data: LaserLayerProperties): {
   regFound: boolean;
   lasFound: boolean;
   engFound: boolean;
@@ -351,44 +353,63 @@ export function processLaserLayerProperties(
   var lasFound = false;
   var engFound = false;
 
+  // Get Layers Exists
+  var regLayer = getLayerByName(data.regLayerName);
+  var lasLayer = getLayerByName(data.lasLayerName);
+  var engLayer = getLayerByName(data.engLayerName);
+
   // Set Document Color Mode
+  const doc = currentDocument();
   setDocumentColorSpaceRGB();
 
   // Process Registration Layer
-  var regLayer = getLayerByName(registrationLayerName);
+
   if (regLayer) {
-    var items = regLayer.pathItems;
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      item.filled = true;
-      item.fillColor = registrationColor;
-      item.stroked = false;
+    var registrationColor = createColorRGB(
+      data.regColor.r,
+      data.regColor.g,
+      data.regColor.b
+    );
+    var regItems = regLayer.pathItems;
+    for (var i = 0; i < regItems.length; i++) {
+      var regItem = regItems[i];
+      regItem.filled = true;
+      regItem.fillColor = registrationColor;
+      regItem.stroked = false;
     }
     regFound = true;
   }
 
   // Process Laser Layer
-  var lasLayer = getLayerByName(laserLayerName);
   if (lasLayer) {
-    var items = lasLayer.pathItems;
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      item.filled = false;
-      item.stroked = true;
-      item.strokeColor = laserColor;
+    var laserColor = createColorRGB(
+      data.lasColor.r,
+      data.lasColor.g,
+      data.lasColor.b
+    );
+    var lasItems = lasLayer.pathItems;
+    for (var j = 0; j < lasItems.length; j++) {
+      var lasItem = lasItems[j];
+      lasItem.filled = false;
+      lasItem.stroked = true;
+      lasItem.strokeColor = laserColor;
     }
-    engFound = true;
+    lasFound = true;
   }
 
   // Process Engrave Layer
-  var engLayer = getLayerByName(engraveLayerName);
   if (engLayer) {
-    var items = engLayer.pathItems;
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      item.filled = false;
-      item.stroked = true;
-      item.strokeColor = engraveColor;
+    var engraveColor = createColorRGB(
+      data.engColor.r,
+      data.engColor.g,
+      data.engColor.b
+    );
+    var engItems = engLayer.pathItems;
+    for (var k = 0; k < engItems.length; k++) {
+      var engItem = engItems[k];
+      engItem.filled = false;
+      engItem.stroked = true;
+      engItem.strokeColor = engraveColor;
     }
     engFound = true;
   }

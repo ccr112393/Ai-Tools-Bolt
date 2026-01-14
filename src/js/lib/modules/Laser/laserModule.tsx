@@ -1,9 +1,6 @@
 import {
   Button,
   Color,
-  ColorField,
-  ColorPicker,
-  ColorSlider,
   Flex,
   Grid,
   Heading,
@@ -14,40 +11,23 @@ import {
 import { useState } from "react";
 import { componentWidth125Percent, evalTS, postToast } from "../../utils";
 import "./CustomFieldLabel.css";
+import { RGBColorPicker } from "./RGBColorPicker";
 
+type LaserLayerProperties = {
+  regLayerName: string;
+  lasLayerName: string;
+  engLayerName: string;
+  regColor: { r: number; g: number; b: number };
+  lasColor: { r: number; g: number; b: number };
+  engColor: { r: number; g: number; b: number };
+};
 
-
-interface RGBColorPickerProps {
-  label?: string;
-  colorValue: Color;
-  setColorValue: (color: Color) => void;
-}
-
-function RGBColorPicker({ label, colorValue, setColorValue }: RGBColorPickerProps) {
-  const space = "rgb";
-
-
-  return (
-    <Flex direction={"column"} >
-
-      {label && (
-        <label className="customFieldLabel">{label}</label>
-      )}
-      <ColorPicker value={colorValue} >
-        <Flex direction={"column"} justifyContent={"space-between"} gap={"size-100"}>
-          <ColorSlider key={"red"} channel={"red"} colorSpace={space} value={colorValue} onChange={setColorValue} />
-          <ColorSlider key={"green"} channel={"green"} colorSpace={space} value={colorValue} onChange={setColorValue} />
-          <ColorSlider key={"blue"} channel={"blue"} colorSpace={space} value={colorValue} onChange={setColorValue} />
-          <Flex direction={"row"} justifyContent={"space-between"} width={"size-2400"} gap={"size-100"}>
-            <ColorField label="Red" channel="red" colorSpace={space} value={colorValue} onChange={(color) => color && setColorValue(color)} />
-            <ColorField label="Green" channel="green" colorSpace={space} value={colorValue} onChange={(color) => color && setColorValue(color)} />
-            <ColorField label="Blue" channel="blue" colorSpace={space} value={colorValue} onChange={(color) => color && setColorValue(color)} />
-          </Flex>
-        </Flex>
-      </ColorPicker>
-    </Flex>
-  );
-
+function toRGBChannels(color: Color) {
+  return {
+    r: color.getChannelValue("red"),
+    g: color.getChannelValue("green"),
+    b: color.getChannelValue("blue"),
+  };
 }
 
 async function handleApply(
@@ -60,18 +40,34 @@ async function handleApply(
 ): Promise<string> {
   let toast = "";
 
-  await evalTS("processLaserLayerProperties", regLayerName, regColor, lasLayerName, lasColor, engLayerName, engColor).then((result) => {
-    let processed = []
-    result.regFound ? processed.push("Registration") : null;
-    result.lasFound ? processed.push("Laser") : null;
-    result.engFound ? processed.push("Engrave") : null;
-    toast = `${processed.join(", ")}`
-    console.log("RESULT: ", result);
-    console.log("PROCESSED: ", processed);
-  });
+  const properties: LaserLayerProperties = {
+    regLayerName,
+    lasLayerName,
+    engLayerName,
+    regColor: toRGBChannels(regColor),
+    lasColor: toRGBChannels(lasColor),
+    engColor: toRGBChannels(engColor),
+  };
+
+  const result = await evalTS("processLaserLayerProperties", properties);
+
+  const processed: string[] = [];
+  if (result.regFound) processed.push("Registration");
+  if (result.lasFound) processed.push("Laser");
+  if (result.engFound) processed.push("Engrave");
+
+  if (processed.length === 2) {
+    toast = `${processed[0]} and ${processed[1]}`;
+  } else {
+    toast = processed.join(", ");
+  }
+
+  console.log("RESULT: ", result);
+  console.log("PROCESSED: ", processed);
 
   return toast;
 }
+
 
 export function LaserComponent() {
 
@@ -83,6 +79,33 @@ export function LaserComponent() {
   const [laserColor, setLaserColor] = useState(parseColor('rgb(255, 0, 0)'));
   const [engraveColor, setEngraveColor] = useState(parseColor('rgb(0, 255, 0)'));
 
+  const getColorNameOrValue = (color: Color): string => {
+    let colorValue = color.toString("rgb").toUpperCase();
+    let colorName = "";
+
+    let colorVals = [color.getChannelValue("red"), color.getChannelValue("green"), color.getChannelValue("blue")]
+
+    switch (colorVals.join(",")) {
+      case "0,0,0":
+        colorName = "RGB Black"
+        break;
+      case "255,0,0":
+        colorName = "RGB Red"
+        break;
+      case "0,255,0":
+        colorName = "RGB Green"
+        break;
+      case "0,0,255":
+        colorName = "RGB Blue"
+        break;
+      case "255,255,255":
+        colorName = "RGB White"
+        break;
+      default:
+        break;
+    }
+    return (colorName.length > 0 ? colorName : colorValue);
+  };
 
   return (
     <Flex direction={"column"} alignSelf={"center"}>
@@ -99,7 +122,7 @@ export function LaserComponent() {
       </Text>
 
       <Grid
-        areas={["layer color"]}
+        areas={["layer color values"]}
         alignItems={"baseline"}
         justifyContent={"start"}
         maxWidth={"size-4600"}
@@ -108,16 +131,22 @@ export function LaserComponent() {
 
         <Heading level={4} marginBottom={"size-0"}>Layer Name</Heading>
         <Heading level={4} marginBottom={"size-0"}>Color</Heading>
+        <span></span>
 
         <TextField label="Registration" value={registrationLayerName} onChange={setRegistrationLayerName} width={componentWidth125Percent} />
         <RGBColorPicker label="Fill" colorValue={registrationColor} setColorValue={setRegistrationColor} />
+        <Text alignSelf={"center"} marginTop={"size-300"}>{getColorNameOrValue(registrationColor)}</Text>
 
 
         <TextField label="Laser" value={laserLayerName} onChange={setLaserLayerName} width={componentWidth125Percent} />
         <RGBColorPicker label="Stroke" colorValue={laserColor} setColorValue={setLaserColor} />
+        <Text alignSelf={"center"} marginTop={"size-300"}>{getColorNameOrValue(laserColor)}</Text>
+
 
         <TextField label="Engrave" value={engraveLayerName} onChange={setEngraveLayerName} width={componentWidth125Percent} />
         <RGBColorPicker label="Stroke" colorValue={engraveColor} setColorValue={setEngraveColor} />
+        <Text alignSelf={"center"} marginTop={"size-300"}>{getColorNameOrValue(engraveColor)}</Text>
+
       </Grid>
 
       <Flex justifyContent={"end"} marginTop={"size-200"}>
@@ -126,7 +155,7 @@ export function LaserComponent() {
           onPress={() => {
             handleApply(registrationLayerName, laserLayerName, engraveLayerName, registrationColor, laserColor, engraveColor).then(
               (result) => {
-                postToast(result.length > 0 ? 'positive' : 'negative', result.length > 0 ? `Processed: ${result}` : "Layers not found")
+                postToast(result.length > 0 ? 'positive' : 'negative', result.length > 0 ? `Applied to ${result}` : "Layers not found")
               }
             )
 
