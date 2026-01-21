@@ -48,6 +48,6 @@ export const spectrumHighlightStyle = HighlightStyle.define([
   },
   {
     tag: tags.punctuation,
-    color: "var(--spectrum-global-color-gray-500) !important",
+    color: "var(--spectrum-global-color-fuchsia-500) !important",
   },
 ]);
