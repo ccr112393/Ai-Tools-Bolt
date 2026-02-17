@@ -10,16 +10,16 @@ import {
   View,
 } from "@adobe/react-spectrum";
 import { Key, useMemo, useState } from "react";
-import { EnabledModules } from ".";
+import { Modules } from "./Modules";
 import { AboutModule } from "./About";
 import { componentGap } from "../utils";
 import { ReloadButton } from "../components";
 import { EnableDeveloperMode, DeveloperBadge } from "./Developer/DeveloperMode";
 
 export const ModuleTabs = () => {
-  const [selectedTab, setSelectedTab] = useState<string>(EnabledModules[0].key);
+  const [selectedTab, setSelectedTab] = useState<string>(Modules[0].key);
   const memoizedModules = useMemo(() => {
-    return EnabledModules.map((item) => (
+    return Modules.map((item) => (
       <View key={item.key} isHidden={selectedTab !== item.key}>
         <item.component />
       </View>
@@ -34,7 +34,7 @@ export const ModuleTabs = () => {
     <>
       <Flex direction={"row"} justifyContent={"space-between"}>
         <ActionGroup
-          items={EnabledModules.filter(
+          items={Modules.filter(
             (item) => item.key !== "abt" && item.key !== "dev"
           )}
           selectionMode="single"

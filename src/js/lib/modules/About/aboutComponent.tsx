@@ -10,10 +10,10 @@ import {
 } from "@adobe/react-spectrum";
 // import { ModuleList } from "../ModuleType";
 import { componentGap, openLinkInBrowser, postToast } from "../../utils";
-import { EnabledModules } from "..";
+import { Modules } from "../Modules";
 
 export function AboutComponent() {
-  const ModuleList: string[] = EnabledModules.map((module) => module.name);
+  const ModuleList: string[] = Modules.map((module) => module.name);
 
   const modules = ModuleList.filter((item) => item !== "About");
 
