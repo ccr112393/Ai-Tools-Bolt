@@ -1,33 +1,10 @@
 import { CEP_Config } from "vite-cep-plugin";
-import { version } from "./package.json";
+import { appInfo } from "./cep-variant.config";
 
-const VARIANT = "template";
-
-const configs = {
-  printer: {
-    id: "com.crob.printertools",
-    displayName: "PrinterTools",
-    icons: {
-      light: "./assets/light-icon.png",
-      dark: "./assets/dark-icon.png",
-    },
-  },
-  template: {
-    id: "com.crob.templatetools",
-    displayName: "TemplateTools",
-    icons: {
-      light: "./assets/light-icon.png",
-      dark: "./assets/dark-icon.png",
-    },
-  },
-};
-
-console.log(`\nCONFIG VARIANT: ${VARIANT}\n`);
-
-const activeConfig = configs[VARIANT];
+const activeConfig = appInfo;
 
 const config: CEP_Config = {
-  version,
+  version: activeConfig.version,
   id: activeConfig.id,
   displayName: activeConfig.displayName,
   symlink: "local",
@@ -54,7 +31,7 @@ const config: CEP_Config = {
     {
       mainPath: "./main/index.html",
       name: "main",
-      panelDisplayName: "Ai Tools",
+      panelDisplayName: activeConfig.displayName,
       autoVisible: true,
     },
   ],

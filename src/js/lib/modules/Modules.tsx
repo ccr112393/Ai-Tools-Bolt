@@ -1,3 +1,4 @@
+import { AppVariant, appVariant } from "../../../../cep-variant.config";
 import { AboutModule } from "./About";
 import { LaserModule } from "./Laser";
 import { ModuleType } from "./ModuleType";
@@ -5,18 +6,18 @@ import { RegistrationModule } from "./Registration";
 import { RenameModule } from "./Rename";
 import { SignAgentModule } from "./SignAgent";
 
+const VariantModules: Record<AppVariant, ModuleType[]> = {
+    printertools: [RegistrationModule, LaserModule, RenameModule, AboutModule],
+    templatetools: [SignAgentModule, AboutModule],
+};
 
-const PrinterModules: ModuleType[] = [RegistrationModule, LaserModule, RenameModule, AboutModule];
+const Modules: ModuleType[] = VariantModules[appVariant];
 
-const TemplateModules: ModuleType[] = [SignAgentModule, AboutModule];
-
-const AppMode = import.meta.env.VITE_APP_VARIANT ?? "printer";
-
-const Modules: ModuleType[] = AppMode === "printer" ? PrinterModules : TemplateModules;
+localStorage.setItem("enabledModules", JSON.stringify(Modules.map((module) => module)));
 
 console.log(`
     \n\n
-    App Mode: ${AppMode}
+    App Variant: ${appVariant}
     Enabled Modules: ${Modules}
     \n\n`
 );

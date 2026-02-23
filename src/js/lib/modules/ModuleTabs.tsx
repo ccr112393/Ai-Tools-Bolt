@@ -39,7 +39,7 @@ export const ModuleTabs = () => {
           )}
           selectionMode="single"
           onAction={handleTabChange}
-          defaultSelectedKeys={["reg"]}
+          defaultSelectedKeys={[Modules[0].key]}
           selectedKeys={[selectedTab]}
           buttonLabelBehavior="hide"
         >

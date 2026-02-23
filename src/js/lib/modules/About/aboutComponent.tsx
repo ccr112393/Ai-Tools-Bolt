@@ -1,32 +1,40 @@
 import {
+  Button,
   Content,
   Flex,
+  Grid,
   Heading,
   LabeledValue,
-  Text,
   Link,
-  Grid,
-  Button,
+  Text,
 } from "@adobe/react-spectrum";
-// import { ModuleList } from "../ModuleType";
+import { useState } from "react";
+import { appInfo } from "../../../../../cep-variant.config";
 import { componentGap, openLinkInBrowser, postToast } from "../../utils";
-import { Modules } from "../Modules";
+import { ModuleType } from "../ModuleType";
+// import { Modules } from "../Modules";
 
 export function AboutComponent() {
+  const Modules = JSON.parse(localStorage.getItem("enabledModules") || "[]") as ModuleType[];
   const ModuleList: string[] = Modules.map((module) => module.name);
 
   const modules = ModuleList.filter((item) => item !== "About");
 
   const handleReset = () => {
-    postToast("negative", "Resetting Ai Tools...");
+    if (!confirmReset) {
+      setConfirmReset(true);
+      return;
+    }
+    postToast("negative", "Resetting...");
     localStorage.clear();
-
     window.location.reload();
   };
 
+  const [confirmReset, setConfirmReset] = useState(false);
+
   return (
     <Flex direction={"column"}>
-      <Heading level={2}>Ai Tools</Heading>
+      <Heading level={2}>{appInfo.displayName}</Heading>
 
       <Grid
         gap={componentGap}
@@ -34,7 +42,7 @@ export function AboutComponent() {
         alignItems={"first baseline"}
       >
         <LabeledValue label="Version" value={""} />
-        <Text>3.0.0</Text>
+        <Text>{appInfo.version}</Text>
 
         <LabeledValue label="Modules" value={""} />
         <Flex direction="column">
@@ -95,7 +103,7 @@ export function AboutComponent() {
         <br />
       </Content>
       <Button variant="negative" onPress={(e) => handleReset()}>
-        Reset Ai Tools
+        {confirmReset ? "Confirm Reset" : `Reset ${appInfo.displayName}`}
       </Button>
     </Flex>
   );

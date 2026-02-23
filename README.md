@@ -13,6 +13,11 @@ Features:
 
 ---
 
+Dev Notes:
+
+- Use yarn cmd:variant
+- Example: yarn dev:printer
+
 <a href="src/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_Black_V01.svg" target="_blank">
 <img src="src/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_Black_V01.svg" width="150" /></a>
 </div>
