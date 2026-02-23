@@ -1,16 +1,5 @@
 import { version } from "./package.json";
 
-export type AppVariant = "printertools" | "templatetools";
-export type VariantConfig = {
-  version: string;
-  id: string;
-  displayName: string;
-  icons: {
-    light: string;
-    dark: string;
-  };
-};
-
 // !! Set the active variant here
 export const appVariant: AppVariant = "templatetools";
 
@@ -37,3 +26,14 @@ export const variantConfigs: Record<AppVariant, VariantConfig> = {
 };
 
 export const appInfo = variantConfigs[appVariant];
+
+export type AppVariant = "printertools" | "templatetools";
+export type VariantConfig = {
+  version: string;
+  id: string;
+  displayName: string;
+  icons: {
+    light: string;
+    dark: string;
+  };
+};
