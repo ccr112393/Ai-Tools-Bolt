@@ -1,4 +1,4 @@
-import { Heading } from "@adobe/react-spectrum";
+import { Heading } from "@react-spectrum/s2";
 import {
   PlacementOptionsDisclosure,
   RegistrationActionBar,

@@ -1,17 +1,10 @@
-import {
-  Flex,
-  ActionGroup,
-  Item,
-  Button,
-  Text,
-  TooltipTrigger,
-  Tooltip,
-} from "@adobe/react-spectrum";
+import { ActionButtonGroup, ActionButton, Button, Text, TooltipTrigger, Tooltip } from "@react-spectrum/s2";
+import { iconStyle, style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { evalTS } from "../../../utils/bolt";
 import { iconMarginAdjust, postToast } from "../../../utils";
 import { useRegistration } from "../contexts/RegistrationContext";
-import SaveFloppy from "@spectrum-icons/workflow/SaveFloppy";
-import Import from "@spectrum-icons/workflow/Import";
+import SaveFloppy from "@react-spectrum/s2/icons/SaveFloppy";
+import Import from "@react-spectrum/s2/icons/Import";
 
 export function RegistrationActionBar() {
   const { registrationSettings, loadSettings, saveSettings, invalidSettings } =
@@ -43,32 +36,48 @@ export function RegistrationActionBar() {
   };
 
   return (
-    <Flex justifyContent={"space-between"} marginTop={"size-200"}>
-      <ActionGroup
-        overflowMode="collapse"
-        buttonLabelBehavior="hide"
-        onAction={(key: React.Key) => {
-          switch (key) {
-            case "load":
-              loadSettings();
-              break;
-            case "save":
-              saveSettings();
+    <div
+      className={style({
+        display: "flex",
+        justifyContent: "space-between",
+        marginTop: 16
+      })}>
+      <ActionButtonGroup>
+        <ActionButton
+          key="save"
+          onPress={() => ((key: React.Key) => {
+            switch (key) {
+              case "load":
+                loadSettings();
+                break;
+              case "save":
+                saveSettings();
 
-            default:
-              break;
-          }
-        }}
-      >
-        <Item key="save">
-          <SaveFloppy size="S" />
+              default:
+                break;
+            }
+          })("save")}>
+          <SaveFloppy styles={iconStyle({ size: 'S' })} />
           <Text>Save Settings</Text>
-        </Item>
-        <Item key="load">
-          <Import size="S" />
+        </ActionButton>
+        <ActionButton
+          key="load"
+          onPress={() => ((key: React.Key) => {
+            switch (key) {
+              case "load":
+                loadSettings();
+                break;
+              case "save":
+                saveSettings();
+
+              default:
+                break;
+            }
+          })("load")}>
+          <Import styles={iconStyle({ size: 'S' })} />
           <Text>Load Saved Settings</Text>
-        </Item>
-      </ActionGroup>
+        </ActionButton>
+      </ActionButtonGroup>
       <TooltipTrigger>
         <Button
           isDisabled={invalidSettings.length >= 1 ? true : false}
@@ -84,6 +93,6 @@ export function RegistrationActionBar() {
           Cmd+Z).
         </Tooltip>
       </TooltipTrigger>
-    </Flex>
+    </div>
   );
 }

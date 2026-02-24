@@ -1,4 +1,4 @@
-export const ProfileKey = "SAT_profile_"; // SignAgentKey + ProfileKey
+export const ProfileKey = "SAT_profile_";
 
 export interface ProfileListType {
   id: string;

@@ -1,4 +1,4 @@
-import { Provider, View } from "@adobe/react-spectrum";
+import { Provider } from "@adobe/react-spectrum";
 import React from "react";
 import { useTheme } from "../contexts";
 
@@ -24,12 +24,11 @@ export const ThemedProvider: React.FC<{
         }
 
       `}</style>
-      <View
-        padding={"calc(single-line-height / 2"}
-        paddingTop={"calc(single-line-height / 2.5"}
+      <div
+        style={{ padding: 2 }}
       >
         {children}
-      </View>
+      </div>
     </Provider>
   );
 };

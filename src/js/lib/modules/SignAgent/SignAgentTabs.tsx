@@ -1,4 +1,3 @@
-import { View } from "@adobe/react-spectrum";
 import { useMemo, useState } from "react";
 import { ColorView, GettingStartedView, ProfileView } from "./components";
 import { ColorProvider, TabContext } from "./contexts";
@@ -32,9 +31,10 @@ export const SignAgentTabs = () => {
 
   const memoizedTabs = useMemo(() => {
     return loadedTabs.map((item) => (
-      <View key={item.key} isHidden={selectedTab !== item.key}>
+      <div key={item.key}
+        hidden={selectedTab !== item.key}>
         <item.component />
-      </View>
+      </div>
     ));
   }, [selectedTab]);
 

@@ -1,26 +1,13 @@
+import { ActionButton, Badge, Menu, MenuItem, MenuTrigger, SubmenuTrigger, Text } from "@react-spectrum/s2";
+import Bug from "@react-spectrum/s2/icons/Bug";
+import Delete from "@react-spectrum/s2/icons/Delete";
+import RadioButton from '@react-spectrum/s2/icons/RadioButton';
+import RotateCCW from "@react-spectrum/s2/icons/RotateCCW";
+import { iconStyle, style } from "@react-spectrum/s2/style" with { type: "macro" };
 import {
-  ActionButton,
-  Badge,
-  Flex,
-  Item,
-  Menu,
-  MenuTrigger,
-  SubmenuTrigger,
-  Text,
-} from "@adobe/react-spectrum";
-import Bug from "@spectrum-icons/workflow/Bug";
-import Code from "@spectrum-icons/workflow/Code";
-import Delete from "@spectrum-icons/workflow/Delete";
-import Export from "@spectrum-icons/workflow/Export";
-import PushNotification from "@spectrum-icons/workflow/PushNotification";
-import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
-import {
-  componentGap,
   getLocalStorageList,
-  menuIconMargin,
-  menuTextMargin,
   openLinkInBrowser,
-  postToast,
+  postToast
 } from "../../utils";
 
 
@@ -83,50 +70,54 @@ export const DeveloperMenu = () => {
   }
 
   return (
-    <Flex direction="row" gap={componentGap}>
+    <div className={style({
+      display: "flex",
+      flexDirection: "row",
+      gap: 2,
+    })}>
       <MenuTrigger align="end">
         <ActionButton isQuiet>
-          {/* <Code size="S" /> */}
+          {/* <Code styles={iconStyle({size: "S"})} /> */}
           <Badge variant="yellow">DEV</Badge>
           {/* <Text>Developer</Text> */}
         </ActionButton>
         <Menu onAction={(key) => handleAction(key.toString())}>
-          <Item key="reload">
-            <RotateCCWBold size="S" slot="icon" />
+          <MenuItem id="reload">
+            <RotateCCW styles={iconStyle({ size: "S" })} slot="icon" />
             <Text >Reload</Text>
-          </Item>
-          <Item key="openRemoteDebug">
-            <Bug size="S" slot="icon" />
+          </MenuItem>
+          <MenuItem id="openRemoteDebug">
+            <Bug styles={iconStyle({ size: "S" })} slot="icon" />
             <Text >Remote Debug</Text>
-          </Item>
-          <Item key="openReactDebug">
-            <Bug size="S" slot="icon" />
+          </MenuItem>
+          <MenuItem id="openReactDebug">
+            <Bug styles={iconStyle({ size: "S" })} slot="icon" />
             <Text >React Debug</Text>
-          </Item>
-          <Item key="clearStorage">
-            <Delete size="S" slot="icon" />
+          </MenuItem>
+          <MenuItem id="clearStorage">
+            <Delete styles={iconStyle({ size: "S" })} slot="icon" />
             <Text >
               Clear Storage [{getLocalStorageList().length}]
             </Text>
-          </Item>
+          </MenuItem>
           {/* <Item key="exportSettings">
-            <Export size="S" slot="icon"  />
+            <Export styles={iconStyle({size: "S"})} slot="icon"  />
             <Text >Export Settings</Text>
           </Item> */}
           <SubmenuTrigger>
-            <Item>
-              <PushNotification size="S" slot="icon" />
+            <MenuItem>
+              <RadioButton styles={iconStyle({ size: "S" })} slot="icon" />
               <Text >Toasts</Text>
-            </Item>
+            </MenuItem>
             <Menu onAction={(key) => handleAction(key.toString())}>
-              <Item key={"toastPositive"}>Positive</Item>
-              <Item key={"toastNegative"}>Negative</Item>
-              <Item key={"toastInfo"}>Information</Item>
-              <Item key={"toastNeutral"}>Neutral</Item>
+              <MenuItem id={"toastPositive"}>Positive</MenuItem>
+              <MenuItem id={"toastNegative"}>Negative</MenuItem>
+              <MenuItem id={"toastInfo"}>Information</MenuItem>
+              <MenuItem id={"toastNeutral"}>Neutral</MenuItem>
             </Menu>
           </SubmenuTrigger>
         </Menu>
       </MenuTrigger>
-    </Flex>
+    </div>
   );
 };

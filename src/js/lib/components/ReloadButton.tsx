@@ -1,5 +1,5 @@
-import { ActionButton, Tooltip, TooltipTrigger } from "@adobe/react-spectrum";
-import RotateCCWBold from "@spectrum-icons/workflow/RotateCCWBold";
+import { ActionButton, Tooltip, TooltipTrigger } from "@react-spectrum/s2";
+import RotateCCW from "@react-spectrum/s2/icons/RotateCCW";
 
 export const ReloadButton = () => {
   return (
@@ -9,7 +9,7 @@ export const ReloadButton = () => {
         isQuiet
         onPress={() => window.location.reload()}
       >
-        <RotateCCWBold size="S" />
+        <RotateCCW size="S" />
       </ActionButton>
       <Tooltip>Reload</Tooltip>
     </TooltipTrigger>

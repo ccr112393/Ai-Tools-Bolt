@@ -1,4 +1,6 @@
-import { NumberField, SpectrumNumberFieldProps } from "@adobe/react-spectrum";
+import { SpectrumNumberFieldProps } from "@adobe/react-spectrum";
+
+import { NumberField } from "@react-spectrum/s2";
 
 interface NumberFieldDefaultProps
   extends Omit<SpectrumNumberFieldProps, "formatOptions"> {

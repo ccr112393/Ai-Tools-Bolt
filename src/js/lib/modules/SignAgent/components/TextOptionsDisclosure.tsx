@@ -5,22 +5,20 @@ import {
   Disclosure,
   DisclosurePanel,
   DisclosureTitle,
-  Flex,
-  Grid,
   Heading,
-  Item,
   Picker,
+  PickerItem,
   StatusLight,
-  Text,
-  Well,
-} from "@adobe/react-spectrum";
+  Text
+} from "@react-spectrum/s2";
+
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { newProfileSettings } from "..";
 import { NumberFieldDefault, UnitPicker } from "../../../components";
 import {
   componentGap,
-  componentWidth,
   componentWidth3Quarters,
-  componentWidthHalf,
+  componentWidthHalf
 } from "../../../utils";
 import { useProfile } from "../contexts";
 
@@ -42,30 +40,50 @@ export const TextOptionsDisclosure = () => {
   return (
     <Disclosure id="textcase">
       <DisclosureTitle>
-        <Heading level={5} margin={0} flex>
+        <Heading
+          level={5}
+          styles={style({
+            margin: 0,
+            flex: 1
+          })}>
           Text Options
         </Heading>
         <StatusLight
-          isDisabled={!textOptions.hasTextCase && !textOptions.hasLeading}
-          variant={invalidSettings.includes("leading") ? "negative" : "info"}
-          marginTop={-7}
-          marginBottom={-10}
+          variant={invalidSettings.includes("leading") ? "negative" : "informative"}
         />
-        <ContextualHelp variant="help" placement="bottom end">
+        <ContextualHelp variant="help" placement="bottom">
           {/* <Heading>Text Options</Heading> */}
-          <Content marginTop={0}>
+          <Content styles={style({
+            marginTop: 0
+          })}>
             <Text>Add formatting commands for text.</Text>
-            <Well marginTop={componentGap}>uppercase, leading: 28 pt</Well>
+            <div
+
+              className={style({
+                display: "block",
+                textAlign: "start",
+                minWidth: 160,
+                padding: 16,
+                marginTop: 4,
+                borderWidth: 1,
+                borderRadius: "sm",
+                backgroundColor: "layer-1",
+                borderStyle: "solid",
+                borderColor: "transparent-black-75",
+                font: "body-sm"
+              })}>uppercase, leading: 28 pt</div>
           </Content>
         </ContextualHelp>
       </DisclosureTitle>
       <DisclosurePanel>
-        <Grid
-          areas={["label field"]}
-          alignItems={"center"}
-          maxWidth={"size-4600"}
-          gap={"size-100"}
-        >
+        <div
+          className={style({
+            display: "grid",
+            gridTemplateAreas: ["label field"],
+            alignItems: "center",
+            maxWidth: 368,
+            gap: 8
+          })}>
           <Checkbox
             isSelected={textOptions.hasTextCase}
             onChange={(isSelected) => updateSettings("hasTextCase", isSelected)}
@@ -77,11 +95,11 @@ export const TextOptionsDisclosure = () => {
             onSelectionChange={(key) => {
               updateSettings("textCase", key);
             }}
-            width={componentWidth}
+
           >
-            <Item key={"uppercase"}>UPPERCASE</Item>
-            <Item key={"lowercase"}>lowercase</Item>
-            <Item key={"titlecase"}>Title Case</Item>
+            <PickerItem id={"uppercase"}>UPPERCASE</PickerItem>
+            <PickerItem id={"lowercase"}>lowercase</PickerItem>
+            <PickerItem id={"titlecase"}>Title Case</PickerItem>
           </Picker>
           <Checkbox
             isSelected={textOptions.hasLeading}
@@ -89,7 +107,11 @@ export const TextOptionsDisclosure = () => {
           >
             Leading
           </Checkbox>
-          <Flex width={componentWidth}>
+          <div
+
+            className={style({
+              display: "flex"
+            })}>
             <NumberFieldDefault
               width={componentWidthHalf}
               marginEnd={componentGap}
@@ -109,8 +131,8 @@ export const TextOptionsDisclosure = () => {
               width={componentWidthHalf}
               menuWidth={componentWidth3Quarters}
             />
-          </Flex>
-        </Grid>
+          </div>
+        </div>
       </DisclosurePanel>
     </Disclosure>
   );

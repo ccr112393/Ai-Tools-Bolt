@@ -1,4 +1,5 @@
-import { Item, Menu } from "@adobe/react-spectrum";
+import { MenuItem, Menu } from "@react-spectrum/s2";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { useRef, useState } from "react";
 
 function ContextMenu() {
@@ -18,15 +19,14 @@ function ContextMenu() {
 
   return (
     <Menu
-      isHidden={!isOpen}
       ref={menuRef}
       onClose={handleClose}
-      position={"fixed"}
-      left={menuPosition.x}
-      top={menuPosition.y}
+      styles={style({
+        position: "fixed"
+      })}
     >
-      <Item>Option 1</Item>
-      <Item>Option 2</Item>
+      <MenuItem>Option 1</MenuItem>
+      <MenuItem>Option 2</MenuItem>
     </Menu>
   );
 }

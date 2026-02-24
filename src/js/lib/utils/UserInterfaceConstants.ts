@@ -1,9 +1,9 @@
-export const componentWidth: string = "size-1700";
-export const componentWidth3Quarters: string = "size-1200";
-export const componentWidthHalf: string = "size-800";
-export const componentWidth125Percent: string = "single-line-width";
-export const componentGap: string = "size-100";
-export const componentGapDouble: string = "size-200";
-export const menuIconMargin: string = "size-75";
-export const menuTextMargin: string = "size-250";
+export const componentWidth: number = 32;
+export const componentWidth3Quarters: number = 96;
+export const componentWidthHalf: number = 64;
+export const componentWidth125Percent: number = 170; // unchanged (semantic token)
+export const componentGap: number = 8;
+export const componentGapDouble: number = 16;
+export const menuIconMargin: number = 6;
+export const menuTextMargin: number = 20;
 export const iconMarginAdjust: number = 6.5;

@@ -1,4 +1,4 @@
-import { ToastQueue } from "@react-spectrum/toast";
+import { ToastQueue } from "@react-spectrum/s2";
 
 const toastTimeout: number = 1500;
 const toastTimeoutExtended: number = 2500;

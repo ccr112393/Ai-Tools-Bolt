@@ -1,4 +1,5 @@
-import { Item, Picker, SpectrumPickerProps } from "@adobe/react-spectrum";
+import { PickerItem, Picker } from "@react-spectrum/s2";
+import { SpectrumPickerProps } from "@adobe/react-spectrum";
 import React from "react";
 import { UnitItem, UnitList } from "../utils/Units";
 
@@ -10,9 +11,10 @@ interface UnitPickerProps
 
 export const UnitPicker: React.FC<UnitPickerProps> = (props) => {
   return (
-    <Picker defaultSelectedKey="inch" items={UnitList} {...props}>
+    <Picker defaultValue="inch" items={UnitList}
+    >
       {(item) => (
-        <Item key={item.key}>{props.abbreviate ? item.abbr : item.name}</Item>
+        <PickerItem id={item.key}>{props.abbreviate ? item.abbr : item.name}</PickerItem>
       )}
     </Picker>
   );

@@ -1,4 +1,4 @@
-import { Content, Heading, Link } from "@adobe/react-spectrum";
+import { Content, Heading, Link } from "@react-spectrum/s2";
 import { openLinkInBrowser } from "../../../utils/bolt";
 
 export const SignAgentDisclaimer = () => {

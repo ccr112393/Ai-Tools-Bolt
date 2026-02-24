@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import macros from "unplugin-parcel-macros";
 
 import { cep, runAction } from "vite-cep-plugin";
 import cepConfig from "./cep.config";
@@ -48,7 +49,7 @@ if (action) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), cep(config)],
+  plugins: [react(), cep(config), macros.vite()],
   resolve: {
     alias: [{ find: "@esTypes", replacement: path.resolve(__dirname, "src") }],
   },
@@ -72,7 +73,14 @@ export default defineConfig({
     rollupOptions: {
       input,
       output: {
-        manualChunks: {},
+        manualChunks(id) {
+          if (
+            /macro-(.*)\.css$/.test(id) ||
+            /@react-spectrum\/s2\/.*\.css$/.test(id)
+          ) {
+            return "s2-styles";
+          }
+        },
         // esModule: false,
         preserveModules: false,
         format: "cjs",

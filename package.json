@@ -16,6 +16,7 @@
     "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.37.2",
+    "@react-spectrum/s2": "^1.1.0",
     "@react-spectrum/toast": "^3.0.0-beta.17",
     "@spectrum-icons/workflow": "^4.2.15",
     "@types/lodash": "^4.17.13",
@@ -68,6 +69,7 @@
     "types-for-adobe": "^7.2.0",
     "types-for-adobe-extras": "^0.0.6",
     "typescript": "^4.6.4",
+    "unplugin-parcel-macros": "^0.1.1",
     "vite": "^4.5.2",
     "vite-cep-plugin": "^1.2.9",
     "yarn": "^1.22.17"

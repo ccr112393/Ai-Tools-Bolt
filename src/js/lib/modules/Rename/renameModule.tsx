@@ -1,14 +1,5 @@
-import {
-  Button,
-  Checkbox,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  TextField,
-  Radio,
-  RadioGroup,
-} from "@adobe/react-spectrum";
+import { Button, Checkbox, Heading, Text, TextField, Radio, RadioGroup } from "@react-spectrum/s2";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { useState } from "react";
 import { evalTS } from "../../utils/bolt";
 import { postToast } from "../../utils";
@@ -57,32 +48,42 @@ export function RenameComponent() {
   return (
     <>
       <Heading level={2}>Rename</Heading>
-      <Grid
-        areas={["label field"]}
-        alignItems={"center"}
-        maxWidth={"size-4600"}
-      >
+      <div
+        className={style({
+          display: "grid",
+          gridTemplateAreas: ["label field"],
+          alignItems: "center",
+          maxWidth: 368
+        })}>
         <Text>Find</Text>
         <TextField value={textFind} onChange={setTextFind} />
         <Text>Replace</Text>
         <TextField
-          marginTop={"size-100"}
           value={textReplace}
           onChange={setTextReplace}
+          styles={style({
+            marginTop: 8
+          })}
         />
         <RadioGroup
           value={selectedOption}
           onChange={setSelectedOption}
           gridColumnStart={"field"}
-          marginTop={"size-100"}
+          styles={style({
+            marginTop: 8
+          })}
         >
           <Radio value="layers">Rename Layers</Radio>
           <Radio value="paths">Rename Path Items</Radio>
           <Radio value="selection">Rename Selected Path Items</Radio>
         </RadioGroup>
-      </Grid>
-
-      <Flex justifyContent={"end"} marginTop={"size-200"}>
+      </div>
+      <div
+        className={style({
+          display: "flex",
+          justifyContent: "end",
+          marginTop: 16
+        })}>
         <Button
           variant="accent"
           onPress={() => {
@@ -133,7 +134,7 @@ export function RenameComponent() {
         >
           Apply
         </Button>
-      </Flex>
+      </div>
     </>
   );
 }

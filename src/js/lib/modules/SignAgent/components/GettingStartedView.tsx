@@ -1,22 +1,19 @@
 import {
   ActionButton,
-  Content,
-  Flex,
-  Heading,
-  View,
-  Text,
-  Divider,
-  StatusLight,
-  Well,
-  TooltipTrigger,
-  Tooltip,
   Button,
-} from "@adobe/react-spectrum";
-import { componentGap, componentGapDouble } from "../../../utils";
-import ChevronLeft from "@spectrum-icons/workflow/ChevronLeft";
+  Content,
+  Divider,
+  Heading,
+  StatusLight,
+  Text,
+  Tooltip,
+  TooltipTrigger
+} from "@react-spectrum/s2";
+
+import ChevronLeft from "@react-spectrum/s2/icons/ChevronLeft";
+import InfoCircle from "@react-spectrum/s2/icons/InfoCircle";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { SignAgentDisclaimer, useTabContext } from "../../SignAgent";
-import InfoOutline from "@spectrum-icons/workflow/InfoOutline";
-import Info from "@spectrum-icons/workflow/Info";
 
 export const GettingStartedButton = () => {
   const { setSelectedTab } = useTabContext();
@@ -26,28 +23,36 @@ export const GettingStartedButton = () => {
         variant="secondary"
         onPress={() => setSelectedTab("getting-started")}
       >
-        <Info />
+        <InfoCircle />
       </Button>
       <Tooltip>Getting Started</Tooltip>
     </TooltipTrigger>
   );
 };
 
-const CustomDivider = () => <Divider size="S" marginY={componentGap} />;
+const CustomDivider = () => <Divider size="S" />;
 
 export const GettingStartedView = () => {
   const { setSelectedTab } = useTabContext();
 
   return (
-    <View marginTop={componentGapDouble}>
-      <Flex direction={"row"} gap={componentGap} alignItems={"center"}>
+    <div>
+      <div
+        className={style({
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 2,
+        })}>
         <ActionButton isQuiet onPress={() => setSelectedTab("signagent")}>
           <ChevronLeft />
         </ActionButton>
         <Heading level={3}>Getting Started</Heading>
-      </Flex>
+      </div>
       <Content>
-        <Heading level={4} marginTop={0}>
+        <Heading level={4} styles={style({
+          marginTop: 0
+        })}>
           Introduction
         </Heading>
         <Text>
@@ -57,13 +62,16 @@ export const GettingStartedView = () => {
         </Text>
         <CustomDivider />
         <Heading level={4}>Status Lights</Heading>
-        <StatusLight variant="neutral" marginY={componentGap}>
+        <StatusLight variant="neutral"
+        >
           Gray: No selections within category
         </StatusLight>
-        <StatusLight variant="info" marginY={componentGap}>
+        <StatusLight variant="informative"
+        >
           Blue: Selections within category
         </StatusLight>
-        <StatusLight variant="negative" marginY={componentGap}>
+        <StatusLight variant="negative"
+        >
           Red: Issue with selections within category
         </StatusLight>
         <CustomDivider />
@@ -72,13 +80,26 @@ export const GettingStartedView = () => {
           Assume we've selected horizontal center, vertical middle, uppercase,
           and leading 28 pt. The selected bounding box would be renamed to:
         </Text>
-        <Well marginY={componentGap}>
+        <div
+
+          className={style({
+            display: "block",
+            textAlign: "start",
+            minWidth: 160,
+            padding: 16,
+            marginTop: 4,
+            borderWidth: 1,
+            borderRadius: "sm",
+            backgroundColor: "layer-1",
+            borderStyle: "solid",
+            borderColor: "transparent-black-75",
+            font: "body-sm"
+          })}>
           center, middle, uppercase, leading: 28 pt
-        </Well>
+        </div>
       </Content>
       <CustomDivider />
-
       <SignAgentDisclaimer />
-    </View>
+    </div>
   );
 };

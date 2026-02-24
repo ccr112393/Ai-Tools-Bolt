@@ -1,4 +1,5 @@
-import { Grid, TextField, Text } from "@adobe/react-spectrum";
+import { TextField, Text } from "@react-spectrum/s2";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { UnitPicker, NumberFieldDefault } from "../../../components";
 import { componentWidth } from "../../../utils";
 import { useRegistration } from "../contexts/RegistrationContext";
@@ -20,31 +21,29 @@ export function RegistrationDisclosure() {
   }, [registrationSettings]);
 
   return (
-    <Grid
-      areas={["label field"]}
-      gap={"size-100"}
-      alignItems={"center"}
-      maxWidth={"size-4600"}
-    >
+    <div
+      className={style({
+        display: "grid",
+        gridTemplateAreas: ["label field"],
+        gap: 8,
+        alignItems: "center",
+        maxWidth: 368
+      })}>
       <Text>Unit Type</Text>
       <UnitPicker
         selectedKey={registrationSettings.unit}
         onSelectionChange={(key) => updateSettings("unit", key)}
         maxWidth={componentWidth}
       />
-
       <Text>Layer Name</Text>
       <TextField
         name="layerName"
         value={registrationSettings.layerName}
-        validationState={
-          invalidSettings.includes("layerName") ? "invalid" : undefined
-        }
+        isInvalid
         errorMessage="Missing layer name"
         onChange={(key) => updateSettings("layerName", key)}
-        width={componentWidth}
+        styles={style({ width: 32 })}
       />
-
       <Text>Diameter</Text>
       <NumberFieldDefault
         name="diameter"
@@ -57,7 +56,6 @@ export function RegistrationDisclosure() {
         onChange={(key) => updateSettings("diameter", key)}
         width={componentWidth}
       />
-
       <Text>Edge Offset</Text>
       <NumberFieldDefault
         name="edgeOffset"
@@ -65,6 +63,6 @@ export function RegistrationDisclosure() {
         onChange={(key) => updateSettings("edgeOffset", key)}
         width={componentWidth}
       />
-    </Grid>
+    </div>
   );
 }

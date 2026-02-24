@@ -1,14 +1,14 @@
 import {
+  ToggleButtonGroup,
+  ToggleButton,
   ActionButton,
-  ActionGroup,
-  Flex,
-  Icon,
-  Item,
   Text,
   Tooltip,
   TooltipTrigger,
-  View,
-} from "@adobe/react-spectrum";
+} from "@react-spectrum/s2";
+
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { Icon } from "@adobe/react-spectrum";
 import { Key, useMemo, useState } from "react";
 import { Modules } from "./Modules";
 import { AboutModule } from "./About";
@@ -20,9 +20,10 @@ export const ModuleTabs = () => {
   const [selectedTab, setSelectedTab] = useState<string>(Modules[0].key);
   const memoizedModules = useMemo(() => {
     return Modules.map((item) => (
-      <View key={item.key} isHidden={selectedTab !== item.key}>
+      <div key={item.key}
+        hidden={selectedTab !== item.key}>
         <item.component />
-      </View>
+      </div>
     ));
   }, [selectedTab]);
 
@@ -32,26 +33,33 @@ export const ModuleTabs = () => {
 
   return (
     <>
-      <Flex direction={"row"} justifyContent={"space-between"}>
-        <ActionGroup
-          items={Modules.filter(
-            (item) => item.key !== "abt" && item.key !== "dev"
-          )}
+      <div
+        className={style({
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between"
+        })}>
+        <ToggleButtonGroup
           selectionMode="single"
-          onAction={handleTabChange}
           defaultSelectedKeys={[Modules[0].key]}
-          selectedKeys={[selectedTab]}
-          buttonLabelBehavior="hide"
-        >
-          {(item) => (
-            <Item key={item.key}>
+          selectedKeys={[selectedTab]}>
+          {Modules.filter(
+            (item) => item.key !== "abt" && item.key !== "dev"
+          ).map((item) => (
+            <ToggleButton key={item.key} id={item.key} onPress={() => handleTabChange(item.key)}>
               {item.icon}
               <Text>{item.name}</Text>
-            </Item>
-          )}
-        </ActionGroup>
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
 
-        <Flex direction={"row"} alignItems={"center"} gap={componentGap}>
+        <div
+          className={style({
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 2,
+          })}>
           <ReloadButton />
           <TooltipTrigger>
             <ActionButton isQuiet onPress={() => handleTabChange("abt")}>
@@ -60,8 +68,8 @@ export const ModuleTabs = () => {
             <Tooltip>About</Tooltip>
           </TooltipTrigger>
           {EnableDeveloperMode && <DeveloperBadge />}
-        </Flex>
-      </Flex>
+        </div>
+      </div>
       {memoizedModules}
     </>
   );

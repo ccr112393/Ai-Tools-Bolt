@@ -1,5 +1,5 @@
-import { Flex } from "@adobe/react-spectrum";
-import { ToastContainer } from "@react-spectrum/toast";
+import { ToastContainer } from "@react-spectrum/s2";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { ThemedProvider } from "../lib/components";
 import { ModuleTabs } from "../lib/modules";
 import { AiThemeProvider } from "../lib/contexts/ThemeContext";
@@ -8,14 +8,16 @@ const Main = () => {
   return (
     <AiThemeProvider>
       <ThemedProvider>
-        <Flex
-          direction={"column"}
-          maxWidth={"static-size-5000"}
-          margin={"auto"}
-        >
+        <div
+          className={style({
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: 400,
+            margin: "[auto]"
+          })}>
           <ModuleTabs />
           <ToastContainer />
-        </Flex>
+        </div>
       </ThemedProvider>
     </AiThemeProvider>
   );

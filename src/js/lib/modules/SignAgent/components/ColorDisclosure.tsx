@@ -1,4 +1,5 @@
 import {
+  PickerItem,
   ActionButton,
   Checkbox,
   Content,
@@ -6,14 +7,13 @@ import {
   Disclosure,
   DisclosurePanel,
   DisclosureTitle,
-  Grid,
   Heading,
-  Item,
   Picker,
   StatusLight,
   Text,
-  Well,
-} from "@adobe/react-spectrum";
+} from "@react-spectrum/s2";
+
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { componentGap, componentWidth } from "../../../utils";
 import { useColorContext, useProfile, useTabContext } from "../contexts";
 
@@ -37,43 +37,60 @@ export const ColorDisclosure = () => {
   return (
     <Disclosure id="color">
       <DisclosureTitle>
-        <Heading level={5} margin={0} flex>
+        <Heading
+          level={5}
+          styles={style({
+            margin: 0,
+            flex: 1
+          })}>
           Color
         </Heading>
         <StatusLight
-          isDisabled={
-            !color.hasColor && !color.hasFillColor && !color.hasStrokeColor
-          }
           variant={
             ["color", "fillColor", "strokeColor"].some((fields) =>
               invalidSettings.includes(fields)
             )
               ? "negative"
-              : "info"
+              : "informative"
           }
-          marginTop={-7}
-          marginBottom={-10}
         />
-        <ContextualHelp variant="help" placement="bottom end">
+        <ContextualHelp variant="help" placement="bottom">
           {/* <Heading>Color</Heading> */}
-          <Content marginTop={0}>
+          <Content styles={style({
+            marginTop: 0
+          })}>
             <Text>
               Add formatting commands for dynamic colors, using field names
               defined within SignAgent.
             </Text>
-            <Well marginTop={componentGap}>
+            <div
+              className={style({
+                display: "block",
+                textAlign: "start",
+                minWidth: 160,
+                padding: 16,
+                marginTop: 4,
+                borderWidth: 1,
+                borderRadius: "sm",
+                backgroundColor: "layer-1",
+                borderStyle: "solid",
+                borderColor: "transparent-black-75",
+                font: "body-sm"
+              })}>
               stroke_color: copy_color, fill_color: sign_color
-            </Well>
+            </div>
           </Content>
         </ContextualHelp>
       </DisclosureTitle>
       <DisclosurePanel>
-        <Grid
-          areas={["label field"]}
-          alignItems={"center"}
-          maxWidth={"size-4600"}
-          gap={"size-100"}
-        >
+        <div
+          className={style({
+            display: "grid",
+            gridTemplateAreas: ["label field"],
+            alignItems: "center",
+            maxWidth: 368,
+            gap: 8
+          })}>
           <Checkbox
             isSelected={color.hasColor}
             onChange={(isSelected) => updateSettings("hasColor", isSelected)}
@@ -81,13 +98,13 @@ export const ColorDisclosure = () => {
             Color
           </Checkbox>
           <Picker
-            width={componentWidth}
+            styles={style({ width: 32 })}
             items={colorList}
             selectedKey={color.color}
             isInvalid={invalidSettings.includes("color")}
             onSelectionChange={(key) => updateSettings("color", key)}
           >
-            {(item) => <Item key={item.id}>{item.name}</Item>}
+            {(item) => <PickerItem id={item.id}>{item.name}</PickerItem>}
           </Picker>
 
           <Checkbox
@@ -99,13 +116,13 @@ export const ColorDisclosure = () => {
             Fill Color
           </Checkbox>
           <Picker
-            width={componentWidth}
+            styles={style({ width: 32 })}
             items={colorList}
             selectedKey={color.fillColor}
             isInvalid={invalidSettings.includes("fillColor")}
             onSelectionChange={(key) => updateSettings("fillColor", key)}
           >
-            {(item) => <Item key={item.id}>{item.name}</Item>}
+            {(item) => <PickerItem id={item.id}>{item.name}</PickerItem>}
           </Picker>
 
           <Checkbox
@@ -117,26 +134,23 @@ export const ColorDisclosure = () => {
             Stroke Color
           </Checkbox>
           <Picker
-            width={componentWidth}
+            styles={style({ width: 32 })}
             items={colorList}
             selectedKey={color.strokeColor}
             isInvalid={invalidSettings.includes("strokeColor")}
             onSelectionChange={(key) => updateSettings("strokeColor", key)}
           >
-            {(item) => <Item key={item.id}>{item.name}</Item>}
+            {(item) => <PickerItem id={item.id}>{item.name}</PickerItem>}
           </Picker>
 
           <ActionButton
-            gridColumn={"field"}
-            width={componentWidth}
-            alignSelf={"end"}
             onPress={() => {
               setSelectedTab("color");
             }}
           >
             Manage Colors
           </ActionButton>
-        </Grid>
+        </div>
       </DisclosurePanel>
     </Disclosure>
   );

@@ -1,13 +1,6 @@
-import {
-  Button,
-  Color,
-  Flex,
-  Grid,
-  Heading,
-  parseColor,
-  Text,
-  TextField
-} from "@adobe/react-spectrum";
+import { Color } from "@adobe/react-spectrum";
+import { Button, Heading, parseColor, Text, TextField } from "@react-spectrum/s2";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { useState } from "react";
 import { componentWidth125Percent, evalTS, postToast } from "../../utils";
 import "./CustomFieldLabel.css";
@@ -108,48 +101,82 @@ export function LaserComponent() {
   };
 
   return (
-    <Flex direction={"column"} alignSelf={"center"}>
-      <Flex
-        direction={"row"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-      >
+    <div
+      className={style({
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center"
+      })}>
+      <div
+        className={style({
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between"
+        })}>
         <Heading level={2}>Laser Files</Heading>
 
-      </Flex>
-      <Text marginBottom={"size-100"}>
+      </div>
+      <Text styles={style({
+        marginBottom: 8
+      })}>
         Quickly process laser cut files by converting the color space to RGB and setting registration fill, laser stroke, and engrave stroke colors.
       </Text>
+      <div
+        className={style({
+          display: "grid",
+          gridTemplateAreas: ["layer color values"],
+          alignItems: "baseline",
+          justifyContent: "start",
+          maxWidth: 368,
+          rowGap: 8,
+          columnGap: 16
+        })}>
 
-      <Grid
-        areas={["layer color values"]}
-        alignItems={"baseline"}
-        justifyContent={"start"}
-        maxWidth={"size-4600"}
-        rowGap={"size-100"}
-        columnGap={"size-200"}>
-
-        <Heading level={4} marginBottom={"size-0"}>Layer Name</Heading>
-        <Heading level={4} marginBottom={"size-0"}>Color</Heading>
+        <Heading level={4} styles={style({
+          marginBottom: 0
+        })}>Layer Name</Heading>
+        <Heading level={4} styles={style({
+          marginBottom: 0
+        })}>Color</Heading>
         <span></span>
 
-        <TextField label="Registration" value={registrationLayerName} onChange={setRegistrationLayerName} width={componentWidth125Percent} />
+        <TextField label="Registration" value={registrationLayerName} onChange={setRegistrationLayerName}
+          styles={style({ width: 16 })} />
         <RGBColorPicker label="Fill" colorValue={registrationColor} setColorValue={setRegistrationColor} />
-        <Text alignSelf={"center"} marginTop={"size-300"}>{getColorNameOrValue(registrationColor)}</Text>
+        <Text
+          styles={style({
+            alignSelf: "center",
+            marginTop: 24
+          })}>{getColorNameOrValue(registrationColor)}</Text>
 
 
-        <TextField label="Laser" value={laserLayerName} onChange={setLaserLayerName} width={componentWidth125Percent} />
+        <TextField label="Laser" value={laserLayerName} onChange={setLaserLayerName}
+          styles={style({ width: 16 })} />
         <RGBColorPicker label="Stroke" colorValue={laserColor} setColorValue={setLaserColor} />
-        <Text alignSelf={"center"} marginTop={"size-300"}>{getColorNameOrValue(laserColor)}</Text>
+        <Text
+          styles={style({
+            alignSelf: "center",
+            marginTop: 24
+          })}>{getColorNameOrValue(laserColor)}</Text>
 
 
-        <TextField label="Engrave" value={engraveLayerName} onChange={setEngraveLayerName} width={componentWidth125Percent} />
+        <TextField label="Engrave" value={engraveLayerName} onChange={setEngraveLayerName}
+          styles={style({ width: 16 })} />
         <RGBColorPicker label="Stroke" colorValue={engraveColor} setColorValue={setEngraveColor} />
-        <Text alignSelf={"center"} marginTop={"size-300"}>{getColorNameOrValue(engraveColor)}</Text>
+        <Text
+          styles={style({
+            alignSelf: "center",
+            marginTop: 24
+          })}>{getColorNameOrValue(engraveColor)}</Text>
 
-      </Grid>
-
-      <Flex justifyContent={"end"} marginTop={"size-200"}>
+      </div>
+      <div
+        className={style({
+          display: "flex",
+          justifyContent: "end",
+          marginTop: 16
+        })}>
         <Button
           variant="accent"
           onPress={() => {
@@ -161,8 +188,7 @@ export function LaserComponent() {
 
           }}
         >Apply</Button>
-      </Flex>
-
-    </Flex>
+      </div>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Badge } from "@adobe/react-spectrum";
+import { Badge } from "@react-spectrum/s2";
 import { DeveloperMenu } from "./DeveloperMenu";
 
 export const EnableDeveloperMode = true;

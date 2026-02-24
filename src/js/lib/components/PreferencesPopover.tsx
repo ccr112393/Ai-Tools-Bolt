@@ -1,14 +1,16 @@
 import {
+  Popover,
   ActionButton,
   Content,
   Dialog,
   DialogTrigger,
   Divider,
-  Grid,
   Heading,
   Text,
-} from "@adobe/react-spectrum";
-import Settings from "@spectrum-icons/workflow/Settings";
+} from "@react-spectrum/s2";
+
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import Settings from "@react-spectrum/s2/icons/Settings";
 import { Fragment } from "react/jsx-runtime";
 
 interface PreferencesPopoverProps {
@@ -20,29 +22,35 @@ const PreferencesPopover: React.FC<PreferencesPopoverProps> = (
   props
 ) => {
   return (
-    <DialogTrigger type="popover" placement="bottom end">
+    <DialogTrigger>
       <ActionButton isQuiet>
         <Settings size="S" />
       </ActionButton>
-      <Dialog maxWidth={"size-1600"}>
+      <Popover
+        styles={style({
+          maxWidth: 128
+        })}
+        placement="bottom end">
         <Heading>{props.heading ? props.heading : "Preferences"}</Heading>
         <Divider />
         <Content>
-          <Grid
-            areas={["label component"]}
-            gap={"size-100"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
+          <div
+            className={style({
+              display: "grid",
+              gridTemplateAreas: ["label component"],
+              gap: 8,
+              justifyContent: "space-between",
+              alignItems: "center"
+            })}>
             {props.options.map(([name, component], index) => (
               <Fragment key={index}>
                 <Text>{name}</Text>
                 <>{component}</>
               </Fragment>
             ))}
-          </Grid>
+          </div>
         </Content>
-      </Dialog>
+      </Popover>
     </DialogTrigger>
   );
 };

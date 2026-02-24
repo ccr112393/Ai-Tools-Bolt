@@ -6,11 +6,11 @@ import {
   DisclosureTitle,
   Heading,
   StatusLight,
-  Text,
-  Well,
-} from "@adobe/react-spectrum";
+  Text
+} from "@react-spectrum/s2";
+
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 import { useProfile } from "../contexts";
-import { componentGap } from "../../../utils";
 import CodeEditor from "./CodeEditor";
 
 export const EditorDisclosure = () => {
@@ -27,24 +27,42 @@ export const EditorDisclosure = () => {
   return (
     <Disclosure id="editor">
       <DisclosureTitle>
-        <Heading level={5} margin={0} flex>
+        <Heading
+          level={5}
+          styles={style({
+            margin: 0,
+            flex: 1
+          })}>
           Custom Code
         </Heading>
         <StatusLight
-          isDisabled={customCode.length === 0}
-          variant="info"
-          marginTop={-7}
-          marginBottom={-10}
+          variant="informative"
         />
-        <ContextualHelp variant="help" placement="bottom end">
-          <Content marginTop={0}>
+        <ContextualHelp variant="help" placement="bottom">
+          <Content styles={style({
+            marginTop: 0
+          })}>
             <Text>
               Allows adding custom formatting commands. Recognized commands,
               numbers, and units will automatically highlight for readability.
             </Text>
-            <Well marginTop={componentGap}>
+            <div
+
+              className={style({
+                display: "block",
+                textAlign: "start",
+                minWidth: 160,
+                padding: 16,
+                marginTop: 4,
+                borderWidth: 1,
+                borderRadius: "sm",
+                backgroundColor: "layer-1",
+                borderStyle: "solid",
+                borderColor: "transparent-black-75",
+                font: "body-sm"
+              })}>
               align_left_to_right: message 0.375 inches
-            </Well>
+            </div>
           </Content>
         </ContextualHelp>
       </DisclosureTitle>
