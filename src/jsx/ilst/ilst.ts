@@ -353,14 +353,14 @@ export function processLaserLayerProperties(data: LaserLayerProperties): {
   var lasFound = false;
   var engFound = false;
 
+  // Set Document Color Mode
+  const doc = currentDocument();
+  // setDocumentColorSpaceRGB(); Set in handleApply function
+
   // Get Layers Exists
   var regLayer = getLayerByName(data.regLayerName);
   var lasLayer = getLayerByName(data.lasLayerName);
   var engLayer = getLayerByName(data.engLayerName);
-
-  // Set Document Color Mode
-  const doc = currentDocument();
-  setDocumentColorSpaceRGB();
 
   // Process Registration Layer
 

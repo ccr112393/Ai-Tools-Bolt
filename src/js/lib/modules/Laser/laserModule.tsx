@@ -49,6 +49,7 @@ async function handleApply(
     engColor: toRGBChannels(engColor),
   };
 
+  await evalTS("setDocumentColorSpaceRGB");
   const result = await evalTS("processLaserLayerProperties", properties);
 
   const processed: string[] = [];

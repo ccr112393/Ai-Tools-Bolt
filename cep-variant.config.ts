@@ -1,6 +1,8 @@
 import { version } from "./package.json";
 
+// !! IMPORTANT
 // !! Set the active variant here
+// templatetools | printertools
 export const appVariant: AppVariant = "templatetools";
 
 // Define App Variants and Configirations here
