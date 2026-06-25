@@ -23,7 +23,6 @@ import {
   postToast,
 } from "../../utils";
 
-
 export const DeveloperMenu = () => {
   function handleAction(action: string) {
     switch (action) {
@@ -56,13 +55,15 @@ export const DeveloperMenu = () => {
       case "clearStorage":
         postToast(
           "info",
-          `Removed [${localStorage.length}] files from local storage`
+          `Removed [${localStorage.length}] files from local storage`,
         );
 
         localStorage.clear();
         setTimeout(() => {
           window.location.reload();
         }, 250);
+        break;
+      case "setAppVariant":
         break;
 
       case "exportSettings":
@@ -93,21 +94,19 @@ export const DeveloperMenu = () => {
         <Menu onAction={(key) => handleAction(key.toString())}>
           <Item key="reload">
             <RotateCCWBold size="S" slot="icon" />
-            <Text >Reload</Text>
+            <Text>Reload</Text>
           </Item>
           <Item key="openRemoteDebug">
             <Bug size="S" slot="icon" />
-            <Text >Remote Debug</Text>
+            <Text>Remote Debug</Text>
           </Item>
           <Item key="openReactDebug">
             <Bug size="S" slot="icon" />
-            <Text >React Debug</Text>
+            <Text>React Debug</Text>
           </Item>
           <Item key="clearStorage">
             <Delete size="S" slot="icon" />
-            <Text >
-              Clear Storage [{getLocalStorageList().length}]
-            </Text>
+            <Text>Clear Storage [{getLocalStorageList().length}]</Text>
           </Item>
           {/* <Item key="exportSettings">
             <Export size="S" slot="icon"  />
@@ -116,7 +115,7 @@ export const DeveloperMenu = () => {
           <SubmenuTrigger>
             <Item>
               <PushNotification size="S" slot="icon" />
-              <Text >Toasts</Text>
+              <Text>Toasts</Text>
             </Item>
             <Menu onAction={(key) => handleAction(key.toString())}>
               <Item key={"toastPositive"}>Positive</Item>

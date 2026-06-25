@@ -25,11 +25,20 @@ export const variantConfigs: Record<AppVariant, VariantConfig> = {
       dark: "./assets/dark-icon.png",
     },
   },
+  aitools: {
+    version: version + ".0.1-A",
+    id: "dev.ccrob.aitools",
+    displayName: "Ai Tools",
+    icons: {
+      light: "./assets/light-icon.png",
+      dark: "./assets/dark-icon.png",
+    },
+  },
 };
 
 export const appInfo = variantConfigs[appVariant];
 
-export type AppVariant = "printertools" | "templatetools";
+export type AppVariant = "printertools" | "templatetools" | "aitools";
 export type VariantConfig = {
   version: string;
   id: string;
